@@ -1,0 +1,89 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--banner列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <button class="layui-btn layui-btn" onclick="banner_add()">新增banner</button>
+                    <button class="layui-btn layui-btn-danger" onclick="banner_del();">删除banner</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+                <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">关键词</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="keyword" name="keyword" placeholder="banner标题" autocomplete="off" class="layui-input keyword" value='{$search.keyword}'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <label class="layui-form-label"></label>
+                        <span class="layui-btn" onclick="banner_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('Banner/banner_list')}">刷新</a>
+                    </div>
+                </form>
+                {if count($list)<=0}
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr>
+                            <td style='text-align:center;'>暂无数据</td>
+                        </tr>
+                    </table>
+                {else /}
+                <div style='height:10px;'></div>
+                <div class='layui-row'>
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr class='table_tr'>
+                            <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>标题</th>
+                            <th>图片</th>
+                            <th>跳转链接</th>
+                            <th>状态</th>
+                            <th>位置</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                        {volist name='$list' id='vo'}
+                        <tr class='table_tr'>
+                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.title}</td>
+                            <td><a href="{$vo.img}" target="_blank"><img src="{$vo.img}" height='50' /></a></td>
+                            <td>{$vo.linkurl}<span style='color:#337ab7;display:block;'>({$vo.typename})</span></td>
+                            <td>{$vo.isshowname}</td>
+                            <td>{$vo.positionname}</td>
+                            <td>{$vo.sortby}</td>
+                            <td>
+                                {if $vo['isshow']==1}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="banner_hide({$vo.id})">隐藏</a>
+                                {else /}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="banner_show({$vo.id})">显示</a>
+                                {/if}
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="banner_edit({$vo.id})">修改</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tr>
+                            <td colspan="8" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                        </tr>
+                    </table>
+                </div>
+            {/if}
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    function closealllayer(){
+        layer.closeAll();
+        window.location.reload();
+    }
+</script>
+{include file='banner/banner_footer' /}
+{/block}

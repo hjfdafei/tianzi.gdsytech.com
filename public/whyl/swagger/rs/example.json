@@ -1,0 +1,34 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/module",
+    "apis":
+    [
+        {
+            "path":"/module/action.php?ac=list",
+            "operations":
+            [
+            {
+                "httpMethod":"POST",
+                "summary":"接口的文字说明",
+                "description":"接口的api介绍",
+                "updateTime":"2012/10/12 12:11",
+                "reviser":"ekin",
+                "revisionHighlight":true,
+                "revisionDesc":"修订说明",
+                "responseClass":"void",
+                "nickname":"action",
+                "parameters":
+                [
+                    {
+                        "paramType":"body",
+                        "description":"参数说明",
+                        "required":true,
+                        "dataType":"name"
+                    }
+                ]
+            }
+            ]
+        }
+    ]
+}

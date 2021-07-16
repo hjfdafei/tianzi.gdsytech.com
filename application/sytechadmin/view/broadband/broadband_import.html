@@ -1,0 +1,36 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--导入宽带账号数据{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">宽带账号数据<span class='musttip'>*</span></label></td>
+                    <td class='td_left' colspan="7">
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn">
+                                <i class="layui-icon">&#xe67c;</i>上传文件
+                            </button>
+                            <input type="file" name="uploadfiles" id="uploadfiles" class="layui-btn shoplogo_file uploadfiles" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv" />
+                            <div class='preimg_content prefile_content'></div>
+                        </div>
+                        <div style='padding-top:10px;'><a href='/demo.xlsx' style='font-size:16px;color:#f00;font-weight:bold;'>模板</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="text-align: center">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="savedata_uploadbtn" id='savedata_uploadbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='broadband/broadband_footer' /}
+{/block}

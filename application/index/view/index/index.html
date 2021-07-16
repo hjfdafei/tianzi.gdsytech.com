@@ -1,0 +1,27 @@
+{extend name="layout/main" /}
+{block name="main"}
+<div class='index_wrap'>
+    <div class='index_main'>
+
+    </div>
+</div>
+<div class='index_copy_wrap'>
+    <div class='index_copy'>
+        <span class='index_copy_support'>技术支持：广东思远信息科技有限公司</span>
+    </div>
+</div>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    $(function(){
+        $('.index_copy').css({'bottom':$('.foot_main').height()+15});
+    })
+    layui.use(['laydate','form','table','upload','layer'], function(){
+        var laydate = layui.laydate;
+        var table = layui.table;
+        var form = layui.form;
+        var upload=layui.upload;
+        var layer=layui.layer;
+    })
+</script>
+{/block}

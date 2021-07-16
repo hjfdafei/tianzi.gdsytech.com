@@ -1,0 +1,22 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "apis":[
+    {
+        "path":"/base.{format}",
+        "description":"通用"
+    },
+    {
+        "path":"/user.{format}",
+        "description":"用户"
+    },
+    {
+        "path":"/assistant.{format}",
+        "description":"名医助理"
+    },
+    {
+        "path":"/basedoctor.{format}",
+        "description":"基层医生"
+    }
+    ]
+}

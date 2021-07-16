@@ -1,0 +1,424 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/generic/getBanner",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-15 11:01:59",
+            "httpMethod":"POST",
+            "summary":"获取banner",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getBanner",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "banner id",
+                "title@string": "banner标题",
+                "img@string": "banner图片链接",
+                "linkurl@string": "banner跳转链接",
+                "type@int": "banner跳转类型 1无跳转 2跳小程序链接 3跳http链接"
+            },
+            "parameters":[
+                {
+                    "description":"position banner位置 1首页 2常见问题 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"position"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/doctor_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-15 11:02:34",
+            "httpMethod":"POST",
+            "summary":"名医列表(搜索，推荐等)",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"doctor_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"名医id",
+                "data.list.realname@string": "名医姓名",
+                "data.list.avatar@string": "名医头像",
+                "data.list.hospital_id@int": "名医所在医院",
+                "data.list.department_id@int": "名医所在科室",
+                "data.list.professional_titles@array":"名医职称",
+                "data.list.skill@array":"名医擅长领域",
+                "data.list.meetnum@int": "预约人数"
+            },
+            "parameters":[
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"isrecommend 是否是推荐名医 1是 0否",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"isrecommend"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/doctor_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-18 15:23:45",
+            "httpMethod":"POST",
+            "summary":"名医详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"doctor_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.data.id@int":"名医id",
+                "data.data.realname@string": "名医姓名",
+                "data.data.avatar@string": "名医头像",
+                "data.data.hospital_id@int": "名医所在医院",
+                "data.data.department_id@int": "名医所在科室",
+                "data.data.professional_titles@array":"名医职称",
+                "data.data.labels@array":"名医自定义标签",
+                "data.data.content@string": "名医简介",
+                "data.data.skill@array":"名医擅长领域",
+                "data.data.honorlist@array":"名医荣誉墙",
+                "data.data.place@array":"名医执业地点",
+                "data.data.meetnum@int": "预约人数",
+                "data.data.visit_rate@string": "复诊率",
+                "data.data.isfavor@int": "用户是否收藏 1是 0否",
+                "data.data.assistant_mobile@string": "名医助理联系电话"
+            },
+            "parameters":[
+                {
+                    "description":"doctor_id 名医id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"doctor_id"
+                },
+                {
+                    "description":"token 登录凭证，如果传token会判断用户是否登录，同时也返回用户是否收藏该名医",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/news_type",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-19 11:33:17",
+            "httpMethod":"POST",
+            "summary":"获取资讯类型",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"news_type",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.list.id@int":"类别id",
+                "data.list.title@string": "类别名称"
+            },
+            "parameters":[]
+        }
+        ]
+    },
+    {
+        "path":"/generic/news_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-15 11:16:38",
+            "httpMethod":"POST",
+            "summary":"资讯列表(名医推荐，执业机构)",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"news_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "资讯标题",
+                "title@string": "资讯标题",
+                "img@string": "资讯封面图",
+                "subtitle@string": "资讯副标题",
+                "brief@string": "资讯简介",
+                "place@string":"地点"
+            },
+            "parameters":[
+                {
+                    "description":"position 位置 1首页 2列表页 默认1 获取首页数据时 keyword,style,pagenum参数无效",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"position"
+                },
+                {
+                    "description":"typeid 类型id 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"typeid"
+                },
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认2",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/news_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-19 12:05:57",
+            "httpMethod":"POST",
+            "summary":"资讯详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"news_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "资讯标题",
+                "title@string": "资讯标题",
+                "img@string": "资讯封面图",
+                "subtitle@string": "资讯副标题",
+                "brief@string": "资讯简介",
+                "place@string":"地点",
+                "content@string": "资讯详情内容"
+            },
+            "parameters":[
+                {
+                    "description":"news_id 资讯id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"news_id"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/basedoctor_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-21 20:20:00",
+            "httpMethod":"POST",
+            "summary":"基层医生列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"basedoctor_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"名医id",
+                "data.list.realname@string": "名医姓名"
+            },
+            "parameters":[
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/hospital_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-26 12:10:10",
+            "httpMethod":"POST",
+            "summary":"医院列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"hospital_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"医院id",
+                "data.list.realname@string": "医院名称"
+            },
+            "parameters":[
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/department_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-26 12:12:00",
+            "httpMethod":"POST",
+            "summary":"科室列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"department_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"科室id",
+                "data.list.realname@string": "科室名称"
+            },
+            "parameters":[
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getShareParam",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-03-11 10:44:17",
+            "httpMethod":"POST",
+            "summary":"获取分享参数",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getShareParam",
+            "revisionHighlight":true,
+            "fieldDesc":{
+            },
+            "parameters":[
+                {
+                    "description":"url 请求分享的当前页面链接",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"url"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+    <html class="pixel-ratio-3 retina ios ios-11 ios-11-0 ios-gt-10 ios-gt-9 ios-gt-8 ios-gt-7 ios-gt-6">
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <title>移动校园宽带</title>
+            <meta name="keywords" content="移动校园宽带">
+            <meta name="description" content="移动校园宽带">
+            <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-status-bar-style" content="black">
+            <meta name="format-detection" content="telephone=no">
+            <meta name="full-screen" content="yes">
+            <meta name="x5-fullscreen" content="true">
+            <script type="text/javascript" src="../js/jquery.min.js"></script>
+            <script type="text/javascript" src="../js/jquery.form.min.js"></script>
+            <script type="text/javascript" src="../js/layui/layui.js"></script>
+            <link rel="stylesheet" href="../js/layui/css/layui.css" media="all" />
+            <link rel="stylesheet" href="../imgs/ownstyle.css" media="all" />
+        </head>
+        <body>
+            <div class='cl'></div>
+            <div class='page_main'>
+                <div class='page_content'>
+                    <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style='display:inline-block;width:25%;'>套餐选择：</label>
+                            <div class="layui-input-block" style='display:inline-block;width:70%;'>
+                                <select name='goodsset' class='goodsset'>
+                                    <option value='30'>30元/月</option>
+                                    <option value='150'>150元/半年</option>
+                                    <option value='270'>270元/年</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">姓名：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name='realname' id="realname" placeholder="姓名" autocomplete="off" class="layui-input realname" value='' />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">联系电话：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name='mobile' id="mobile" placeholder="联系电话" autocomplete="off" class="layui-input mobile" value='' />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份证号码：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name='idcardnum' id="idcardnum" placeholder="身份证号码" autocomplete="off" class="layui-input idcardnum" value='' />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">院系：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name='department' id="department" placeholder="院系" autocomplete="off" class="layui-input department" value='' />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">学号：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name='studentnumber' id="studentnumber" placeholder="学号" autocomplete="off" class="layui-input studentnumber" value='' />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">宿舍地址：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name='address' id="address" placeholder="宿舍地址" autocomplete="off" class="layui-input address" value='' />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style='text-align:center;'>
+                                <span class="layui-btn settlebtn" lay-submit="" lay-filter="settlebtn" id="settlebtn">确认</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class='cl' style='height:80px;'></div>
+            <div class='foot'>
+                <div class='foot_list'>
+                    <ul>
+                        <li class='foot_item'><a href='../index.html'><img src='../imgs/indexico.png' /></a></li>
+                        <li class='foot_item'><a href='../index.html'><img src='../imgs/personico.png' /></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class='cl'></div>
+            <script type="text/javascript">
+                layui.use(['laydate','form','table','upload','layer'], function(){
+                    var laydate = layui.laydate;
+                    var table = layui.table;
+                    var form = layui.form;
+                    var upload=layui.upload;
+                    var layer=layui.layer;
+                    form.on('submit(settlebtn)', function(data){
+                        orders_create("/index/index/orders_create.html");
+                        return false;
+                    });
+                    layer.open({
+                        type: 1,
+                        title: '校园宽带办理条款', //不显示标题栏,
+                        closeBtn: false,
+                        area:['100%','90%'],
+                        shade: 0.8,
+                        id: 'LAY_layuipro', //设定一个id，防止重复弹出
+                        resize: false,
+                        btn: ['我已知悉'],
+                        btnAlign: 'c',
+                        moveType: 1, //拖拽模式，0或者1
+                        content: '<div style="padding:10px;line-height:22px;background-color:#393D49;color:#fff;height:100%;"><p>办理条款</p><p>办理条款</p><p>办理条款</p><p>办理条款</p><p>办理条款</p></div>'
+                    });
+                })
+
+                function orders_create(url){
+                    layer.msg('办理成功');
+                    setTimeout("window.location.href='../index.html'",3000);
+                }
+            </script>
+        </body>
+    </html>

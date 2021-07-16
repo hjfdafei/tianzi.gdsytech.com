@@ -1,0 +1,145 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--修改资讯{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">资讯类别<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name="typeid" class='newstype'>
+                                {volist name='newstype' id='vo'}
+                                <option value="{$vo.id}" {if $vo['id']==$info['typeid']}selected='selected'{/if}>{$vo.title}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">资讯标题<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='title' id="title" placeholder="资讯标题" autocomplete="off" class="layui-input title" value='{$info.title}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">地点</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='place' id="place" placeholder="地点" autocomplete="off" class="layui-input place" value='{$info.place}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">资讯简介</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <textarea name="brief" id="brief" placeholder="资讯简介" class="layui-textarea brief">{$info.brief}</textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">资讯封面图片</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block" style='position:relative;'>
+                            <button type="button" class="layui-btn">
+                                <i class="layui-icon">&#xe67c;</i>上传图片
+                            </button>
+                            <input type="file" name="img" id="img" class="layui-btn shoplogo_file img" accept="image/gif,image/jpeg,image/jpg,image/png" />
+                            <div class='preimg_content'>{if $info['img']}<a href="{$info.img}" target="_blank"><img class="layui-upload-img" id="preimg_view" src="{$info.img}" height='50' /></a>{else /}<img class="layui-upload-img" id="preimg_view">{/if}</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">文章链接</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='linkurl' id="linkurl" placeholder="文章链接" autocomplete="off" class="layui-input linkurl" value='{$info.linkurl}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">文章详情</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <textarea name="content" id="content" placeholder="文章详情" class="layui-textarea content">{$info.content}</textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否推荐<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="radio" name="isindex" value="1" title="是" {if $info['isindex']==1}checked='checked'{/if}>
+                            <input type="radio" name="isindex" value="2" title="否" {if $info['isindex']==2}checked='checked'{/if}>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否发布<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="radio" name="ispublic" value="1" title="是" {if $info['ispublic']==1}checked='checked'{/if}>
+                            <input type="radio" name="ispublic" value="2" title="否" {if $info['ispublic']==2}checked='checked'{/if}>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">发布时间</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='publish_time' id="publish_time" placeholder="发布时间" autocomplete="off" class="layui-input publish_time" readonly="readonly" value='{$info.publish_time}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='sortby' id="sortby" placeholder="资讯排序" autocomplete="off" class="layui-input sortby" value='{$info.sortby}' />
+                        </div>
+                        <span class='inputnote_span'>(排序值越大排在越前)</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="newsid" value='{$info.id}' />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_editbtn" id='savedata_editbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    <script type="text/javascript">
+        tinymce.init({
+            'selector':'#content',
+            'language':'zh_CN',
+            'width':'100%',
+            'height':'350px',
+            'resize':false,
+            'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
+            'toolbar':
+                'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+                styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+                table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
+            'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+            'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
+            'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
+            'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
+            'image_caption': true,
+            'upload_image_url':"{:url('sytechadmin/upload/file_upload',array('type'=>'attach'))}"
+        });
+        $('#goodsform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
+    </script>
+    {include file='news/news_footer' /}
+{/block}

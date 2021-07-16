@@ -1,0 +1,81 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--添加角色{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">角色名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='role_title' id="role_title" placeholder="角色名称" autocomplete="off" class="layui-input role_title" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否启用</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="role_status" class='role_status' value="1" title="是" checked='checked' />
+                                <input type="radio" name="role_status" class='role_status' value="2" title="否" />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    <script type="text/javascript">
+        layui.use(['laydate','form','table','upload'], function(){
+            var laydate = layui.laydate;
+            var table = layui.table;
+            var form = layui.form;
+            form.on('submit(savedata_subbtn)', function(data){
+                savedata();
+                return false;
+            });
+
+        })
+
+        //保存数据
+        function savedata(){
+            var sindex=layer.load(1,{time:5*1000});
+            $('#goodsform').ajaxSubmit({
+                url:"{:url('Adminrole/adminrole_add')}",
+                type:'post',
+                dataType:'json',
+                beforeSubmit: function(){
+                    var role_title=$.trim($('.role_title').val());
+                    if(role_title==''){
+                        layer.msg('请输入角色名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                },
+                success: function(data){
+                    layer.close(sindex);
+                    layer.msg(data.msg);
+                    if(data.code==400){
+                        return false;
+                    }else if(data.code==200){
+                        setTimeout("window.location.reload()",2000)
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+{/block}

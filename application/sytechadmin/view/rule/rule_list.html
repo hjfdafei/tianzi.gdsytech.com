@@ -1,0 +1,148 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--权限列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <button class="layui-btn layui-btn" onclick="rule_add()">新增权限</button>
+                    <button class="layui-btn layui-btn-danger" onclick="rule_del();">删除权限</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+            {if empty($list)}
+                <div class='nodata'>暂无数据</div>
+            {else /}
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        {foreach $list as $key=>$item}
+                        <dl class="rule_ul">
+                            <dt>
+                                <div class="layui-row" style='padding-bottom:10px;'>
+                                    <div class="layui-col-md9">
+                                      <input type="checkbox" name="ids[]" value="{$item.id}" lay-filter="level-1" class="checkbox-ids" lay-skin="primary" title="{$item.rule_title}">
+                                    </div>
+                                    <div class="layui-col-md3">
+                                        <a class="layui-btn layui-btn-warm layui-btn-sm rule_ul_edit" href="javascript:void(0);" onclick="rule_edit({$item.id})">修改</a>
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd>
+                            {notempty name="$item.son"}
+                            {foreach $item.son as $key2=>$item2}
+                                <dl class="rule_ul menu-son">
+                                    <dt>
+                                        <div class="layui-row" style='padding-bottom:10px;'>
+                                            <div class="layui-col-md9" style="padding-left: 20px;">
+                                                <input type="checkbox" name="ids[]" value="{$item2.id}" lay-filter="level-2" class="checkbox-ids" lay-skin="primary" title="{$item2.rule_title}">
+                                            </div>
+                                            <div class="layui-col-md3">
+                                                <a class="layui-btn layui-btn-normal layui-btn-sm rule_ul_edit" href="javascript:void(0);" onclick="rule_edit({$item2.id})">修改</a>
+                                            </div>
+                                        </div>
+                                    </dt>
+                                    {notempty name="$item2.son"}
+                                    {foreach $item2.son as $key3=>$item3}
+                                    <dd>
+                                        <div class="layui-row" style='padding-bottom:10px;'>
+                                            <div class="layui-col-md9"  style="padding-left: 40px;">
+                                                <input type="checkbox" name="ids[]" value="{$item3.id}" class="checkbox-ids" lay-skin="primary" title="{$item3.rule_desc}">
+                                            </div>
+                                            <div class="layui-col-md3">
+                                                <a class="layui-btn layui-btn-normal layui-btn-sm rule_ul_edit" href="javascript:void(0);" onclick="rule_edit({$item3.id})">修改</a>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                    {/foreach}
+                                    {/notempty}
+                                </dl>
+                            {/foreach}
+                            {/notempty}
+                            </dd>
+                        </dl>
+                        {/foreach}
+                    </div>
+                </form>
+            {/if}
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    layui.use(['form','jquery','layer'], function(){
+        var $    = layui.jquery;
+            form = layui.form;
+            layer= layui.layer;
+        //隔行换色
+        $('.layui-form .layui-row:odd').css('background-color','#f2f2f2');
+
+        form.on('checkbox(level-1)', function(data){
+            $(data.elem).parent().parent().parent().next().find('input').prop('checked',data.elem.checked);
+            form.render('checkbox');
+        });
+
+        form.on('checkbox(level-2)', function(data){
+            $(data.elem).parent().parent().parent().siblings().find('input').prop('checked',data.elem.checked);
+            form.render('checkbox');
+        });
+    });
+
+    function rule_add(){
+        var url='{:url("rule/rule_add")}';
+        var title='添加权限';
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url, //iframe的url
+            end:function () {
+                location.reload()
+            }
+        });
+    }
+
+    function rule_edit(dataid){
+        if(dataid>0){
+            var url='{:url("rule/rule_edit")}?ruleid='+dataid;
+            var title='修改权限';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url, //iframe的url
+                end:function () {
+                    location.reload()
+                }
+            });
+        }
+    }
+
+    function rule_del(){
+        var dataid='';
+        $("[name='ids[]']:checked").each(function(){
+            dataid+=$(this).val()+',';
+        })
+        dataid=$.trim(dataid);
+        if(dataid!=''){
+            layer.confirm('确定删除吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('rule/rule_del')}",{'ruleid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+</script>
+{/block}

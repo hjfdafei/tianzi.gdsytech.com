@@ -1,0 +1,189 @@
+<script type="text/javascript">
+    layui.use(['laydate','form','table','upload'], function(){
+        var laydate=layui.laydate;
+        var table=layui.table;
+        var form=layui.form;
+        var upload=layui.upload;
+        form.on('submit(savedata_addbtn)', function(data){
+            var url="{:url('Broadband/broadband_add')}";
+            savedata(url);
+            return false;
+        });
+        form.on('submit(savedata_editbtn)', function(data){
+            var url="{:url('Broadband/broadband_edit')}";
+            savedata(url);
+            return false;
+        });
+        var uploadInst = upload.render({
+            elem: '#uploadfiles',
+            auto:false,
+            exts: 'xls|xlsx|csv',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('.prefile_content').html(file.name);
+                });
+            }
+        });
+
+        form.on('submit(savedata_uploadbtn)',function(data){
+            savedata_upload();
+            return false;
+        })
+    })
+
+    function broadband_add(){
+        var url='{:url("Broadband/broadband_add")}';
+        var title='添加宽带账号';
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url
+        });
+    }
+
+    function broadband_edit(dataid){
+        if(dataid>0){
+            var url='{:url("Broadband/broadband_edit")}?broadbandid='+dataid;
+            var title='修改宽带账号';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function savedata(url){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:url,
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var keyaccount=$.trim($('.keyaccount').val());
+                if(keyaccount==''){
+                    layer.msg('请输入宽带账号');
+                    layer.close(sindex);
+                    return false;
+                }
+                var keypassword=$.trim($('.keypassword').val());
+                if(keypassword==''){
+                    layer.msg('请输入宽带密码');
+                    layer.close(sindex);
+                    return false;
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    //导入宽带账号
+    function broadband_import(){
+        var url='{:url("Broadband/broadband_import")}';
+        layer.open({
+            type: 2,
+            title:'导入宽带账号',
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url
+        });
+    }
+
+    function savedata_upload(){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:"{:url('Broadband/broadband_import')}",
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    function broadband_del(){
+        var dataid='';
+        $("[name='checkgoods[]']:checked").each(function(){
+            dataid+=$(this).val()+',';
+        })
+        dataid=$.trim(dataid);
+        if(dataid!=''){
+            layer.confirm('确定删除选中的宽带账号吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Broadband/broadband_del')}",{'broadbandid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function broadband_hide(dataid){
+        if(dataid!=''){
+            layer.confirm('禁用后宽带账号将不能分配，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Broadband/broadband_hide')}",{'broadbandid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function broadband_show(dataid){
+        if(dataid!=''){
+            var sindex=layer.load(1,{'time':3*1000});
+            $.post("{:url('Broadband/broadband_show')}",{'broadbandid':dataid},function(data){
+                layer.msg(data.msg);
+                layer.close(sindex);
+                if(data.code==200){
+                    setTimeout("window.location.reload();",2000);
+                }
+            },'json')
+            layer.close(index);
+        }
+    }
+
+    function broadband_search(){
+        var url="{:url('Broadband/broadband_list')}?a=1";
+        var keyword=$('.keyword').val();
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        window.location.href=url;
+    }
+
+</script>

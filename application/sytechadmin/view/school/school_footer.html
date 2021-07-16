@@ -1,0 +1,138 @@
+<script type="text/javascript">
+    layui.use(['laydate','form','table','upload'], function(){
+        var laydate=layui.laydate;
+        var table=layui.table;
+        var form=layui.form;
+        var upload=layui.upload;
+        form.on('submit(savedata_addbtn)', function(data){
+            var url="{:url('School/school_add')}";
+            savedata(url);
+            return false;
+        });
+        form.on('submit(savedata_editbtn)', function(data){
+            var url="{:url('School/school_edit')}";
+            savedata(url);
+            return false;
+        });
+    })
+
+    function school_add(){
+        var url='{:url("School/school_add")}';
+        var title='添加校区';
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url
+        });
+    }
+
+    function school_edit(dataid){
+        if(dataid>0){
+            var url='{:url("School/school_edit")}?schoolid='+dataid;
+            var title='修改校区';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function savedata(url){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:url,
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var title=$.trim($('.title').val());
+                if(title==''){
+                    layer.msg('请输入校区标题');
+                    layer.close(sindex);
+                    return false;
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    function school_del(){
+        var dataid='';
+        $("[name='checkgoods[]']:checked").each(function(){
+            dataid+=$(this).val()+',';
+        })
+        dataid=$.trim(dataid);
+        if(dataid!=''){
+            layer.confirm('确定删除选中的校区吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('School/school_del')}",{'schoolid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function school_hide(dataid){
+        if(dataid!=''){
+            layer.confirm('禁用后前端将不再显示，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('School/school_hide')}",{'schoolid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function school_show(dataid){
+        if(dataid!=''){
+            var sindex=layer.load(1,{'time':3*1000});
+            $.post("{:url('School/school_show')}",{'schoolid':dataid},function(data){
+                layer.msg(data.msg);
+                layer.close(sindex);
+                if(data.code==200){
+                    setTimeout("window.location.reload();",2000);
+                }
+            },'json')
+            layer.close(index);
+        }
+    }
+
+    function school_search(){
+        var url="{:url('School/school_list')}?a=1";
+        var keyword=$('.keyword').val();
+        var status=$('.status').val();
+        if(status!=''){
+            url+="&status="+status;
+        }
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        window.location.href=url;
+    }
+
+</script>

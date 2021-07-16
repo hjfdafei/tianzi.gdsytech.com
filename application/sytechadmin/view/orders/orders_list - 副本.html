@@ -1,0 +1,226 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--订单列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <button class="layui-btn layui-btn" onclick="orders_add()">新增订单</button>
+                    <button class="layui-btn layui-btn-danger" onclick="orders_del();">删除订单</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+                <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">分配状态</label>
+                                <div class="layui-input-block">
+                                    <select name="isassign" class='isassign'>
+                                        <option value='0' {if $search['isassign']==0}selected='selected'{/if}>全部(是否分配名医)</option>
+                                        <option value='1' {if $search['isassign']==1}selected='selected'{/if}>是</option>
+                                        <option value='2' {if $search['isassign']==2}selected='selected'{/if}>否</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">结算状态</label>
+                                <div class="layui-input-block">
+                                    <select name="issettle" class='issettle'>
+                                        <option value='0' {if $search['issettle']==0}selected='selected'{/if}>全部</option>
+                                        <option value='1' {if $search['issettle']==1}selected='selected'{/if}>是</option>
+                                        <option value='2' {if $search['issettle']==2}selected='selected'{/if}>否</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">业务状态</label>
+                                <div class="layui-input-block">
+                                    <select name="status" class='status'>
+                                        <option value='0' {if $search['status']==0}selected='selected'{/if}>全部</option>
+                                        <option value='1' {if $search['status']==1}selected='selected'{/if}>待处理</option>
+                                        <option value='2' {if $search['status']==2}selected='selected'{/if}>已预约</option>
+                                        <option value='3' {if $search['status']==3}selected='selected'{/if}>已完成</option>
+                                        <option value='4' {if $search['status']==4}selected='selected'{/if}>退款中</option>
+                                        <option value='5' {if $search['status']==5}selected='selected'{/if}>已关闭</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">支付状态</label>
+                                <div class="layui-input-block">
+                                    <select name="ispay" class='ispay'>
+                                        <option value='0' {if $search['ispay']==0}selected='selected'{/if}>全部</option>
+                                        <option value='1' {if $search['ispay']==1}selected='selected'{/if}>已支付</option>
+                                        <option value='2' {if $search['ispay']==2}selected='selected'{/if}>待支付</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">名医</label>
+                                <div class="layui-input-block">
+                                    <select name="doctorid" class='doctorid' lay-search>
+                                        <option value='0'>全部</option>
+                                        {volist name='doctor_list' id='vo'}
+                                        <option value="{$vo.id}" {if $vo['id']==$search['doctorid']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">名医助理</label>
+                                <div class="layui-input-block">
+                                    <select name="assistantsid" class='assistantsid' lay-search>
+                                        <option value='0'>全部</option>
+                                        {volist name='assistants_list' id='vo'}
+                                        <option value="{$vo.id}" {if $vo['id']==$search['assistantsid']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">基层医生</label>
+                                <div class="layui-input-block">
+                                    <select name="basedoctorsid" class='basedoctorsid' lay-search>
+                                        <option value='0'>全部</option>
+                                        {volist name='basedoctors_list' id='vo'}
+                                        <option value="{$vo.id}" {if $vo['id']==$search['basedoctorsid']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">订单号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="orderno" name="orderno" placeholder="预约订单号" autocomplete="off" class="layui-input orderno" value='{$search.orderno}'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">关键词</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="keyword" name="keyword" placeholder="就诊人姓名/联系电话" autocomplete="off" class="layui-input keyword" value='{$search.keyword}'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下单日期</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="applytime_start" name="applytime_start" placeholder="开始下单日期" autocomplete="off" class="layui-input applytime_start" readonly="readonly" value='{$search.applytime_start}'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下单日期</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="applytime_end" name="applytime_end" placeholder="结束下单日期" autocomplete="off" class="layui-input applytime_end" readonly="readonly" value='{$search.applytime_end}'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <label class="layui-form-label"></label>
+                        <span class="layui-btn" onclick="orders_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('Orders/orders_list')}">刷新</a>
+                    </div>
+                </form>
+                {if count($list)<=0}
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr>
+                            <td style='text-align:center;'>暂无数据</td>
+                        </tr>
+                    </table>
+                {else /}
+                <div style='height:10px;'></div>
+                <div class='layui-row' style='overflow: auto;'>
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr class='table_tr'>
+                            <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>订单号</th>
+                            <th>就诊人姓名</th>
+                            <th>就诊人联系电话</th>
+                            <th>所属名医</th>
+                            <th>所属名医助理</th>
+                            <th>推荐基层医生</th>
+                            <th>状态</th>
+                            <th>支付状态</th>
+                            <th>退款状态</th>
+                            <th>费用</th>
+                            <th>名医积分</th>
+                            <th>下单时间</th>
+                            <th>操作</th>
+                        </tr>
+                        {volist name='$list' id='vo'}
+                        <tr class='table_tr'>
+                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.orderno}</td>
+                            <td>{$vo.realname}</td>
+                            <td>{$vo.mobile}</td>
+                            <td>{$vo.doctor_name}</td>
+                            <td>{$vo.assistant_name}</td>
+                            <td>{$vo.basedoctor_name}</td>
+                            <td>{$vo.statusname}</td>
+                            <td>{$vo.ispayname}</td>
+                            <td>{$vo.isrefundname}{if $vo['isrefund']==1}<span style='display:block;border:1px solid #f00;'>退款时间：{$vo.refund_time}</span>{/if}</td>
+                            <td>
+                                <span style='display:block;border:1px solid #1E9FFF;margin-bottom:3px;'>应结算：{$vo.pay_money-$vo.refund_money}</span>
+                                <span style='display:block;border:1px solid #009688;margin-bottom:3px;'>应付：{$vo.money}</span>
+                                <span style='display:block;border:1px solid #FFB800;margin-bottom:3px;'>实付{$vo.pay_money}</span>
+                                <span style='display:block;border:1px solid #f00;'>退款：{$vo.refund_money}</span>
+                            </td>
+                            <td>{$vo.doctor_integral}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                {if $vo['doctor_id']<=0}
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_assign({$vo.id})">分配名医</a>
+                                {/if}
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_setfee({$vo.id})">设置费用</a>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_setfee({$vo.id})">设置积分</a>
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_setfee({$vo.id})">标记完成</a>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_setfee({$vo.id})">标记结算</a>
+                                <a class="layui-btn layui-btn-sm" onclick="orders_detail({$vo.id})">详情</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tr>
+                            <td colspan="14" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                        </tr>
+                    </table>
+                </div>
+            {/if}
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    function closealllayer(){
+        layer.closeAll();
+        window.location.reload();
+    }
+</script>
+{include file='orders/orders_footer' /}
+{/block}

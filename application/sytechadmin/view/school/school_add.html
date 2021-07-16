@@ -1,0 +1,58 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--添加校区{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">校区标题<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='title' id="title" placeholder="校区标题" autocomplete="off" class="layui-input title" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">校区地址</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='address' id="address" placeholder="校区地址" autocomplete="off" class="layui-input address" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否启用<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="radio" name="status" value="1" title="是" checked>
+                            <input type="radio" name="status" value="2" title="否" >
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='sortby' id="sortby" placeholder="校区排序" autocomplete="off" class="layui-input sortby" value='0' />
+                        </div>
+                        <span class='inputnote_span'>(排序值越大排在越前)</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="savedata_addbtn" id='savedata_addbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='school/school_footer' /}
+{/block}

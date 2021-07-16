@@ -1,0 +1,157 @@
+<script type="text/javascript">
+    layui.use(['laydate','form','table','upload'], function(){
+        var laydate=layui.laydate;
+        var table=layui.table;
+        var form=layui.form;
+        var upload=layui.upload;
+        var uploadInst = upload.render({
+            elem: '#img',
+            auto:false,
+            //bindAction:'#savedata_subbtn',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('#preimg_view').attr('src', result);
+                });
+            }
+        });
+        form.on('radio(showlink)',function(data){
+            showlink(data.value,form);
+        })
+        form.on('submit(savedata_addbtn)', function(data){
+            var url="{:url('Banner/banner_add')}";
+            savedata(url);
+            return false;
+        });
+        form.on('submit(savedata_editbtn)', function(data){
+            var url="{:url('Banner/banner_edit')}";
+            savedata(url);
+            return false;
+        });
+
+
+    })
+
+    function showlink(dataid,obj){
+        if(dataid==1){
+            $('.linkurl_tr').hide();
+        }else{
+            $('.linkurl_tr').show();
+        }
+    }
+
+    function banner_add(){
+        var url='{:url("Banner/banner_add")}';
+        var title='添加banner';
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url
+        });
+    }
+
+    function banner_edit(dataid){
+        if(dataid>0){
+            var url='{:url("Banner/banner_edit")}?bannerid='+dataid;
+            var title='修改banner';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function savedata(url){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:url,
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var title=$.trim($('.title').val());
+                if(title==''){
+                    layer.msg('请输入banner标题');
+                    layer.close(sindex);
+                    return false;
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    function banner_del(){
+        var dataid='';
+        $("[name='checkgoods[]']:checked").each(function(){
+            dataid+=$(this).val()+',';
+        })
+        dataid=$.trim(dataid);
+        if(dataid!=''){
+            layer.confirm('确定删除选中的banner吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Banner/banner_del')}",{'bannerid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function banner_hide(dataid){
+        if(dataid!=''){
+            layer.confirm('隐藏后前端将不再显示，确定隐藏吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Banner/banner_hide')}",{'bannerid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function banner_show(dataid){
+        if(dataid!=''){
+            var sindex=layer.load(1,{'time':3*1000});
+            $.post("{:url('Banner/banner_show')}",{'bannerid':dataid},function(data){
+                layer.msg(data.msg);
+                layer.close(sindex);
+                if(data.code==200){
+                    setTimeout("window.location.reload();",2000);
+                }
+            },'json')
+            layer.close(index);
+        }
+    }
+
+    function banner_search(){
+        var url="{:url('Banner/banner_list')}?a=1";
+        var keyword=$('.keyword').val();
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        window.location.href=url;
+    }
+
+</script>

@@ -1,0 +1,127 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--分配权限{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:20px;'></div>
+            {if empty($list)}
+                <div class='nodata'>暂无数据</div>
+            {else /}
+                <form class="layui-form" id='goodsform'>
+                    <div class="layui-form-item">
+                        {foreach $list as $key=>$item}
+                        <dl class="rule_ul">
+                            <dt>
+                                <div class="layui-row layui-rowlevel1" style='padding-bottom:10px;'>
+                                    <div class="layui-col-md">
+                                      <input type="checkbox" name="ids[]" value="{$item.id}" lay-filter="level-1" class="checkbox-ids" lay-skin="primary" title="{$item.rule_title}" {if in_array($item['id'],$info['role_ruleid'])}checked='checked'{/if} />
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd style='background:#f2f2f2;padding-left:20px;'>
+                            {notempty name="$item.son"}
+                            {foreach $item.son as $key2=>$item2}
+                                <dl class="rule_ul menu-son">
+                                    <dt>
+                                        <div class="layui-row" style='padding-bottom:10px;'>
+                                            <div class="layui-col-md">
+                                                <input type="checkbox" name="ids[]" value="{$item2.id}" lay-filter="level-2" class="checkbox-ids" lay-skin="primary" title="{$item2.rule_title}" {if in_array($item2['id'],$info['role_ruleid'])}checked='checked'{/if} />
+                                            </div>
+                                        </div>
+                                    </dt>
+                                </dl>
+                            {/foreach}
+                            {/notempty}
+                            </dd>
+                        </dl>
+                        {/foreach}
+                    </div>
+                    <div class="layui-input-block" style='text-align:center;margin:0;'>
+                        <input type="hidden" name="roleid" value='{$info.id}' />
+                        <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </form>
+            {/if}
+        </div>
+    </div>
+</body>
+<style type="text/css">
+    .menu-son{min-width:120px;display:inline-block;}
+</style>
+
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    layui.use(['form','jquery','layer'], function(){
+        var $=layui.jquery;
+        form = layui.form;
+        layer= layui.layer;
+        //隔行换色
+        //$('.layui-form .layui-rowlevel1:odd').css('background-color','#f2f2f2');
+        form.on('checkbox(level-1)', function(data){
+            $(data.elem).parent().parent().parent().next().find('input').prop('checked',data.elem.checked);
+            form.render('checkbox');
+        });
+        form.on('checkbox(level-2)', function(data){
+            var aa=0;
+            var bb=new Array();
+            $(data.elem).parent().parent().parent().parent().parent().siblings().find('input').prop('checked',data.elem.checked);
+            $($(data.elem).parent().parent().parent().parent().siblings()).each(function(){
+                bb.push($(this).find('input').prop('checked'));
+            });
+            bb.push(data.elem.checked);
+            for(var i=0;i<bb.length;i++){
+                if(bb[i]==false){
+                    aa+=0;
+                }else{
+                    aa+=1;
+                }
+            }
+            if(aa==0){
+                $(data.elem).parent().parent().parent().parent().parent().siblings().find('input').prop('checked',false);
+            }else{
+                $(data.elem).parent().parent().parent().parent().parent().siblings().find('input').prop('checked',true);
+            }
+            form.render('checkbox');
+        });
+        form.on('submit(savedata_subbtn)', function(data){
+            savedata();
+            return false;
+        });
+    });
+
+    //保存数据
+    function savedata(){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:"{:url('Adminrole/adminrole_assign')}",
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var dataid='';
+                $('input[type=checkbox]:checked').each(function(){
+                    dataid+=$(this).val()+',';
+                });
+                dataid=$.trim(dataid);
+                if(dataid==''){
+                    layer.msg('请选择权限');
+                    layer.close(sindex);
+                    return false;
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("window.location.reload()",2000)
+                }
+            }
+        });
+        return false;
+    }
+</script>
+{/block}

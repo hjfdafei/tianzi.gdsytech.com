@@ -1,0 +1,170 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--权限列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md1">
+                    <button class="layui-btn layui-btn" onclick="rule_add()">新增权限</button>
+                </div>
+                <div class="layui-col-md1">
+                    <button class="layui-btn layui-btn-danger" onclick="rule_del();">删除权限</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                {foreach $list as $key=>$item}
+                <ul class='rule_ulone rule_ul'>
+                    <li>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="ids[]" value="{$item.id}" lay-filter="level-1" class="checkbox-ids" lay-skin="primary" title="{$item.rule_title}">
+                                <a class="layui-btn layui-btn-warm layui-btn-sm rule_ul_edit" href="javascript:void(0);" onclick="rule_edit({$item.id})">修改</a>
+                            </div>
+                        </div>
+                    </li>
+                    {notempty name="$item.son"}
+                    {foreach $item.son as $key2=>$item2}
+                    <ul class='rule_ultwo rule_ul'>
+                        <li>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="ids[]" value="{$item2.id}" lay-filter="level-2" class="checkbox-ids" lay-skin="primary" title="{$item2.rule_title}">
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm rule_ul_edit" href="javascript:void(0);" onclick="rule_edit({$item2.id})">修改</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    {/foreach}
+                    {/notempty}
+                </ul>
+                {/foreach}
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+layui.use(['form','jquery','layer'], function(){
+    var $=layui.jquery;
+    var form=layui.form;
+    var layer=layui.layer;
+    //隔行换色
+    $('.layui-form .layui-form-item:odd').css('background-color','#f2f2f2');
+    form.on('checkbox()', function(data){
+        var pc=data.elem.classList //获取选中的checkbox的class属性
+        /* checkbox处于选中状态  */
+        if(data.elem.checked==true){//并且当前checkbox为选中状态
+            /*如果是parent节点 */
+            if(pc=="checkbox-ids"){  //如果当前选中的checkbox class里面有parent
+                            //获取当前checkbox的兄弟节点的孩子们是 input[type='checkbox']的元素
+                            var c =$(data.elem).siblings().children("input[type='checkbox']");
+                             c.each(function(){//遍历他们的孩子们
+                                var e = $(this); //添加layui的选中的样式   控制台看元素
+                                e.next().addClass("layui-form-checked");
+                           });
+                        }else{/*如果不是parent*/
+                            //选中子级选中父级
+                            $(data.elem).parent().prev().addClass("layui-form-checked");
+                        }
+
+                }else{  /*checkbox处于 false状态*/
+
+                      //父级没有选中 取消所有的子级选中
+                      if(pc=="checkbox-ids"){/*判断当前取消的是父级*/
+                        var c =$(data.elem).siblings().children("input[type='checkbox']");
+                         c.each(function(){
+                            var e = $(this);
+                            e.next().removeClass("layui-form-checked")
+                         });
+                      }else{/*不是父级*/
+
+                            var c = $(data.elem).siblings("div");
+                            var count =0;
+                            c.each(function(){//遍历他们的孩子们
+                                   //如果有一个==3那么久说明是处于选中状态
+                                    var is =  $(this).get(0).classList;
+                                    if(is.length==3){
+                                        count++;
+                                    }
+                             });
+                            //如果大于0说明还有子级处于选中状态
+                            if(count>0){
+
+                            }else{/*如果不大于那么就说明没有子级处于选中状态那么就移除父级的选中状态*/
+                                $(data.elem).parent().prev().removeClass("layui-form-checked");
+                            }
+                      }
+                }
+    });
+    // form.on('checkbox(level-1)', function(data){
+    //     $(data.elem).parent().parent().parent().next().find('input').prop('checked',data.elem.checked);
+    //     form.render('checkbox');
+    // });
+
+    // form.on('checkbox(level-2)', function(data){
+    //     $(data.elem).parent().parent().parent().siblings().find('input').prop('checked',data.elem.checked);
+    //     form.render('checkbox');
+    // });
+});
+function rule_add(){
+    var url='{:url("rule/rule_add")}';
+    var title='添加权限';
+    layer.open({
+        type: 2,
+        title:title,
+        shadeClose: false,
+        shade: 0.8,
+        area: ['95%', '90%'],
+        content: url, //iframe的url
+        end:function () {
+            location.reload()
+        }
+    });
+}
+
+function rule_edit(dataid){
+    if(dataid>0){
+        var url='{:url("rule/rule_edit")}/ruleid/'+dataid;
+        var title='修改权限';
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url, //iframe的url
+            end:function () {
+                location.reload()
+            }
+        });
+    }
+}
+
+function rule_del(){
+    var dataid='';
+    $("[name='checkgoods[]']:checked").each(function(){
+        dataid+=$(this).val()+',';
+    })
+    dataid=$.trim(dataid);
+    if(dataid!=''){
+        layer.confirm('确定删除吗?',{icon:3,title:'操作提示'},function(index){
+            var sindex=layer.load(1,{'time':3*1000});
+            $.post("{:url('rule/rule_del')}",{'ruleid':dataid},function(data){
+                layer.msg(data.msg);
+                layer.close(sindex);
+                if(data.code==200){
+                    setTimeout("window.location.reload();",2000);
+                }
+            },'json')
+            layer.close(index);
+        })
+    }
+}
+</script>
+{/block}

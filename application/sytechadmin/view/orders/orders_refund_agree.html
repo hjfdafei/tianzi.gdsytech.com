@@ -1,0 +1,40 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--同意退款{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">退款金额<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='money' id="money" placeholder="退款金额" autocomplete="off" class="layui-input money" value='{$info.refund_applymoney}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">退款备注<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <textarea name="remark" id="remark" placeholder="退款备注" class="layui-textarea remark">{$info.remark}</textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="refundid" value='{$info.id}' />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_agreebtn" id='savedata_agreebtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='orders/orders_footer' /}
+{/block}

@@ -1,0 +1,74 @@
+{extend name="layout/main" /}
+{block name="title"}{$page_title}管理后台登录{/block}
+{block name="main"}
+<link rel="stylesheet" href="/static/css/login.css" />
+<script type="text/javascript">
+    $('body').particleground({
+        dotColor: '#5cbdaa',
+        lineColor: '#5cbdaa'
+    });
+</script>
+<body class="beg-login-bg">
+    <div class='login_wrap'>
+        <div class="beg-login-box">
+            <header><h1>{$page_title}管理后台登录</h1></header>
+            <div class="beg-login-main">
+                <form class="layui-form  loginform" method="post">
+                    <div class="layui-form-item">
+                        <label class="beg-login-icon">
+                            <i class="layui-icon layui-icon-username"></i>
+                        </label>
+                        <input type="text" name="username" lay-verify="userName" autocomplete="off" placeholder="请输入登录用户名" class="layui-input">
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="beg-login-icon">
+                            <i class="layui-icon layui-icon-password"></i>
+                        </label>
+                        <input type="password" name="userpassword" lay-verify="password" autocomplete="off" placeholder="请输入登录密码" class="layui-input">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class='login_btnwrap'>
+                            <button class="layui-btn layui-btn-primary loginbtn" lay-submit lay-filter="loginbtn">登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer>
+                <p>技术支持 © <a href='http://www.zssytech.com' target="_blank">思远科技</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    <script type="text/javascript">
+        layui.use(['layer','form'],function(){
+            var layer = layui.layer;
+            var $ = layui.jquery;
+            var form = layui.form;
+            form.on('submit(loginbtn)', function(data){
+                var username=data.field.username;
+                var userpassword=data.field.userpassword;
+                if(username==''){
+                    layer.msg('请输入登录用户名');
+                    return false;
+                }
+                if(userpassword==''){
+                    layer.msg('请输入登录密码');
+                    return false;
+                }
+                $.post("{:url('sytechadmin/Login/login')}",{'username':username,'userpassword':md5(userpassword)},function(result){
+                    layer.msg(result.msg);
+                    if(result.code==200){
+                        window.location.href=result.data.url;
+                    }
+                },'json')
+                return false;
+            });
+        });
+
+        function login(){
+            console.log('gfhgh');
+        }
+    </script>
+{/block}

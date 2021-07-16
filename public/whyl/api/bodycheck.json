@@ -1,0 +1,310 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/bodycheck/meetingtime_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约时间",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"meetingtime_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "weekdata.weekdate@string": "当前是第几日",
+                "weekdata.weekname@string": "周几",
+                "weekdata.datestr@string": "日期",
+                "weekdata.datestr2@string": "日期",
+                "weekdata.hasnumber@int":"是否有号 0无 1有",
+                "weekdata.isnow@int":"是否当天 0否 1是",
+                "timedata.id@string": "时段id",
+                "timedata.starttime@string": "开始时间",
+                "timedata.endtime@string": "结束时间",
+                "timedata.num@int":"可预约数量"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/meetingtime_list_more",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取更多预约时间",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"meetingtime_list_more",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "weekdata.weekdate@string": "当前是第几日",
+                "weekdata.weekname@string": "周几",
+                "weekdata.datestr@string": "日期",
+                "weekdata.datestr2@string": "日期",
+                "weekdata.hasnumber@int":"是否有号 0无 1有",
+                "weekdata.isnow@int":"是否当天 0否 1是",
+                "timedata.id@string": "时段id",
+                "timedata.starttime@string": "开始时间",
+                "timedata.endtime@string": "结束时间",
+                "timedata.num@int":"可预约数量"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/getmeeting_number",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取剩余预约数量",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getmeeting_number",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@string": "时段id",
+                "starttime@string": "开始时间",
+                "endtime@string": "结束时间",
+                "num@int":"可预约数量"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"selectdate 日期 格式2020-05-20",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"selectdate"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/appointment_deal",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"提交预约信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_deal",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingdate 预约日期 格式2020-05-20",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingdate"
+                },
+                {
+                    "description":"meetingtimeid 预约时段id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingtimeid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/appointment_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约信息列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int":"预约信息id",
+                "meetingdate@string": "预约日期",
+                "starttime@string": "预约时间(开始)",
+                "endtime@string": "预约时间(结束)",
+                "realname@string": "预约人姓名"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"start 起始值 默认0",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"start"
+                },
+                {
+                    "description":"limit 限制值 默认10",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"limit"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/appointment_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约信息详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int":"预约信息id",
+                "meetingdate@string": "预约日期",
+                "starttime@string": "预约时间(开始)",
+                "endtime@string": "预约时间(结束)",
+                "realname@string": "预约人姓名"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingid 预约信息id 可以两个字段都传，也可以传其中一个",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/appointment_cancel",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"取消预约",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_cancel",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingid 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/bodycheck/appointment_del",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"删除预约信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_del",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingid 预约信息id 已预约的状态不能删除",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingid"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

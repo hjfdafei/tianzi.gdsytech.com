@@ -1,0 +1,274 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/basedoctor/basedoctorDetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-26 20:09:27",
+            "httpMethod":"POST",
+            "summary":"基层医生详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"basedoctorDetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据包",
+                "realname@string": "姓名",
+                "mobile@string": "联系电话",
+                "avatar@string": "头像"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/basedoctor/updateInfo",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-27 14:47:15",
+            "httpMethod":"POST",
+            "summary":"更新基层医生信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"updateInfo",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据包",
+                "realname@string": "姓名",
+                "mobile@string": "联系电话",
+                "avatar@string": "头像"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"realname 真实姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"mobile 联系电话",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"mobile"
+                },
+                {
+                    "description":"avatar 头像(base64编码)",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"avatar"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/basedoctor/basedoctor_fanslist",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-27 18:13:55",
+            "httpMethod":"POST",
+            "summary":"粉丝列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"basedoctor_fanslist",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"用户id",
+                "data.list.realname@string": "用户姓名",
+                "data.list.mobile@string": "联系电话",
+                "data.list.bind_time@int": "推荐时间"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/basedoctor/basedoctor_meetinglist",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-27 18:20:12",
+            "httpMethod":"POST",
+            "summary":"推荐预约订单列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"basedoctor_meetinglist",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据集",
+                "data.coutn@int":"符合条件的总数量",
+                "data.list@array":"返回数据",
+                "data.list.id@int": "预约信息id",
+                "data.list.doctor_id@int": "名医id",
+                "data.list.orderno@string": "订单号",
+                "data.list.realname@string": "就诊人姓名",
+                "data.list.mobile@string": "就诊人联系电话",
+                "data.list.status":"预约状态 1已扫码 3已完成 4退款中 5已关闭",
+                "data.list.money@float": "支付金额",
+                "data.list.ispay@int": "支付状态 1已支付 2待支付",
+                "data.list.doctor_name@string": "名医姓名",
+                "data.list.basedoctor_id@int": "基层医生id",
+                "data.list.basedoctor_name@string": "基层医生姓名",
+                "data.list.meeting_time@string": "预约日期"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"user_id 用户id",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"user_id"
+                },
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"status 状态 0全部 1已扫码  3已完成 4退款中 5已关闭",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"status"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/basedoctor/basedoctor_meetingdetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-27 18:32:03",
+            "httpMethod":"POST",
+            "summary":"预约详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"basedoctor_meetingdetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.data@array":"返回数据",
+                "data.data.id@int": "预约信息id",
+                "data.data.doctor_id@int": "名医id",
+                "data.data.orderno@string": "订单号",
+                "data.data.realname@string": "就诊人姓名",
+                "data.data.mobile@string": "就诊人联系电话",
+                "data.content@string": "已确诊信息",
+                "data.data.status@int":"预约状态 1已预约 2已完成",
+                "data.data.money@float": "支付金额",
+                "data.data.pay_money@float": "实际支付金额",
+                "data.data.ispay@int": "支付状态 1已支付 2待支付",
+                "data.data.pay_time@string":"支付时间",
+                "data.data.doctor_name@string": "名医姓名",
+                "data.data.assistant_mobile@string": "名医助理联系电话",
+                "data.data.assistant_name@string": "名医助理姓名",
+                "data.data.meeting_time@string": "预约日期"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meeting_id 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meeting_id"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

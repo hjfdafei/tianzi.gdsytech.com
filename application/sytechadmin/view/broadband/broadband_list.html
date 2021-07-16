@@ -1,0 +1,116 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--宽带账号列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <button class="layui-btn layui-btn" onclick="broadband_add()">新增宽带账号</button>
+                    <button class="layui-btn layui-btn-warm" onclick="broadband_import();">导入宽带账号</button>
+                    <button class="layui-btn layui-btn-danger" onclick="broadband_del();">删除宽带账号</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+                <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">关键词</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="keyword" name="keyword" placeholder="宽带账号" autocomplete="off" class="layui-input keyword" value='{$search.keyword}'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">使用状态</label>
+                                <div class="layui-input-block">
+                                    <select name='usestatus' class='usestatus'>
+                                        <option value='0'>全部</option>
+                                        <option value='1' {if $search['usestatus']==1}selected{/if}>已使用</option>
+                                        <option value='2' {if $search['usestatus']==2}selected{/if}>未使用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">状态</label>
+                                <div class="layui-input-block">
+                                    <select name='status' class='status'>
+                                        <option value='0'>全部</option>
+                                        <option value='1' {if $search['status']==1}selected{/if}>正常</option>
+                                        <option value='2' {if $search['status']==2}selected{/if}>禁用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <label class="layui-form-label"></label>
+                        <span class="layui-btn" onclick="broadband_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('School/broadband_list')}">刷新</a>
+                    </div>
+                </form>
+                {if count($list)<=0}
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr>
+                            <td style='text-align:center;'>暂无数据</td>
+                        </tr>
+                    </table>
+                {else /}
+                <div style='height:10px;'></div>
+                <div class='layui-row'>
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr class='table_tr'>
+                            <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>宽带账号</th>
+                            <th>宽带密码</th>
+                            <th>使用状态</th>
+                            <th>状态</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                        {volist name='$list' id='vo'}
+                        <tr class='table_tr'>
+                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.keyaccount}</td>
+                            <td>{$vo.keypassword}</td>
+                            <td>{$vo.usename}</td>
+                            <td>{$vo.statusname}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                {if $vo['status']==1}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="broadband_hide({$vo.id})">禁用</a>
+                                {else /}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="broadband_show({$vo.id})">启用</a>
+                                {/if}
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="broadband_edit({$vo.id})">修改</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tr>
+                            <td colspan="10" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                        </tr>
+                    </table>
+                </div>
+            {/if}
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    function closealllayer(){
+        layer.closeAll();
+        window.location.reload();
+    }
+</script>
+{include file='broadband/broadband_footer' /}
+{/block}

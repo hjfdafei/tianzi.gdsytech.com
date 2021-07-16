@@ -1,0 +1,169 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--修改管理员{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">选择站点</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name='meetingsiteid' class='meetingsiteid'>
+                                <option value='0'>平台</option>
+                                {volist name='meetingsitelist' id='vo'}
+                                <option value='{$vo.id}' {if $vo['id']==$info['meetingsiteid']}selected='selected'{/if}>{$vo.title}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">选择角色</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name='roleid' class='roleid'>
+                                <option value='0'>选择角色</option>
+                                {if !empty($info['role_list'])}
+                                    {volist name='info.role_list' id='vo'}
+                                    <option value='{$vo.id}' {if $info['roleid']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
+                                    {/volist}
+                                {if}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">管理员账号<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='username' id="username" placeholder="管理员账号" autocomplete="off" class="layui-input username" value='{$info.username}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">管理员密码</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="password" name='userpassword' id="userpassword" placeholder="管理员密码" autocomplete="off" class="layui-input userpassword" value='' />
+                            <span>(不修改密码请留空)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">联系方式</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='mobile' id="mobile" placeholder="联系方式" autocomplete="off" class="layui-input mobile" value='{$info.mobile}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否启用</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="status" class='status' value="1" title="是" {if $info['status']==1}checked='checked'{/if} />
+                                <input type="radio" name="status" class='status' value="2" title="否" {if $info['status']==2}checked='checked'{/if} />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="adminuserid" value='{$info.id}' />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    <script type="text/javascript">
+        layui.use(['laydate','form','table','upload'], function(){
+            var laydate = layui.laydate;
+            var table = layui.table;
+            var form = layui.form;
+            form.on('submit(savedata_subbtn)', function(data){
+                savedata();
+                return false;
+            });
+            form.on('select(gettype)',function(data){
+                gettype(data.value,form);
+            })
+            form.on('select(getrole)',function(data){
+                getrole(data.value,data.elem[data.elem.selectedIndex].title,form);
+            })
+        })
+
+        function gettype(dataid,obj){
+            if(dataid>=0){
+                $.post("{:url('Index/gettype')}",{'type':dataid},function(res){
+                    if(res.code==200){
+                        var str="<option value='-1'>请选择</option>";
+                        var resdata=res.data.list;
+                        for(var i=0;i<resdata.length;i++){
+                            str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                        }
+                        $('.admintypeid').empty().append(str);
+                        $('.roleid').empty().append("<option value='0'>请选择</option>");
+                        obj.render('select');
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                },'json')
+            }
+        }
+
+        function getrole(dataid,dataid2,obj){
+            if(dataid>=0){
+                $.post("{:url('Index/getrole')}",{'type':dataid2,'typeid':dataid},function(res){
+                    if(res.code==200){
+                        var str="<option value='0'>请选择</option>";
+                        var resdata=res.data.list;
+                        for(var i=0;i<resdata.length;i++){
+                            str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                        }
+                        $('.roleid').empty().append(str);
+                        obj.render('select');
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                },'json')
+            }
+        }
+
+        //保存数据
+        function savedata(){
+            var sindex=layer.load(1,{time:5*1000});
+            $('#goodsform').ajaxSubmit({
+                url:"{:url('Adminuser/adminuser_edit')}",
+                type:'post',
+                dataType:'json',
+                beforeSubmit: function(){
+                    var username=$.trim($('.username').val());
+                    if(username==''){
+                        layer.msg('请输入管理员账号');
+                        layer.close(sindex);
+                        return false;
+                    }
+                },
+                success: function(data){
+                    layer.close(sindex);
+                    layer.msg(data.msg);
+                    if(data.code==400){
+                        return false;
+                    }else if(data.code==200){
+                        setTimeout("window.location.reload()",2000)
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+{/block}

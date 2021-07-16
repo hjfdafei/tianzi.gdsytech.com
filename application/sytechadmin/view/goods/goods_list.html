@@ -1,0 +1,104 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--宽带套餐列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <button class="layui-btn layui-btn" onclick="goods_add()">新增宽带套餐</button>
+                    <button class="layui-btn layui-btn-danger" onclick="goods_del();">删除宽带套餐</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+                <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">关键词</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="keyword" name="keyword" placeholder="宽带套餐标题" autocomplete="off" class="layui-input keyword" value='{$search.keyword}'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">状态</label>
+                                <div class="layui-input-block">
+                                    <select name='status' class='status'>
+                                        <option value='0'>全部</option>
+                                        <option value='1' {if $search['status']==1}selected{/if}>上架</option>
+                                        <option value='2' {if $search['status']==2}selected{/if}>下架</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <label class="layui-form-label"></label>
+                        <span class="layui-btn" onclick="goods_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('Goods/goods_list')}">刷新</a>
+                    </div>
+                </form>
+                {if count($list)<=0}
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr>
+                            <td style='text-align:center;'>暂无数据</td>
+                        </tr>
+                    </table>
+                {else /}
+                <div style='height:10px;'></div>
+                <div class='layui-row'>
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr class='table_tr'>
+                            <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>标题</th>
+                            <th>封面图</th>
+                            <th>价格</th>
+                            <th>已售数量</th>
+                            <th>状态</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                        {volist name='$list' id='vo'}
+                        <tr class='table_tr'>
+                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.goods_title}</td>
+                            <td>{if $vo['goods_img']!=''}<a href='{$vo.goods_img}' target="_blank"><img src='{$vo.goods_img}' height='50'/></a>{else /}暂未上传{/if}{$vo.goods_price}</td>
+                            <td>{$vo.goods_price}</td>
+                            <td>{$vo.sale_num}</td>
+                            <td>{$vo.statusname}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                {if $vo['goods_status']==1}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="goods_hide({$vo.id})">下架</a>
+                                {else /}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="goods_show({$vo.id})">上架</a>
+                                {/if}
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="goods_edit({$vo.id})">修改</a>
+                                <a class="layui-btn layui-btn-sm" onclick="goods_orders_list({$vo.id})">订单列表</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tr>
+                            <td colspan="8" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                        </tr>
+                    </table>
+                </div>
+            {/if}
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    function closealllayer(){
+        layer.closeAll();
+        window.location.reload();
+    }
+</script>
+{include file='goods/goods_footer' /}
+{/block}

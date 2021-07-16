@@ -1,0 +1,118 @@
+{extend name="layout/main" /}
+{if $info['id']>=0}
+    {block name="title"}管理后台--修改管理员信息{/block}
+{else /}
+    {block name="title"}管理后台--添加管理员信息{/block}
+{/if}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">选择受理点<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name="areaid" id="areaid" class='areaid' lay-verify="required" lay-search>
+                                {volist name="arealist" id="vo"}
+                                <option value="{$vo.id}" {if $vo['id']==$info['areaid']}selected='selected'{/if}>{$vo.area_name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">管理员用户名<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='username' id="username" placeholder="管理员用户名" autocomplete="off" class="layui-input username" value='{$info.username}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">管理员登录密码<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="password" name='userpassword' id="userpassword" placeholder="管理员登录密码" autocomplete="off" class="layui-input userpassword" value='' />
+                            <span class='inputnote_span'>(不修改密码请留空，首次添加需填写)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否启用</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="status" class='status' value="1" title="是" {if $info['status']==1}checked='checked'{/if}  />
+                                <input type="radio" name="area_status" class='status' value="2" title="否" {if $info['status']==2}checked='checked'{/if}   />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="adminid" class='adminid' value="{$info.id}" />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+
+    <script type="text/javascript">
+        layui.use(['laydate','form','table','upload'], function(){
+            var laydate = layui.laydate;
+            var table = layui.table;
+            var form = layui.form;
+            var upload=layui.upload;
+
+            form.on('submit(savedata_subbtn)', function(data){
+                savedata();
+                return false;
+            });
+        })
+
+        //保存数据
+        function savedata(){
+            var sindex=layer.load(1,{time:3*1000});
+            $('#goodsform').ajaxSubmit({
+                url:"{:url('admin/admin_add')}",
+                type:'post',
+                dataType:'json',
+                beforeSubmit: function(){
+                    var username=$.trim($('.username').val());
+                    var userpassword=$.trim($('.userpassword').val());
+                    var adminid=$.trim($('.adminid').val());
+                    if(username==''){
+                        layer.msg('请输入管理员用户名');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(adminid<=0){
+                        if(userpassword==''){
+                            layer.msg('请输入管理员登录密码');
+                            layer.close(sindex);
+                            return false;
+                        }
+                    }
+                },
+                success: function(data){
+                    layer.close(sindex);
+                    layer.msg(data.msg);
+                    if(data.code==400){
+                        return false;
+                    }else if(data.code==200){
+                        setTimeout("window.location.reload()",2000)
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+{/block}

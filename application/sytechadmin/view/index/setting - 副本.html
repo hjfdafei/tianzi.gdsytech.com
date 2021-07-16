@@ -1,0 +1,267 @@
+{extend name="layout/main" /}
+{block name="title"}系统管理后台{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='settingform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">网站标题<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='shop_title' id="shop_title" placeholder="网站标题" autocomplete="off" class="layui-input shop_title" value='{$shopinfo.shop_title}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type='hidden' name='merchantid' value="{$shopinfo.id}" />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    <style>
+        .mapsearch{padding-top:10px;}
+        .amap-icon img, .amap-marker-content img {width:19px;height:33px;}
+    </style>
+    <script type="text/javascript">
+        layui.use(['laydate','form','table','upload'], function(){
+            var laydate = layui.laydate;
+            var table = layui.table;
+            var form = layui.form;
+            var upload=layui.upload;
+            var uploadInst = upload.render({
+                elem: '#shop_logo',
+                auto:false,
+                //bindAction:'#savedata_subbtn',
+                choose: function(obj){
+                    obj.preview(function(index, file, result){
+                        $('#preimg_view').attr('src', result); //图片链接（base64）
+                    });
+                }
+            });
+            var uploadInst = upload.render({
+                elem: '#shop_idcard_fimg',
+                auto:false,
+                //bindAction:'#savedata_subbtn',
+                choose: function(obj){
+                    obj.preview(function(index, file, result){
+                        $('#preimg_view2').attr('src', result); //图片链接（base64）
+                    });
+                }
+            });
+            var uploadInst = upload.render({
+                elem: '#shop_idcard_bimg',
+                auto:false,
+                bindAction:'#savedata_subbtn',
+                choose: function(obj){
+                    obj.preview(function(index, file, result){
+                        $('#preimg_view3').attr('src', result); //图片链接（base64）
+                    });
+                }
+            });
+
+            var uploadInst = upload.render({
+                elem: '#shop_license',
+                auto:false,
+                //bindAction:'#savedata_subbtn',
+                choose: function(obj){
+                    obj.preview(function(index, file, result){
+                        $('#preimg_view4').attr('src', result); //图片链接（base64）
+                    });
+                }
+            });
+
+            form.on('select(province)', function(data){
+                var dataid=data.value;
+                if(dataid>0){
+                    getarea('province',dataid,form);
+                }
+            });
+            form.on('select(city)', function(data){
+                var dataid=data.value;
+                if(dataid>0){
+                    getarea('city',dataid,form);
+                }
+            });
+            form.on('select(area)', function(data){
+                var dataid=data.value;
+                if(dataid>0){
+                    getarea('area',dataid,form);
+                }
+            });
+
+            form.on('radio(showlicense)', function(data){
+                showlicense(data.value);
+            });
+
+            form.on('submit(savedata_subbtn)', function(data){
+                savedata();
+                return false;
+            });
+
+        })
+
+        //保存数据
+        function savedata(){
+            var sindex=layer.load(1,{time:5*1000});
+            $('#settingform').ajaxSubmit({
+                url:"{:url('Index/setting')}",
+                type:'post',
+                dataType:'json',
+                beforeSubmit: function(){
+
+                },
+                success: function(data){
+                    layer.close(sindex);
+                    layer.msg(data.msg);
+                    if(data.code==400){
+                        return false;
+                    }else if(data.code==200){
+                        setTimeout("window.location.reload()",2000)
+                    }
+                }
+            });
+            return false;
+        }
+
+        //显示/隐藏营业执照
+        function showlicense(dataid){
+            if(dataid==1){
+                $('.shop_license_tr').hide();
+            }else if(dataid==2){
+                $('.shop_license_tr').show();
+            }
+        }
+
+        //地区联动数据
+        function getarea(type,parentid,obj){
+            if(parentid>0){
+                var selectname='请选择';
+                if(type=='province'){
+                    selectname='请选择城市';
+                    $('.city').html('');
+                    $('.area').html('');
+                    $('.town').html('');
+                }else if(type=='city'){
+                    selectname='请选择区/县';
+                    $('.area').html('');
+                    $('.town').html('');
+                }else if(type=='area'){
+                    selectname='请选择镇/街道';
+                    $('.town').html('');
+                }
+                $.post("{:url('index/getarea')}",{'parentid':parentid},function(data){
+                    console.log(data);
+                    if(data.code==200){
+                        var str="<option value='0'>"+selectname+"</option>";
+                        for(var i=0;i<data.data.data.length;i++){
+                            str+="<option value='"+data.data.data[i]['code']+"'>"+data.data.data[i]['name']+"</option>"
+                        }
+                        if(type=='province'){
+                            $('.city').append(str);
+                        }else if(type=='city'){
+                            $('.area').append(str);
+                        }else if(type=='area'){
+                            $('.town').append(str);
+                        }
+                        obj.render('select');
+                        obj.render();
+                    }
+                },'json')
+            }
+        }
+    </script>
+    <script src="https://webapi.amap.com/maps?v=1.4.14&key=8f2c5fd99ed6cd4bf55c99c361bc2400&plugin=AMap.Autocomplete"></script>
+    <script type="text/javascript">
+        var oldlng='113.416604';
+        var oldlat='22.487439';
+        var lng={$shopinfo.shop_lng};
+        var lat={$shopinfo.shop_lat};
+        var marker,map = new AMap.Map('mapcontainer', {
+            resizeEnable: true,
+            zoom:13,
+            center:[lng,lat]
+        });
+        if(oldlng>0 && oldlat>0){
+            marker = new AMap.Marker({
+                icon: "//webapi.amap.com/theme/v1.3/markers/n/mark_bs.png",
+                position: [oldlng,oldlat],
+                offset: new AMap.Pixel(-13, -30)
+            });
+            marker.setMap(map);
+        }
+        map.plugin(["AMap.ToolBar","AMap.OverView", "AMap.PlaceSearch","AMap.CitySearch","AMap.Geocoder"], function(){
+            map.addControl(new AMap.ToolBar);
+            map.addControl(new AMap.OverView);
+            placeSearch = new AMap.PlaceSearch;
+            AMap.event.addListener(placeSearch, "complete", fnPlaceSearchCallback);
+            AMap.event.addListener(placeSearch, "error", fnPlaceSearchCallback);
+        });
+        map.on('click', function(e){
+            document.getElementById("centerpoint").value=e.lnglat.getLng()+','+e.lnglat.getLat();
+            //document.getElementById("map_lng").value=e.lnglat.getLng();
+            //document.getElementById("map_lat").value=e.lnglat.getLat();
+            if(marker){
+                marker.setMap(null);
+                marker = null;
+            }
+            marker = new AMap.Marker({
+                icon: "//webapi.amap.com/theme/v1.3/markers/n/mark_bs.png",
+                position: [e.lnglat.getLng(),e.lnglat.getLat()],
+                offset: new AMap.Pixel(-13, -30)
+            });
+            marker.setMap(map);
+        });
+        function mapsearch(){
+            //var mapsearch_address=document.getElementById("mapsearch_address").value;
+            var mapsearch_address='';
+            var province=$('.province').find("option:selected").text();
+            var city=$('.city').find("option:selected").text();
+            var area=$('.area').find("option:selected").text();
+            var town=$('.town').find("option:selected").text();
+            if(province!='请选择省/直辖市'){
+                mapsearch_address+=province;
+            }
+            if(city!='请选择城市'){
+                mapsearch_address+=city;
+            }
+            if(area!='请选择区/县'){
+                mapsearch_address+=area;
+            }
+            if(town!='请选择镇/街道'){
+                mapsearch_address+=town;
+            }
+            mapsearch_address+=document.getElementById("mapsearch_address").value;
+            if (mapsearch_address!=""){
+                placeSearch.search(mapsearch_address,fnPlaceSearchCallback);
+            }
+        }
+
+        function fnPlaceSearchCallback(result){
+            if(result.poiList && result.poiList.pois && result.poiList.pois.length){
+                if(marker){
+                    marker.setMap(null);
+                    marker = null;
+                }
+                var poi=result.poiList.pois[0];
+                map.setZoomAndCenter(13, poi.location);
+                marker=new AMap.Marker({
+                    icon: "//webapi.amap.com/theme/v1.3/markers/n/mark_bs.png",
+                    position:[poi.location.lng,poi.location.lat],
+                    offset: new AMap.Pixel(-13, -30)
+                });
+                marker.setMap(map);
+                document.getElementById("centerpoint").value=poi.location.lng+','+poi.location.lat;
+            }
+        }
+    </script>
+{/block}

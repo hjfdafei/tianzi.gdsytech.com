@@ -1,0 +1,86 @@
+<script type="text/javascript">
+    layui.use(['laydate','form','table','upload'], function(){
+        var laydate=layui.laydate;
+        var table=layui.table;
+        var form=layui.form;
+        var upload=layui.upload;
+        var uploadInst = upload.render({
+            elem: '#img',
+            auto:false,
+            //bindAction:'#savedata_subbtn',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('#preimg_view').attr('src', result);
+                });
+            }
+        });
+        form.on('submit(savedata_editbtn)', function(data){
+            var url="{:url('User/user_edit')}";
+            savedata(url);
+            return false;
+        });
+    })
+
+    function user_edit(dataid){
+        if(dataid>0){
+            var url='{:url("User/user_edit")}?userid='+dataid;
+            var title='修改用户信息';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function savedata(url){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:url,
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var realname=$.trim($('.realname').val());
+                if(realname==''){
+                    layer.msg('请输入用户姓名');
+                    layer.close(sindex);
+                    return false;
+                }
+                var mobile=$.trim($('.mobile').val());
+                if(mobile==''){
+                    layer.msg('请用户联系电话');
+                    layer.close(sindex);
+                    return false;
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    function user_orders_list(dataid){
+        if(dataid>0){
+            var url='{:url("Orders/orders_list")}?user_id='+dataid;
+            var title='用户订单列表';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+</script>

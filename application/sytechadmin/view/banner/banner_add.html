@@ -1,0 +1,92 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--添加banner{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">banner位置<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name="position" class='position'>
+                                {volist name='position' id='vo'}
+                                <option value="{$vo.id}">{$vo.title}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">banner标题<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='title' id="title" placeholder="banner标题" autocomplete="off" class="layui-input title" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">banner图片<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block" style='position:relative;'>
+                            <button type="button" class="layui-btn">
+                                <i class="layui-icon">&#xe67c;</i>上传图片
+                            </button>
+                            <input type="file" name="img" id="img" class="layui-btn shoplogo_file img" accept="image/gif,image/jpeg,image/jpg,image/png" />
+                            <div class='preimg_content'><img class="layui-upload-img" id="preimg_view"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">跳转类型<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="radio" name="type" class='bannertype' lay-filter="showlink" value="1" title="无跳转" checked>
+                            <input type="radio" name="type" class='bannertype' lay-filter="showlink" value="2" title="小程序" >
+                            <input type="radio" name="type" class='bannertype' lay-filter="showlink" value="3" title="网页" >
+                        </div>
+                    </td>
+                </tr>
+                <tr class='linkurl_tr' style='display:none;'>
+                    <td class='td_right'><label class="layui-form-label">跳转链接</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='linkurl' id="linkurl" placeholder="跳转链接" autocomplete="off" class="layui-input linkurl" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否显示<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="radio" name="isshow" value="1" title="是" checked>
+                            <input type="radio" name="isshow" value="2" title="否" >
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='sortby' id="sortby" placeholder="banner排序" autocomplete="off" class="layui-input sortby" value='0' />
+                        </div>
+                        <span class='inputnote_span'>(排序值越大排在越前)</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="savedata_addbtn" id='savedata_addbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='banner/banner_footer' /}
+{/block}

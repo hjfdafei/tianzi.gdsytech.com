@@ -1,0 +1,158 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--添加权限{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">选择层级</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <select name="parentid">
+                                    <option value="0">顶级</option>
+                                    {volist name='parentlist' id='vo'}
+                                    <option value="{$vo.id}">{$vo.rule_title}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                          </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">权限名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_title' id="rule_title" placeholder="权限名称" autocomplete="off" class="layui-input rule_title" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">模块名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_module' id="rule_module" placeholder="模块名称" autocomplete="off" class="layui-input rule_module" value='sytechadmin' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">控制器名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_controller' id="rule_controller" placeholder="控制器名称" autocomplete="off" class="layui-input rule_controller" value='' />
+                            <span class='inputnote_span'>(如果没有，请填写#)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">方法名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_action' id="rule_action" placeholder="方法名称" autocomplete="off" class="layui-input rule_action" value='' />
+                            <span class='inputnote_span'>(如果没有，请填写#)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">权限css样式类</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_class' id="rule_class" placeholder="权限css样式类" autocomplete="off" class="layui-input rule_class" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='rule_sort' id="rule_sort" placeholder="排序" autocomplete="off" class="layui-input rule_sort" value='0' />
+                            <span class='inputnote_span'>(值越大排在越前)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否菜单</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="rule_ismenu" class='rule_ismenu' value="1" title="是" />
+                                <input type="radio" name="rule_ismenu" class='rule_ismenu' value="2" title="否" checked='checked' />
+                            </div>
+                            <span class='inputnote_span'>(设置为菜单的权限，才会在分配权限后在左侧栏显示)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    <script type="text/javascript">
+        layui.use(['laydate','form','table','upload'], function(){
+            var laydate = layui.laydate;
+            var table = layui.table;
+            var form = layui.form;
+            form.on('submit(savedata_subbtn)', function(data){
+                savedata();
+                return false;
+            });
+
+        })
+
+        //保存数据
+        function savedata(){
+            var sindex=layer.load(1,{time:5*1000});
+            $('#goodsform').ajaxSubmit({
+                url:"{:url('rule/rule_add')}",
+                type:'post',
+                dataType:'json',
+                beforeSubmit: function(){
+                    var rule_title=$.trim($('.rule_title').val());
+                    var rule_module=$.trim($('.rule_module').val());
+                    var rule_controller=$.trim($('.rule_controller').val());
+                    var rule_action=$.trim($('.rule_action').val());
+                    if(rule_title==''){
+                        layer.msg('请输入权限名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(rule_module==''){
+                        layer.msg('请输入模块名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(rule_controller==''){
+                        layer.msg('请输入控制器名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(rule_action==''){
+                        layer.msg('请输入方法名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                },
+                success: function(data){
+                    layer.close(sindex);
+                    layer.msg(data.msg);
+                    if(data.code==400){
+                        return false;
+                    }else if(data.code==200){
+                        setTimeout("window.location.reload()",2000)
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+{/block}

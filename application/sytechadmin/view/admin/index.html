@@ -1,0 +1,161 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--管理员列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-row">
+                <div class="layui-col-md1">
+                    <button class="layui-btn layui-btn" onclick="admin_add()">新增管理员</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md3">
+                    <input type="text" id="keyword" name="keyword" placeholder="关键词" autocomplete="off" class="layui-input keyword" value='{$search.keyword}'>
+                </div>
+                <div class="layui-col-md2">
+                    <button style="margin-left:20px;" class="layui-btn" onclick="admin_search()">搜索</button>
+                    <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('admin/index')}">刷新</a>
+                </div>
+                <div class="layui-col-md1">
+                    <button style="margin-left:20px;" class="layui-btn layui-btn-danger" onclick="admin_alldel();">批量删除</button>
+                </div>
+            </div>
+            <div style='height:10px;'></div>
+            <div class='layui-row'>
+                <table class="layui-table layui-form" id="goods_table">
+                    <tr class='table_tr'>
+                        <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                        <th>管理员用户名</th>
+                        <th>管理员所属受理点</th>
+                        <th>管理员状态</th>
+                        <th>操作</th>
+                    </tr>
+                    {if !empty($list)}
+                    {volist name='$list' id='vo'}
+                    <tr class='table_tr'>
+                        <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                        <td>{$vo.username}</td>
+                        <td>{$vo.area_name}</td>
+                        <td>{if $vo['status']==1}启用{else /}禁用{/if}</td>
+                        <td>
+                            <a class="layui-btn layui-btn-sm" onclick="admin_add({$vo.id})">修改</a>
+                            {if $vo['status']==1}
+                                <a class="layui-btn layui-btn-sm layui-btn-normal" onclick="admin_open({$vo.id},2)">禁用</a>
+                            {else}
+                                <a class="layui-btn layui-btn-sm layui-btn-normal" onclick="admin_open({$vo.id},1)">启用</a>
+                            {/if}
+                            <a class="layui-btn layui-btn-danger layui-btn-sm" onclick="admin_del({$vo.id})">删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    <tr>
+                        <td colspan="8" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                    </tr>
+                    {else}
+                    <tr>
+                        <td colspan="8">暂无数据</td>
+                    </tr>
+                    {/if}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    //添加/编辑管理员
+    function admin_add(dataid=0){
+        var url='{:url("admin/admin_add")}';
+        var title='添加管理员';
+        if(dataid>0){
+            var url='{:url("admin/admin_add")}?adminid='+dataid;
+            title='编辑管理员';
+        }
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url, //iframe的url
+            end:function () {
+                location.reload()
+            }
+        });
+    }
+
+    //修改管理员状态
+    function admin_open(dataid,status){
+        if(dataid>0){
+            var statusname='停用管理员';
+            if(status==1){
+                statusname='启用管理员';
+            }
+            layer.confirm('确定'+statusname+'吗?', {icon: 3, title:'提示'}, function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('admin/admin_open')}",{'adminid':dataid,'status':status},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout(function(){window.location.reload();},1500);
+                    }
+                },'json')
+                layer.close(index);
+            });
+        }
+    }
+
+    //删除管理员
+    function admin_del(dataid){
+        if(dataid>0){
+            layer.confirm('确定删除该受理点吗？删除后将不可恢复', {icon: 3, title:'提示'}, function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('admin/admin_del')}",{'adminid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout(function(){window.location.reload();},1500);
+                    }
+                },'json')
+                layer.close(index);
+            });
+        }
+    }
+
+    //批量删除管理员
+    function admin_alldel(){
+        var dataid='';
+        $("[name='checkgoods[]']:checked").each(function(){
+            dataid+=$(this).val()+',';
+        })
+        dataid=$.trim(dataid);
+        if(dataid!=''){
+            layer.confirm('确定删除选中的管理员吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('admin/admin_del')}",{'adminid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    //搜索
+    function area_search(){
+        var url="{:url('admin/index')}?a=1";
+        var keyword=$('.keyword').val();
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        window.location.href=url;
+    }
+
+</script>
+{/block}

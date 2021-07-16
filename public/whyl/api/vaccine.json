@@ -1,0 +1,905 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/index/improve_parentinfo",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-05-25 12:29:18",
+            "httpMethod":"POST",
+            "summary":"完善家长信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"improve_parentinfo",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"realname 真实姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"idcardnum 身份证号码",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"idcardnum"
+                },
+                {
+                    "description":"mobile 联系电话",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"mobile"
+                },
+                {
+                    "description":"address 居住地址",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"address"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/getparentinfo",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-05-25 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取家长信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getparentinfo",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "realname@string": "家长姓名",
+                "idcardnum@string": "家长身份证号码",
+                "mobile@string": "联系电话",
+                "address@string": "居住地址"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/babyinfo_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-05-25 12:29:18",
+            "httpMethod":"POST",
+            "summary":"宝宝信息列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"babyinfo_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "宝宝信息id",
+                "realname@string": "宝宝姓名",
+                "sex@string": "宝宝性别",
+                "birthday@string": "宝宝出生日期",
+                "status@int": "审核状态 1通过 2待审核 3审核不通过"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"keyword 关键词 宝宝姓名",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"start 起始值 默认0",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"start"
+                },
+                {
+                    "description":"limit 限制值 默认10",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"limit"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/babyinfo_add",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-05-25 12:29:18",
+            "httpMethod":"POST",
+            "summary":"添加宝宝信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"babyinfo_add",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"realname 宝宝姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"sex 宝宝性别 男或者女 不能修改",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"sex"
+                },
+                {
+                    "description":"birthday 宝宝出生日期 格式2020-05-01,不能修改",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"birthday"
+                },
+                {
+                    "description":"proveimg_front 家长信息证明",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"proveimg_front"
+                },
+                {
+                    "description":"proveimg_back 宝宝信息证明",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"proveimg_back"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/babyinfo_edit",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-05-25 12:29:18",
+            "httpMethod":"POST",
+            "summary":"修改宝宝信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"babyinfo_edit",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"babyid 宝宝信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"babyid"
+                },
+                {
+                    "description":"realname 宝宝姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"proveimg_front 家长信息证明",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"proveimg_front"
+                },
+                {
+                    "description":"proveimg_back 宝宝信息证明",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"proveimg_back"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/babyinfo_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取宝宝信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"babyinfo_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "宝宝信息id",
+                "realname@string": "宝宝姓名",
+                "sex@string": "宝宝性别",
+                "birthday@string": "宝宝出生日期",
+                "status@int":"审核状态 1通过 2待审核 3审核不通过",
+                "proveimg_front@string":"家长信息证明 信息审核通过后不会显示",
+                "proveimg_back@string":"宝宝信息证明 信息审核通过后不会显示",
+                "remark@string":"审核不通过时返回的原因"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"babyid 宝宝信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"babyid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/babyinfo_del",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"删除宝宝信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"babyinfo_del",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"babyid 宝宝信息id 删除多个,id用“,”拼接",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"babyid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/meetingtime_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约时间",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"meetingtime_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "weekdata.weekdate@string": "当前是第几日",
+                "weekdata.weekname@string": "周几",
+                "weekdata.datestr@string": "日期",
+                "weekdata.datestr2@string": "日期",
+                "weekdata.hasnumber@int":"是否有号 0无 1有",
+                "weekdata.isnow@int":"是否当天 0否 1是",
+                "timedata.id@string": "时段id",
+                "timedata.starttime@string": "开始时间",
+                "timedata.endtime@string": "结束时间",
+                "timedata.num@int":"可预约数量"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id 默认1",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/meetingtime_list_more",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取更多预约时间",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"meetingtime_list_more",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "weekdata.weekdate@string": "当前是第几日",
+                "weekdata.weekname@string": "周几",
+                "weekdata.datestr@string": "日期",
+                "weekdata.datestr2@string": "日期",
+                "weekdata.hasnumber@int":"是否有号 0无 1有",
+                "weekdata.isnow@int":"是否当天 0否 1是",
+                "timedata.id@string": "时段id",
+                "timedata.starttime@string": "开始时间",
+                "timedata.endtime@string": "结束时间",
+                "timedata.num@int":"可预约数量"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id 默认1",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/getmeeting_number",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取剩余预约数量",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getmeeting_number",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@string": "时段id",
+                "starttime@string": "开始时间",
+                "endtime@string": "结束时间",
+                "num@int":"可预约数量"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"selectdate 日期 格式2020-05-20",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"selectdate"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id 默认1",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/vaccine_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取疫苗列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"vaccine_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int":"疫苗id",
+                "title@string": "疫苗名称",
+                "remark@string": "疫苗说明",
+                "minyear@string": "接种年龄 岁",
+                "minmonth@string": "接种年龄 月",
+                "maxyear@string": "接种年龄 岁",
+                "maxmonth@string": "接种年龄 月",
+                "content@string":"疫苗告知书"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id 默认1",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/vaccine_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"获取疫苗详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"vaccine_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int":"疫苗id",
+                "title@string": "疫苗名称",
+                "remark@string": "疫苗说明",
+                "minyear@string": "接种年龄 岁",
+                "minmonth@string": "接种年龄 月",
+                "maxyear@string": "接种年龄 岁",
+                "maxmonth@string": "接种年龄 月",
+                "content@string":"疫苗告知书"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"vaccineid 疫苗id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"vaccineid"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/appointment_deal",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"提交预约信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_deal",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id 默认1",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                },
+                {
+                    "description":"meetingdate 预约日期 格式2020-05-20",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingdate"
+                },
+                {
+                    "description":"meetingtimeid 预约时段id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingtimeid"
+                },
+                {
+                    "description":"babyid 预约的宝宝id 多个用“,”拼接",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"babyid"
+                },
+                {
+                    "description":"vaccineid 疫苗id 多个用“,”拼接",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"vaccineid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/appointment_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约信息列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int":"预约信息id",
+                "vaccinename@string":"预约疫苗名称",
+                "bookcode@string": "预约码",
+                "codeimg@string": "预约码二维码地址",
+                "meetingdate@string": "预约日期",
+                "starttime@string": "预约时间(开始)",
+                "endtime@string": "预约时间(结束)",
+                "status@int":"预约状态 1已预约 2已签到 3已取消 4已过期",
+                "signtime@string":"签到时间",
+                "canceltime@string":"取消时间",
+                "expiretime@string":"过期时间",
+                "realname@string": "预约的宝宝姓名"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"keyword 关键字 预约码/真实姓名",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"status 状态 1已预约 2已签到 3已取消 4已过期",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"status"
+                },
+                {
+                    "description":"start 起始值 默认0",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"start"
+                },
+                {
+                    "description":"limit 限制值 默认10",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"limit"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/appointment_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约信息详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int":"预约信息id",
+                "vaccinename@string":"预约疫苗名称",
+                "bookcode@string": "预约码",
+                "codeimg@string": "预约码二维码地址",
+                "meetingdate@string": "预约日期",
+                "starttime@string": "预约时间(开始)",
+                "endtime@string": "预约时间(结束)",
+                "status@int":"预约状态 1已预约 2已签到 3已取消 4已过期",
+                "signtime@string":"签到时间",
+                "canceltime@string":"取消时间",
+                "expiretime@string":"过期时间",
+                "realname@string": "预约的宝宝姓名"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingid 预约信息id 可以两个字段都传，也可以传其中一个",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingid"
+                },
+                {
+                    "description":"bookcode 预约码",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"bookcode"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/appointment_cancel",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"取消预约",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_cancel",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingid 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/appointment_del",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"删除预约信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"appointment_del",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingid 预约信息id 已预约的状态不能删除",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/meetingsite_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约站点列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"meetingsite_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@string": "预约站点id",
+                "title@string": "站点名称",
+                "mobile@string": "站点咨询电话",
+                "address@string": "站点地址",
+                "lng@string": "站点经度",
+                "lat@string": "站点纬度"
+            },
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/meetingsite_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"预约站点详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"meetingsite_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meetingsiteid 预约站点id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meetingsiteid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/index/attach_upload",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2019-06-17 12:29:18",
+            "httpMethod":"POST",
+            "summary":"上传文件",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"attach_upload",
+            "revisionHighlight":true,
+            "fieldDesc":{},
+            "parameters":[
+                {
+                    "description":"token",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"uploadfile 字段名称即上传文件传到后台的字段 默认uploadfile 最大上传3M",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"uploadfile"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

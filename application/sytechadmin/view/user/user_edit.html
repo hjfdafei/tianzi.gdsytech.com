@@ -1,0 +1,72 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--修改用户信息{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">姓名<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='realname' id="realname" placeholder="姓名" autocomplete="off" class="layui-input realname" value='{$info.realname}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">联系电话<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='mobile' id="mobile" placeholder="联系电话" autocomplete="off" class="layui-input mobile" value='{$info.mobile}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">身份证号码</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='idcardnum' id="idcardnum" placeholder="身份证号码" autocomplete="off" class="layui-input idcardnum" value='{$info.idcardnum}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">院系</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='department' id="department" placeholder="院系" autocomplete="off" class="layui-input department" value='{$info.department}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">学号</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='studentnumber' id="studentnumber" placeholder="学号" autocomplete="off" class="layui-input studentnumber" value='{$info.studentnumber}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">宿舍地址</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='address' id="address" placeholder="宿舍地址" autocomplete="off" class="layui-input address" value='{$info.address}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="userid" value='{$info.id}' />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_editbtn" id='savedata_editbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='user/user_footer' /}
+{/block}

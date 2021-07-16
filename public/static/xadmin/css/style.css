@@ -1,0 +1,11 @@
+.x-admin-sm .login input[type=submit],.x-admin-sm .login input[type=button]{font-size: 14px;}
+.x-admin-sm .login input[type=text],.x-admin-sm .login input[type=file],.x-admin-sm .login input[type=password],.x-admin-sm .login input[type=email], .x-admin-sm select {font-size: 14px;}
+.x-admin-sm .login .message{font-size: 14px;}
+.banner_form .layui-form-label{width:120px;}
+.common_span_del{cursor:pointer;padding-left:8px;color:#f00;}
+.preimg_content,.preico_content{display:inline-block;}
+.banner_form .layui-table td.td_right{text-align:right;width:10%;}
+.banner_form .layui-table td.td_left{text-align:left;}
+.td_left .layui-input-block{margin-left:0;}
+.banner_form .layui-form-label{float:none;display:inline-block;}
+.inputnote_span{color:#f00;}

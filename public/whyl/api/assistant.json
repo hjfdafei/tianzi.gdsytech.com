@@ -1,0 +1,755 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/assistant/assistantDetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-21 19:24:14",
+            "httpMethod":"POST",
+            "summary":"助理详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistantDetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据包",
+                "realname@string": "姓名",
+                "mobile@string": "联系电话",
+                "avatar@string": "头像"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/updateInfo",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-21 11:42:55",
+            "httpMethod":"POST",
+            "summary":"更新助理个人信息",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"updateInfo",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"realname 真实姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"mobile 联系电话",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"mobile"
+                },
+                {
+                    "description":"avatar 头像(base64编码)",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"avatar"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_doctorlist",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-21 19:52:24",
+            "httpMethod":"POST",
+            "summary":"助理的名医列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_doctorlist",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"名医id",
+                "data.list.realname@string": "名医姓名",
+                "data.list.avatar@string": "名医头像",
+                "data.list.hospital_id@int": "名医所在医院",
+                "data.list.department_id@int": "名医所在科室",
+                "data.list.professional_titles@array":"名医职称"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_meetinglist",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-21 19:58:25",
+            "httpMethod":"POST",
+            "summary":"助理的预约列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_meetinglist",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据集",
+                "data.coutn@int":"符合条件的总数量",
+                "data.list@array":"返回数据",
+                "data.list.id@int": "预约信息id",
+                "data.list.doctor_id@int": "名医id",
+                "data.list.orderno@string": "订单号",
+                "data.list.realname@string": "就诊人姓名",
+                "data.list.mobile@string": "就诊人联系电话",
+                "data.list.status":"预约状态 1待处理 2已预约 3已完成 4退款中 5已关闭",
+                "data.list.money@float": "支付金额",
+                "data.list.ispay@int": "支付状态 1已支付 2待支付",
+                "data.list.doctor_name@string": "名医姓名",
+                "data.list.basedoctor_id@int": "基层医生id",
+                "data.list.basedoctor_name@string": "基层医生姓名",
+                "data.list.meeting_time@string": "预约日期"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"doctor_id 名医id",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"doctor_id"
+                },
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"status 状态 0全部 1待处理 2已预约 3已完成",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"status"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_meetingdetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-22 10:59:23",
+            "httpMethod":"POST",
+            "summary":"预约详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_meetingdetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.data@array":"返回数据",
+                "data.data.id@int": "预约信息id",
+                "data.data.doctor_id@int": "名医id",
+                "data.data.orderno@string": "订单号",
+                "data.data.realname@string": "就诊人姓名",
+                "data.data.mobile@string": "就诊人联系电话",
+                "data.content@string": "已确诊信息",
+                "data.data.status@int":"预约状态 1待处理 2已预约 3已完成",
+                "data.data.money@float": "支付金额",
+                "data.data.pay_money@float": "实际支付金额",
+                "data.data.ispay@int": "支付状态 1已支付 2待支付",
+                "data.data.pay_time@string":"支付时间",
+                "data.data.doctor_name@string": "名医姓名",
+                "data.data.basedoctor_id@int": "基层医生id",
+                "data.data.basedoctor_name@string": "基层医生姓名",
+                "data.data.meeting_time@string": "预约日期"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meeting_id 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meeting_id"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_meeting_change",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-22 11:04:59",
+            "httpMethod":"POST",
+            "summary":"更改预约状态",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_meeting_change",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meeting_id 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meeting_id"
+                },
+                {
+                    "description":"status 预约状态 2预约 3完成 目前只支持2",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"status"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_binduser",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-25 18:50:41",
+            "httpMethod":"POST",
+            "summary":"绑定基层医生",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_binduser",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meeting_id 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meeting_id"
+                },
+                {
+                    "description":"basedoctor_id 基层医生id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"basedoctor_id"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_setmoney",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-26 09:42:26",
+            "httpMethod":"POST",
+            "summary":"设置预约价钱",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_setmoney",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"meeting_id 预约信息id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"meeting_id"
+                },
+                {
+                    "description":"money 价钱(元)",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"money"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_applydoctor_list",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-02-24 11:21:47",
+            "httpMethod":"POST",
+            "summary":"名医助理待审核名医列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_applydoctor_list",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"名医id",
+                "data.list.realname@string": "名医姓名",
+                "data.list.avatar@string": "名医头像",
+                "data.list.status@int": "状态 2待审核 3审核不通过",
+                "data.list.hospital_id@int": "名医所在医院",
+                "data.list.department_id@int": "名医所在科室",
+                "data.list.professional_titles@array":"名医职称"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_applydoctor_detail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-02-24 11:24:53",
+            "httpMethod":"POST",
+            "summary":"申请的名医详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_applydoctor_detail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.data.id@int":"名医id",
+                "data.data.realname@string": "名医姓名",
+                "data.data.avatar@string": "名医头像",
+                "data.data.hospital_id@int": "名医所在医院",
+                "data.data.department_id@int": "名医所在科室",
+                "data.data.professional_titles@array":"名医职称",
+                "data.data.labels@array":"名医自定义标签",
+                "data.data.content@string": "名医简介",
+                "data.data.skill@array":"名医擅长领域",
+                "data.data.honorlist@array":"名医荣誉墙",
+                "data.data.place@array":"名医执业地点"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"doctorid 名医id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"doctorid"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_applydoctor",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-02-24 11:19:19",
+            "httpMethod":"POST",
+            "summary":"添加名医申请",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_applydoctor",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"realname 名医姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"mobile 名医联系电话",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"mobile"
+                },
+                {
+                    "description":"avatar 头像 base64编码",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"avatar"
+                },
+                {
+                    "description":"hospital_id 名医所属医院id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"hospital_id"
+                },
+                {
+                    "description":"department_id 名医所在科室id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"department_id"
+                },
+                {
+                    "description":"content 名医简介",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"content"
+                },
+                {
+                    "description":"professional_titles 名医职称 多个职称用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"professional_titles"
+                },
+                {
+                    "description":"labels 名医标签 多个标签用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"labels"
+                },
+                {
+                    "description":"skill 名医擅长领域 多个领域用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"skill"
+                },
+                {
+                    "description":"honorlist 名医荣誉 多个荣誉用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"honorlist"
+                },
+                {
+                    "description":"place 名医执业地点 多个执业地点用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"place"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_editdoctor",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-02-24 11:24:29",
+            "httpMethod":"POST",
+            "summary":"修改名医申请(待审核和审核不通的才能修改)",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_editdoctor",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"doctorid 名医id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"doctorid"
+                },
+                {
+                    "description":"realname 名医姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"mobile 名医联系电话",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"mobile"
+                },
+                {
+                    "description":"avatar 头像 base64编码",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"avatar"
+                },
+                {
+                    "description":"hospital_id 名医所属医院id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"hospital_id"
+                },
+                {
+                    "description":"department_id 名医所在科室id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"department_id"
+                },
+                {
+                    "description":"content 名医简介",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"content"
+                },
+                {
+                    "description":"professional_titles 名医职称 多个职称用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"professional_titles"
+                },
+                {
+                    "description":"labels 名医标签 多个标签用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"labels"
+                },
+                {
+                    "description":"skill 名医擅长领域 多个领域用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"skill"
+                },
+                {
+                    "description":"honorlist 名医荣誉 多个荣誉用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"honorlist"
+                },
+                {
+                    "description":"place 名医执业地点 多个执业地点用“、”或者“|”拼接",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"place"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/assistant/assistant_applydoctor_del",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-02-24 17:55:37",
+            "httpMethod":"POST",
+            "summary":"删除待审核或者审核不通过的名医申请",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"assistant_applydoctor_del",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"doctorid 名医id,多个id用“,”拼接",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"doctorid"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

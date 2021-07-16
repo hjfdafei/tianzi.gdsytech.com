@@ -1,0 +1,58 @@
+{extend name="layout/main" /}
+{block name="main"}
+<div class='index_wrap'>
+    <div class='index_main'>
+        <button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
+    </div>
+</div>
+<div class='index_copy_wrap'>
+    <div class='index_copy'>
+        <span class='index_copy_support'>技术支持：广东思远信息科技有限公司</span>
+    </div>
+</div>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(str)
+    {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            str,
+            function(res){
+                WeixinJSBridge.log(res.err_msg);
+                alert(res.err_code+res.err_desc+res.err_msg);
+            }
+        );
+    }
+
+    function callpay(){
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            $.post("http://vipmedcare.gdsytech.com/Api/user/meeting_payfee",{'token':'4ec24bf23d5e7e76834cc18e011f6bf8','meeting_id':11},function(data){
+                jsApiCall(data.data.data);
+            },'json')
+
+        }
+    }
+    </script>
+
+<script type="text/javascript">
+    $(function(){
+        $('.index_copy').css({'bottom':$('.foot_main').height()+15});
+    })
+    layui.use(['laydate','form','table','upload','layer'], function(){
+        var laydate = layui.laydate;
+        var table = layui.table;
+        var form = layui.form;
+        var upload=layui.upload;
+        var layer=layui.layer;
+    })
+</script>
+{/block}
