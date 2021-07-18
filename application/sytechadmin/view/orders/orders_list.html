@@ -153,9 +153,10 @@
                             <td>{$vo.create_time}</td>
                             <td>
                                 <a class="layui-btn layui-btn-sm" onclick="orders_detail({$vo.id})">详情</a>
-                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_setsettle({$vo.id})">修改</a>
-                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_setintegral({$vo.id})">分配宽带账号</a>
-                                <a class="layui-btn layui-btn-danger layui-btn-sm" onclick="orders_setintegral({$vo.id})">清空宽带账号</a>
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_edit({$vo.id})">修改</a>
+                                <a class="layui-btn layui-btn-sm" onclick="orders_settime({$vo.id})">设置宽带时间</a>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_setbroadband({$vo.id})">分配宽带账号</a>
+                                <a class="layui-btn layui-btn-danger layui-btn-sm" onclick="orders_clearbroadband({$vo.id})">清空宽带账号</a>
                             </td>
                         </tr>
                         {/volist}

@@ -305,33 +305,13 @@
 
     function orders_export(){
         var url="{:url('Orders/orders_export')}?a=1";
-        var doctorid=$('.doctorid').val();
-        if(doctorid!=''){
-            url+='&doctorid='+doctorid;
+        var school_id=$('.school_id').val();
+        if(school_id!=''){
+            url+='&school_id='+school_id;
         }
-        var assistantsid=$('.assistantsid').val();
-        if(assistantsid!=''){
-            url+='&assistantsid='+assistantsid;
-        }
-        var basedoctorsid=$('.basedoctorsid').val();
-        if(basedoctorsid!=''){
-            url+='&basedoctorsid='+basedoctorsid;
-        }
-        var isassign=$('.isassign').val();
-        if(isassign!=''){
-            url+='&isassign='+isassign;
-        }
-        var issettle=$('.issettle').val();
-        if(issettle!=''){
-            url+='&issettle='+issettle;
-        }
-        var issetintegral=$('.issetintegral').val();
-        if(issetintegral!=''){
-            url+='&issetintegral='+issetintegral;
-        }
-        var ispay=$('.ispay').val();
-        if(ispay!=''){
-            url+='&ispay='+ispay;
+        var goods_id=$('.goods_id').val();
+        if(goods_id!=''){
+            url+='&goods_id='+goods_id;
         }
         var status=$('.status').val();
         if(status!=''){
