@@ -1,0 +1,181 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/generic/getBanner",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 16:41:46",
+            "httpMethod":"POST",
+            "summary":"获取banner",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getBanner",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "banner id",
+                "title@string": "banner标题",
+                "img@string": "banner图片链接",
+                "linkurl@string": "banner跳转链接",
+                "type@int": "banner跳转类型 1无跳转 2跳小程序链接 3跳http链接"
+            },
+            "parameters":[
+                {
+                    "description":"position banner位置 1首页 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"position"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getNotice",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 16:42:17",
+            "httpMethod":"POST",
+            "summary":"获取宽带办理须知",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getNotice",
+            "revisionHighlight":true,
+            "fieldDesc":{
+            },
+            "parameters":[]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getGoodsList",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 16:50:06",
+            "httpMethod":"POST",
+            "summary":"宽带套餐列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getGoodsList",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.list@array":"返回数据集",
+                "data.count@int":"符合条件的总数量",
+                "data.list.id@int":"宽带套餐id",
+                "data.list.goods_title@string": "宽带套餐标题",
+                "data.list.goods_img@string": "宽带套餐封面图",
+                "data.list.goods_price@string": "宽带套餐售价"
+            },
+            "parameters":[
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getGoodsDetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 17:09:16",
+            "httpMethod":"POST",
+            "summary":"宽带套餐详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getGoodsDetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "data.data.id@int":"宽带套餐id",
+                "data.data.goods_title@string": "宽带套餐标题",
+                "data.data.goods_img@string": "宽带套餐封面图",
+                "data.data.goods_price@string": "宽带套餐售价",
+                "data.data.goods_content@string": "宽带套餐详情"
+            },
+            "parameters":[
+                {
+                    "description":"goods_id 宽带套餐id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"goods_id"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getSchoolList",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 17:13:50",
+            "httpMethod":"POST",
+            "summary":"校区列表",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getSchoolList",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "校区id",
+                "title@string": "校区名称",
+                "address@string": "校区地址"
+            },
+            "parameters":[
+                {
+                    "description":"keyword 关键词",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"keyword"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

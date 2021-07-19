@@ -233,4 +233,18 @@ class Index extends Sytechadminbase{
         return jsondata('200','获取成功',$data);
     }
 
+    public function getRandAccount(){
+        $id=input('id','0','intval');
+        $map=[];
+        $map[]=['status','=',1];
+        $map[]=['isuse','=',2];
+        $map[]=['id','<>',$id];
+        $info=DB::name('broadband')->field('id,keyaccount,keypassword')->where($map)->limit(1)->order(rand())->find();
+        if(empty($info)){
+            return jsondata('400','暂无数据');
+        }
+        $data['data']=$info;
+        return jsondata('200','获取成功',$data);
+    }
+
 }

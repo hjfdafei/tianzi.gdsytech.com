@@ -9,14 +9,6 @@
     {
         "path":"/user.{format}",
         "description":"用户"
-    },
-    {
-        "path":"/assistant.{format}",
-        "description":"名医助理"
-    },
-    {
-        "path":"/basedoctor.{format}",
-        "description":"基层医生"
     }
     ]
 }

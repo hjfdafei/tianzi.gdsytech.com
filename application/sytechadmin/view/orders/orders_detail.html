@@ -12,44 +12,59 @@
                         </tr>
                     </table>
                 {else /}
-                <div style='height:10px;'></div>
                 <div class='layui-row'>
                     <table class="layui-table layui-form" id="goods_table">
+                        <tr>
+                            <td width="10%">所属校区</td>
+                            <td>{$info.school_name}</td>
+                        </tr>
                         <tr>
                             <td width="10%">订单号</td>
                             <td>{$info.orderno}</td>
                         </tr>
                         <tr>
-                            <td width="10%">就诊人姓名</td>
+                            <td width="10%">姓名</td>
                             <td>{$info.realname}</td>
                         </tr>
                         <tr>
-                            <td width="10%">就诊人联系电话</td>
+                            <td width="10%">联系电话</td>
                             <td>{$info.mobile}</td>
                         </tr>
                         <tr>
-                            <td width="10%">确诊信息</td>
-                            <td>{$info.content}</td>
+                            <td width="10%">身份证号码</td>
+                            <td>{$info.idcardnum}</td>
                         </tr>
                         <tr>
-                            <td width="10%">所属名医</td>
-                            <td>{$info.doctor_name}</td>
+                            <td width="10%">院系</td>
+                            <td>{$info.department}</td>
                         </tr>
                         <tr>
-                            <td width="10%">所属名医助理</td>
-                            <td>{$info.assistant_name}</td>
+                            <td width="10%">学号</td>
+                            <td>{$info.studentnumber}</td>
                         </tr>
                         <tr>
-                            <td width="10%">推荐基层医生</td>
-                            <td>{$info.basedoctor_name}</td>
+                            <td width="10%">宿舍地址</td>
+                            <td>{$info.address}</td>
                         </tr>
                         <tr>
-                            <td width="10%">状态</td>
-                            <td>{$info.statusname}</td>
+                            <td width="10%">宽带套餐</td>
+                            <td>{$info.goods_title}</td>
                         </tr>
                         <tr>
-                            <td width="10%">名医积分</td>
-                            <td>{$info.doctor_integral}</td>
+                            <td width="10%">宽带信息</td>
+                            <td>
+                                <span style='color:#337ab7;display:block;'>宽带账号:{$info.keyaccount}</span>
+                                <span style='color:#337ab7;display:block;'>宽带密码:{$info.keypassword}</span>
+                                <span style='color:#337ab7;display:block;'>有效期:{$info.start_time}--{$info.end_time}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">订单金额</td>
+                            <td>
+                                <span style='color:#337ab7;display:block;'>原价:{$info.money/100}</span>
+                                <span style='color:#337ab7;display:block;'>优惠:{$info.discount_money/100}</span>
+                                <span style='color:#337ab7;display:block;'>支付金额:{$info.pay_money/100} 支付时间:{$info.pay_time}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td width="10%">下单时间</td>

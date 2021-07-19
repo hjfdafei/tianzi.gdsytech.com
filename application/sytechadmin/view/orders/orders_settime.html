@@ -1,0 +1,58 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--设置订单宽带信息{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">宽带账号<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            {$info.keyaccount}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">宽带密码<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            {$info.keypassword}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">开始时间<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='applytime_start' id="applytime_start" placeholder="开始时间" autocomplete="off" class="layui-input applytime_start" value='{$info.start_time}' />
+                        </div>
+                        <span class='inputnote_span'>(宽带有效期开始时间)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">结束时间<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='applytime_end' id="applytime_end" placeholder="结束时间" autocomplete="off" class="layui-input applytime_end" value='{$info.end_time}' />
+                        </div>
+                        <span class='inputnote_span'>(宽带有效期结束时间)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="ordersid" value='{$info.id}' />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_settimebtn" id='savedata_settimebtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='orders/orders_footer' /}
+{/block}

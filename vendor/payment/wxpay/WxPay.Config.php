@@ -28,10 +28,10 @@ class WxPayConfig extends WxPayConfigInterface
 	 * MCHID：商户号（必须配置，开户邮件中可查看）
 	 *
 	 */
-	const APPID = 'wx7beff0c60556a44c';
-	const MCHID = '1605747426';
-	const KEY = 'vipmedcare520317vipmedcare520317';
-	const APPSECRET = '8fc14d005ab6bd15f69e353fec6eee29';
+	const APPID = 'wx3361d0befe30cf39';
+	const MCHID = '1579915801';
+	const KEY = 'tianzitongxunqicaiyouxiangongsi1';
+	const APPSECRET = 'f9f1733a0c4eab79876132c3177a493c';
 	public function GetAppId()
 	{
 		return self::APPID;

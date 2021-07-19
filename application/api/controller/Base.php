@@ -5,7 +5,6 @@ use think\facade\Request;
 use think\Db;
 use think\db\Query;
 use think\facade\Session;
-use app\api\service\IndexService;
 
 class Base extends Controller{
     public $base_userinfo=array();

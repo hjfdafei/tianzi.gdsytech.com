@@ -139,6 +139,7 @@
                             <td>
                                 <span style='color:#337ab7;display:block;'>宽带账号:{$vo.keyaccount}</span>
                                 <span style='color:#337ab7;display:block;'>宽带密码:{$vo.keypassword}</span>
+                                <span style='color:#337ab7;display:block;'>有效期:{$vo.start_time}--{$vo.end_time}</span>
                             </td>
                             <td>{$vo.statusname}</td>
                             <td>
@@ -146,17 +147,20 @@
                                 {if $vo['ispay']!=2}<span style='color:#337ab7;display:block;'>支付时间:{$vo.pay_time}</span>{/if}
                             </td>
                             <td>
-                                <span style='color:#337ab7;display:block;'>应付金额:{$vo.money}</span>
-                                <span style='color:#337ab7;display:block;'>折扣金额:{$vo.discount_money}</span>
-                                <span style='color:#337ab7;display:block;'>实付金额:{$vo.pay_money}</span>
+                                <span style='color:#337ab7;display:block;'>应付金额:{$vo.money/100}</span>
+                                <span style='color:#337ab7;display:block;'>折扣金额:{$vo.discount_money/100}</span>
+                                <span style='color:#337ab7;display:block;'>实付金额:{$vo.pay_money/100}</span>
                             </td>
                             <td>{$vo.create_time}</td>
                             <td>
                                 <a class="layui-btn layui-btn-sm" onclick="orders_detail({$vo.id})">详情</a>
                                 <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_edit({$vo.id})">修改</a>
+                                {if $vo['broadband_id']>0}
                                 <a class="layui-btn layui-btn-sm" onclick="orders_settime({$vo.id})">设置宽带时间</a>
-                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_setbroadband({$vo.id})">分配宽带账号</a>
                                 <a class="layui-btn layui-btn-danger layui-btn-sm" onclick="orders_clearbroadband({$vo.id})">清空宽带账号</a>
+                                {else /}
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="orders_setbroadband({$vo.id})">分配宽带账号</a>
+                                {/if}
                             </td>
                         </tr>
                         {/volist}

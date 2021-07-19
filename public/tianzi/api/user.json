@@ -1,0 +1,366 @@
+{
+    "apiVersion":"0.2",
+    "swaggerVersion":"1.1",
+    "resourcePath":"/",
+    "apis":[
+    {
+        "path":"/user/getMiniOpenid",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 17:32:51",
+            "httpMethod":"POST",
+            "summary":"获取小程序openid(小程序用)",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getMiniOpenid",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据包",
+                "data.data.openid@string":"加密后小程序openid"
+            },
+            "parameters":[
+                {
+                    "description":"code 小程序返回的code",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"code"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/miniLogin",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 17:32:57",
+            "httpMethod":"POST",
+            "summary":"小程序登录",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"miniLogin",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据包",
+                "data.data.token@string":"登录凭证",
+                "data.data.nickname@string":"微信昵称",
+                "data.data.avatar@string":"微信头像链接",
+                "data.data.realname@string":"姓名",
+                "data.data.mobile@string":"联系电话",
+                "data.data.status@string":"状态 1:正常 2:需要填写姓名或者手机号码"
+            },
+            "parameters":[
+                {
+                    "description":"openid 加密的小程序openid",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"openid"
+                },
+                {
+                    "description":"nickname 微信昵称",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"nickname"
+                },
+                {
+                    "description":"avatar 微信头像链接",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"avatar"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/userDetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-01-19 17:16:40",
+            "httpMethod":"POST",
+            "summary":"用户信息详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"userDetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据包",
+                "data.data.token@string":"登录凭证",
+                "data.data.nickname@string":"微信昵称",
+                "data.data.avatar@string":"微信头像链接",
+                "data.data.realname@string":"姓名",
+                "data.data.mobile@string":"联系电话",
+                "data.data.status@string":"状态 1:正常 2:需要填写姓名或者手机号码"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/createOrders",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 17:37:37",
+            "httpMethod":"POST",
+            "summary":"宽带套餐下单",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"createOrders",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.data@int":"下单信息id"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"school_id 校区id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"school_id"
+                },
+                {
+                    "description":"goods_id 宽带套餐id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"goods_id"
+                },
+                {
+                    "description":"realname 姓名",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"realname"
+                },
+                {
+                    "description":"mobile 联系电话",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"mobile"
+                },
+                {
+                    "description":"idcardnum 身份证号码",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"idcardnum"
+                },
+                {
+                    "description":"department 院系",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"department"
+                },
+                {
+                    "description":"studentnumber 学号",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"studentnumber"
+                },
+                {
+                    "description":"address 宿舍地址",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"address"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/getOrdersList",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 18:38:10",
+            "httpMethod":"POST",
+            "summary":"购买记录",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getOrdersList",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据集",
+                "data.coutn@int":"符合条件的总数量",
+                "data.list@array":"返回数据",
+                "data.list.id@int": "订单id",
+                "data.list.orderno@string": "订单号",
+                "data.list.realname@string": "姓名",
+                "data.list.mobile@string": "联系电话",
+                "data.list.money@float": "订单金额",
+                "data.list.status@int": "业务状态 1待支付 2已支付 3已完成 4已取消 5取消中",
+                "data.list.create_time@string": "下单时间",
+                "data.list.goods_title@string": "宽带套餐标题",
+                "data.list.start_time@string": "宽带生效开始时间",
+                "data.list.end_time@string": "宽带生效结束时间"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"status 状态 1待支付 2已支付 3已完成 4已取消 5取消中",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"status"
+                },
+                {
+                    "description":"style 获取数据方式 1获取分页 2获取全部 默认1",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"style"
+                },
+                {
+                    "description":"pagenum 页数 默认1 1页10条数据",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/getOrdersDetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 19:00:35",
+            "httpMethod":"POST",
+            "summary":"订单详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getOrdersDetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.data@array":"返回数据",
+                "data.data.id@int": "订单id",
+                "data.data.orderno@string": "订单号",
+                "data.data.payno@string": "支付单号",
+                "data.data.realname@string": "姓名",
+                "data.data.mobile@string": "联系电话",
+                "data.data.idcardnum@string": "身份证号码",
+                "data.data.department@string": "院系",
+                "data.data.studentnumber@string": "学号",
+                "data.data.address@string": "宿舍地址",
+                "data.data.money@float": "订单金额",
+                "data.data.status@int": "业务状态 1待支付 2已支付 3已完成 4已取消 5取消中",
+                "data.data.create_time@string": "下单时间",
+                "data.data.pay_time@string": "付款时间",
+                "data.data.finish_time@string": "完成时间",
+                "data.data.goods_title@string": "宽带套餐标题",
+                "data.data.keyaccount@string": "宽带账号",
+                "data.data.keypassword@string": "宽带密码",
+                "data.data.start_time@string": "宽带生效开始时间",
+                "data.data.end_time@string": "宽带生效结束时间"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"orders_id 订单id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"orders_id"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/ordersPay",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-19 19:16:35",
+            "httpMethod":"POST",
+            "summary":"支付订单",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"ordersPay",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data.data@array":"返回数据"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
+                },
+                {
+                    "description":"orders_id 订单id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"orders_id"
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

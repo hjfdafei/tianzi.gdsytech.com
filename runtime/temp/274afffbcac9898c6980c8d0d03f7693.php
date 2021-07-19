@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html";i:1626422793;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626422761;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html";i:1626423237;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626422886;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -90,6 +90,7 @@
                             <th>标题</th>
                             <th>地址</th>
                             <th>状态</th>
+                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
@@ -98,6 +99,7 @@
                             <td><?php echo htmlentities($vo['title']); ?></td>
                             <td><?php echo htmlentities($vo['address']); ?></td>
                             <td><?php echo htmlentities($vo['statusname']); ?></td>
+                            <td><?php echo htmlentities($vo['create_time']); ?></td>
                             <td>
                                 <?php if($vo['status']==1): ?>
                                     <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="school_hide(<?php echo htmlentities($vo['id']); ?>)">禁用</a>
@@ -222,7 +224,7 @@
 
     function school_hide(dataid){
         if(dataid!=''){
-            layer.confirm('隐藏后前端将不再显示，确定隐藏吗?',{icon:3,title:'操作提示'},function(index){
+            layer.confirm('禁用后前端将不再显示，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
                 var sindex=layer.load(1,{'time':3*1000});
                 $.post("<?php echo url('School/school_hide'); ?>",{'schoolid':dataid},function(data){
                     layer.msg(data.msg);

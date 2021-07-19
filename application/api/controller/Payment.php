@@ -38,7 +38,7 @@ class Payment extends Controller{
                 $map=[];
                 $map[]=['orderno','=',$attachdata['orderno']];
                 $uservice=new UserService();
-                $info=$uservice->meetingDetail($map);
+                $info=$uservice->ordersDetail($map);
                 if(!empty($info)){
                     if($info['ispay']!=1){
                         $updateData['pay_money']=$rescontent['total_fee'];
@@ -97,16 +97,4 @@ class Payment extends Controller{
         // }
     //}
 
-    //上传证件
-    public function attach_upload(){
-        set_time_limit(0);
-        $file_field=input('param.uploadfile','uploadfile','trim');
-        $upload=new Upload;
-        $uploadres=$upload->file_upload_param('attach',$file_field,'2',1);
-        if($uploadres['code']!='1'){
-            return jsondata('400',$uploadres['msg']);
-        }
-        $data['file_path']=$this->weburl.$uploadres['url'];
-        return jsondata('0001','上传成功',$data);
-    }
 }

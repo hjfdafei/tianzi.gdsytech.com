@@ -3,7 +3,6 @@ namespace app\api\service;
 use think\facade\Request;
 use think\Db;
 use think\db\Query;
-use app\api\service\QrcodeService;
 use app\api\service\GenericService;
 //用户管理
 class UserService extends Base{
@@ -25,16 +24,11 @@ class UserService extends Base{
         return ['code'=>'200','openid'=>$res['openid']];
     }
 
-    //会员注册登录
+    //用户注册登录
     public function verifyUser($param){
         $openid=$param['openid'];
         $nickname=preg_replace('/[\x{10000}-\x{10FFFF}]/u','', $param['nickname']);//$param['nick_name']
         $avatar=$param['avatar'];
-        $invite_code=$param['invite_code'];
-        $sex=$param['sex'];
-        $city=$param['city'];
-        $province=$param['province'];
-        $country=$param['country'];
         $openid=string_authcode($openid,'decode',config('app.codekey'));
         if($openid==''){
             return ['code'=>'400','msg'=>'请重新登录'];
@@ -49,24 +43,8 @@ class UserService extends Base{
             'token'=>$token,
             'nickname'=>$nickname,
             'avatar'=>$avatar,
-            'sex'=>$sex,
-            'city'=>$city,
-            'province'=>$province,
-            'country'=>$country,
         ];
         if(empty($userinfo)){
-            if($invite_code!=''){
-                $bdmap=[];
-                $bdmap[]=['invite_code','=',$invite_code];
-                $bdmap[]=['status','=',1];
-                $gservice=new GenericService();
-                $basedoctorinfo=$gservice->basedoctorDetail($bdmap);
-                if(!empty($basedoctorinfo)){
-                    $data['basedoctor_id']=$basedoctorinfo['id'];
-                    $data['bind_time']=date('Y-m-d H:i:s');
-                    $data['bind_way']=1;
-                }
-            }
             $data['create_time']=date('Y-m-d H:i:s');
             DB::name('user')->insertGetId($data);
         }else{
@@ -133,301 +111,154 @@ class UserService extends Base{
         }
     }
 
-    //收藏/取消收藏名医
-    public function userDoctorFavor($user_id,$doctor_id){
+    //订单列表
+    public function ordersList($style,$map,$field,$start,$limit,$orderby){
+        if($style==1){
+            $list=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->limit($start,$limit)->order($orderby)->select();
+        }else{
+            $list=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->order($orderby)->select();
+        }
+        $count=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->count();
+        return ['list'=>$list,'count'=>$count];
+    }
+
+    //新增订单
+    public function ordersVerify($user_id,$param){
+        $school_id=$param['school_id'];
+        $goods_id=$param['goods_id'];
+        $realname=$param['realname'];
+        $mobile=$param['mobile'];
+        $idcardnum=$param['idcardnum'];
+        $department=$param['department'];
+        $studentnumber=$param['studentnumber'];
+        $address=$param['address'];
+        if($school_id<=0){
+            return jsondata('400','请选择校区');
+        }
+        if($goods_id<=0){
+            return jsondata('400','请选择宽带套餐');
+        }
+        if($realname==''){
+            return jsondata('400','请输入姓名');
+        }
+        if($mobile==''){
+            return jsondata('400','请输入联系电话');
+        }
+        if($idcardnum==''){
+            return jsondata('400','请输入身份证号码');
+        }
+        if($department==''){
+            return jsondata('400','请输入院系');
+        }
+        if($studentnumber==''){
+            return jsondata('400','请输入学号');
+        }
+        if($address==''){
+            return jsondata('400','请输入宿舍地址');
+        }
+        $checkmobile_res=checkformat_mobile($mobile);
+        if($checkmobile_res['code']!='0001'){
+            return jsondata('400',$checkmobile_res['msg']);
+        }
         $gservice=new GenericService();
-        $map=[];
-        $map[]=['user_id','=',$user_id];
-        $map[]=['doctor_id','=',$doctor_id];
-        $favorinfo=DB::name('user_favor')->where($map)->find();
-        $opname='收藏';
-        $data=[];
-        if(empty($favorinfo)){
-            $dmap=[];
-            $dmap[]=['isdel','=',2];
-            $dmap[]=['status','=',1];
-            $dmap[]=['id','=',$doctor_id];
-            $doctorinfo=$gservice->doctorDetail($dmap);
-            if(empty($doctorinfo)){
-                return ['code'=>'400','msg'=>'名医信息不存在'];
-            }
-            $data['user_id']=$user_id;
-            $data['doctor_id']=$doctor_id;
-            $data['status']=1;
-            $data['favor_time']=date('Y-m-d H:i:s');
-            $data['create_time']=date('Y-m-d H:i:s');
-            $res=DB::name('user_favor')->insertGetId($data);
-        }else{
-            if($favorinfo['status']==2){
-                $dmap=[];
-                $dmap[]=['isdel','=',2];
-                $dmap[]=['status','=',1];
-                $dmap[]=['id','=',$doctor_id];
-                $doctorinfo=$gservice->doctorDetail($dmap);
-                if(empty($doctorinfo)){
-                    return ['code'=>'400','msg'=>'名医信息不存在'];
-                }
-                $data['status']=1;
-                $data['favor_time']=date('Y-m-d H:i:s');
-            }else{
-                $data['status']=2;
-                $data['update_time']=date('Y-m-d H:i:s');
-                $opname='取消收藏';
-            }
-            $res=DB::name('user_favor')->where([['id','=',$favorinfo['id']]])->update($data);
+        $smap=[];
+        $smap[]=['id','=',$school_id];
+        $smap[]=['status','=',1];
+        $school_info=$gservice->schoolDetail($smap);
+        if(empty($school_info)){
+            return jsondata('400','选择的校区暂未开通服务');
         }
-        if($res){
-            return ['code'=>'200','msg'=>$opname.'成功'];
-        }else{
-            return ['code'=>'400','msg'=>$opname.'失败'];
-        }
-    }
-
-    //名医收藏列表
-    public function userDoctorFavorlist($style,$map,$field,$start,$limit,$orderby){
-        if($style==1){
-            $list=DB::name('user_favor f')->field($field)->join('__DOCTOR__ d','d.id=f.doctor_id','left')->where($map)->limit($start,$limit)->order($orderby)->select();
-        }else{
-            $list=DB::name('user_favor f')->field($field)->join('__DOCTOR__ d','d.id=f.doctor_id','left')->where($map)->order($orderby)->select();
-        }
-        $count=DB::name('user_favor f')->join('__DOCTOR__ d','d.id=f.doctor_id','left')->where($map)->count();
-        return ['list'=>$list,'count'=>$count];
-    }
-
-    //用户是否收藏名医
-    public function userCheckFavor($user_id,$doctor_id){
-        $map=[];
-        $map[]=['user_id','=',$user_id];
-        $map[]=['doctor_id','=',$doctor_id];
-        $favorinfo=DB::name('user_favor')->where($map)->find();
-        if(empty($favorinfo)){
-            return false;
-        }
-        if($favorinfo['status']==2){
-            return false;
-        }
-        return true;
-    }
-
-    //就诊人列表
-    public function patientList($style,$map,$field,$start,$limit,$orderby){
-        if($style==1){
-            $list=DB::name('user_patient')->field($field)->where($map)->limit($start,$limit)->order($orderby)->select();
-        }else{
-            $list=DB::name('user_patient')->field($field)->where($map)->order($orderby)->select();
-        }
-        $count=DB::name('user_patient')->where($map)->count();
-        return ['list'=>$list,'count'=>$count];
-    }
-
-    //添加/修改就诊人
-    public function patientVerify($user_id,$patient_id,$param=[]){
-        if(empty($param)){
-            return ['code'=>'400','msg'=>'请输入信息'];
-        }
-        $realname=$param['realname'];
-        $mobile=$param['mobile'];
-        $content=$param['content'];
-        $patientinfo=[];
-        if($patient_id>0){
-            $map=[];
-            $map[]=['user_id','=',$user_id];
-            $map[]=['id','=',$patient_id];
-            $patientinfo=$this->patientDetail($map);
-        }
-        $hasmap=[];
-        $hasmap[]=['user_id','=',$user_id];
-        $hasmap[]=['realname','=',$realname];
-        $hasmap[]=['mobile','=',$mobile];
-        $haspatientinfo=$this->patientDetail($hasmap);
-        if(!empty($haspatientinfo)){
-            if($haspatientinfo['id']!=$patient_id){
-                return ['code'=>'400','msg'=>'就诊人信息已存在'];
-            }
-        }
-        $data=[];
-        $opname='新增';
-        $data['realname']=$realname;
-        $data['mobile']=$mobile;
-        $data['content']=$content;
-        if(empty($patientinfo)){
-            $data['user_id']=$user_id;
-            $data['create_time']=date('Y-m-d H:i:s');
-            $res=DB::name('user_patient')->insertGetId($data);
-            $patient_id=$res;
-        }else{
-            $data['update_time']=date('Y-m-d H:i:s');
-            $res=DB::name('user_patient')->where([['id','=',$patientinfo['id']],['user_id','=',$user_id]])->update($data);
-            $patient_id=$patientinfo['id'];
-            $opname='修改';
-        }
-        if($res){
-            $outdata=['patient_id'=>$patient_id,'realname'=>$realname,'mobile'=>$mobile];
-            return ['code'=>'200','msg'=>$opname.'就诊人信息成功','data'=>$outdata];
-        }else{
-            return ['code'=>'400','msg'=>$opname.'就诊人信息失败'];
-        }
-    }
-
-    //获取就诊人信息
-    public function patientDetail($map,$field='*'){
-        if(empty($map)){
-            return [];
-        }
-        return DB::name('user_patient')->field($field)->where($map)->find();
-    }
-
-    //删除就诊人信息
-    public function patientDelete($user_id,$patient_id=[]){
-        if(empty($patient_id)){
-            return ['code'=>'400','msg'=>'删除失败'];
-        }
-        $realid=[];
-        foreach($patient_id as $v){
-            $map=[];
-            $map[]=['user_id','=',$user_id];
-            $map[]=['id','=',intval($v)];
-            $info=$this->patientDetail($map);
-            if(!empty($info)){
-                $realid[]=$info['id'];
-            }
-        }
-        if(empty($realid)){
-            return ['code'=>'400','msg'=>'请选择要删除的信息'];
-        }
-        $map=[];
-        $map[]=['user_id','=',$user_id];
-        $map[]=['id','in',$realid];
-        $res=DB::name('user_patient')->where($map)->delete();
-        if($res){
-            return ['code'=>'200','msg'=>'删除成功'];
-        }else{
-            return ['code'=>'400','msg'=>'删除失败,请重试'];
-        }
-    }
-
-    //预约信息列表
-    public function meetingList($style,$map,$field,$start,$limit,$orderby){
-        if($style==1){
-            $list=DB::name('orders')->field($field)->where($map)->limit($start,$limit)->order($orderby)->select();
-        }else{
-            $list=DB::name('orders')->field($field)->where($map)->order($orderby)->select();
-        }
-        $count=DB::name('orders')->where($map)->count();
-        return ['list'=>$list,'count'=>$count];
-    }
-
-    //新增预约信息
-    public function meetingVerify($user_id,$param){
-        $doctor_id=$param['doctor_id'];
-        $realname=$param['realname'];
-        $mobile=$param['mobile'];
-        $content=$param['content'];
-        $basedoctor_id=$param['basedoctor_id'];
-        $verifycode=$param['verifycode'];
-        $invitecode=$param['invitecode'];
-        $doctorinfo=[];
-        $assistant_id=0;
-        if($doctor_id>0){
-            $dmap=[];
-            $dmap[]=['isdel','=',2];
-            $dmap[]=['status','=',1];
-            $dmap[]=['id','=',$doctor_id];
-            $gservice=new GenericService();
-            $doctorinfo=$gservice->doctorDetail($dmap);
-            if(empty($doctorinfo)){
-                return ['code'=>'400','msg'=>'选择预约的名医信息不存在,请刷新页面重试'];
-            }
-            if(isset($doctorinfo['assistantinfo']) && !empty($doctorinfo['assistantinfo'])){
-                $assistant_id=$doctorinfo['assistantinfo']['id'];
-            }
-        }
-
-        //校验验证码
-        $coderes=$this->checkVerifyCode($mobile,$verifycode,1);
-        if($coderes['code']!=200){
-            return ['code'=>'400','msg'=>$coderes['msg']];
-        }
-        $basedoctor_id2=0;
-        if($basedoctor_id>0){
-            $bmap=[];
-            $bmap[]=['isdel','=',2];
-            $bmap[]=['status','=',1];
-            $bmap[]=['id','=',$basedoctor_id];
-            $gservice=new GenericService();
-            $basedoctorinfo=$gservice->basedoctorDetail($bmap);
-            if(empty($basedoctorinfo)){
-                $basedoctor_id=0;
-            }
-        }else{
-            if($invitecode!=''){
-                $bmap=[];
-                $bmap[]=['isdel','=',2];
-                $bmap[]=['status','=',1];
-                $bmap[]=['invite_code','=',$invitecode];
-                $gservice=new GenericService();
-                $basedoctorinfo=$gservice->basedoctorDetail($bmap);
-                if(!empty($basedoctorinfo)){
-                    $basedoctor_id=$basedoctorinfo['id'];
-                    $basedoctor_id2=$basedoctorinfo['id'];
-                }
-            }
+        $gmap=[];
+        $gmap[]=['id','=',$goods_id];
+        $gmap[]=['goods_status','=',1];
+        $goods_info=$gservice->goodsDetail($gmap);
+        if(empty($goods_info)){
+            return jsondata('400','宽带套餐已下架');
         }
         $data=[];
         $orderno=$this->orderno_create();
         $payno=$this->payno_create();
         $isfirst=1;
         $hasmap=[];
-        $hasmap[]=['realname','=',$realname];
-        $hasmap[]=['mobile','=',$mobile];
-        $hasinfo=$this->meetingDetail($hasmap);
+        $hasmap[]=['user_id','=',$user_id];
+        $hasinfo=$this->ordersDetail($hasmap);
         if(!empty($hasinfo)){
             $isfirst=2;
         }
         $data=[
             'user_id'=>$user_id,
-            'basedoctor_id'=>$basedoctor_id,
-            'assistant_id'=>$assistant_id,
-            'doctor_id'=>$doctor_id,
+            'school_id'=>$school_id,
+            'goods_id'=>$goods_id,
+            'orderno'=>$orderno,
             'realname'=>$realname,
             'mobile'=>$mobile,
-            'content'=>$content,
-            'orderno'=>$orderno,
+            'idcardnum'=>$idcardnum,
+            'department'=>$department,
+            'studentnumber'=>$studentnumber,
+            'address'=>$address,
             'payno'=>$payno,
             'status'=>1,
-            'meetingymd'=>date('Ymd'),
+            'money'=>$goods_info['goods_price']*100,
             'create_time'=>date('Y-m-d H:i:s'),
             'isfirst'=>$isfirst,
         ];
         $order_id=DB::name('orders')->insertGetId($data);
         if($order_id){
-            $pmap=[];
-            $pmap[]=['user_id','=',$user_id];
-            $pmap[]=['realname','=',$realname];
-            $pmap[]=['mobile','=',$mobile];
-            $haspatientinfo=$this->patientDetail($pmap);
-            if(empty($haspatientinfo)){
-                $patient_id=0;
-            }else{
-                $patient_id=$haspatientinfo['id'];
-            }
-            $patientres=$this->patientVerify($user_id,$patient_id,['realname'=>$realname,'mobile'=>$mobile,'content'=>$content]);
-            if(!empty($doctorinfo)){
-                if(isset($doctorinfo['assistantinfo']) && !empty($doctorinfo['assistantinfo'])){
-                    $openid=$doctorinfo['assistantinfo']['openid'];
-                    if($openid!=''){
-                        send_newtpl($openid,$doctorinfo['assistantinfo']['id'],$doctorinfo['assistantinfo']['realname'],$doctorinfo['realname']);
-                    }
-                }
-            }
-            $this->updateVerifyCode($mobile,$verifycode,1);
-            if($basedoctor_id2>0){
-                DB::name('user')->where([['id','=',$user_id]])->update(['basedoctor_id'=>$basedoctor_id2,'bind_time'=>date('Y-m-d H:i:s'),'bind_way'=>3]);
-            }
-            return ['code'=>'200','msg'=>'你的预约已成功提交，请保持通讯畅通，稍后将由名医助理为您安排就诊','data'=>$order_id];
+            $uudata=[];
+            $uudata['realname']=$realname;
+            $uudata['mobile']=$mobile;
+            $uudata['idcardnum']=$idcardnum;
+            $uudata['department']=$department;
+            $uudata['studentnumber']=$studentnumber;
+            $uudata['address']=$address;
+            $uudata['update_time']=date('Y-m-d H:i:s');
+            $uumap=[];
+            $uumap[]=['id','=',$user_id];
+            DB::name('user')->where($uumap)->update($uudata);
+            return ['code'=>'200','msg'=>'下单成功','data'=>$order_id];
         }else{
-            return ['code'=>'400','msg'=>'预约失败'];
+            return ['code'=>'400','msg'=>'下单失败,请重试'];
         }
+    }
+
+    //订单详情
+    public function ordersDetail($map,$field='*'){
+        if(empty($map)){
+            return [];
+        }
+        return DB::name('orders')->field($field)->where($map)->find();
+    }
+
+    //订单信息
+    public function ordersInfo($map,$field='o.*'){
+        if(empty($map)){
+            return [];
+        }
+        return DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->find();
+    }
+
+    //获取订单号
+    public function orderno_create(){
+        $no=date('YmdHis').mt_rand(1000,9999);
+        $map=[];
+        $map[]=['orderno','=',$no];
+        $hasinfo=$this->ordersDetail($map);
+        if(!empty($hasinfo)){
+            $this->orderno_create();
+        }
+        return $no;
+    }
+
+    //获取自定义支付单号
+    public function payno_create(){
+        $no='P'.date('YmdHis').mt_rand(1000,9999);
+        $map=[];
+        $map[]=['payno','=',$no];
+        $hasinfo=$this->ordersDetail($map);
+        if(!empty($hasinfo)){
+            $this->payno_create();
+        }
+        return $no;
     }
 
     //创建验证码
@@ -516,43 +347,11 @@ class UserService extends Base{
         return DB::name('verifycode')->where($map)->order($orderby)->find();
     }
 
-    //预约信息详情
-    public function meetingDetail($map,$field='*'){
-        if(empty($map)){
-            return [];
-        }
-        return DB::name('orders')->field($field)->where($map)->find();
-    }
-
     //获取上一条预约信息详情
     public function lastMeetingDetail($id,$map,$field='*'){
         $map2=[];
         $map2[]=['id','<',$id];
         return DB::name('orders')->field($field)->where($map)->where($map2)->order(['id'=>'desc'])->find();
-    }
-
-    //获取订单号
-    public function orderno_create(){
-        $no=date('YmdHis').mt_rand(1000,9999);
-        $map=[];
-        $map[]=['orderno','=',$no];
-        $hasinfo=DB::name('orders')->where($map)->find();
-        if(!empty($hasinfo)){
-            $this->orderno_create();
-        }
-        return $no;
-    }
-
-    //获取自定义支付单号
-    public function payno_create(){
-        $no='P'.date('YmdHis').mt_rand(1000,9999);
-        $map=[];
-        $map[]=['payno','=',$no];
-        $hasinfo=DB::name('orders')->where($map)->find();
-        if(!empty($hasinfo)){
-            $this->payno_create();
-        }
-        return $no;
     }
 
     //获取自定义退款单号
