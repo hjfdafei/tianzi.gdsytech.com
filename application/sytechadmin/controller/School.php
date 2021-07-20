@@ -90,6 +90,7 @@ class School extends Sytechadminbase{
 
     //删除校区
     public function school_del(){
+        return jsondata('400','网络错误');
         set_time_limit(0);
         if(request()->isPost() || request()->isAjax()){
             $schoolid=input('post.schoolid','','trim');

@@ -58,6 +58,30 @@ class Payment extends Controller{
                         $data['pay_path']=$attachdata['pay_way'];
                         $data['create_time']=date('Y-m-d H:i:s');
                         DB::name('orders_paynotice')->insert($data);
+
+                        $bmap=[];
+                        $bmap[]=['status','=',1];
+                        $bmap[]=['isuse','=',2];
+                        $broadbandinfo=DB::name('broadband')->field('id,keyaccount,keypassword')->where($bmap)->limit(1)->orderRand()->find();
+                        if(!empty($broadbandinfo)){
+                            $oumap=[];
+                            $oumap[]=['id','=',$info['id']];
+                            $oudata=[];
+                            $oudata['broadband_id']=$broadbandinfo['id'];
+                            $oudata['status']=3;
+                            $oudata['finish_time']=date('Y-m-d H:i:s');
+                            $oudata['update_time']=date('Y-m-d H:i:s');
+                            $res=DB::name('orders')->where($oumap)->update($oudata);
+                            $bumap=[];
+                            $bumap[]=['id','=',$broadbandinfo['id']];
+                            $budata=[];
+                            $budata['isuse']=1;
+                            $budata['use_time']=date('Y-m-d H:i:s');
+                            $budata['update_time']=date('Y-m-d H:i:s');
+                            $res2=DB::name('broadband')->where($bumap)->update($budata);
+                            //send_broadbandtpl($info['openid'],$info['realname'],$info['orderno']);
+                            send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2));
+                        }
                     }
                 }
             }

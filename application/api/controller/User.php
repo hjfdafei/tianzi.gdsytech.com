@@ -175,8 +175,8 @@ class User extends Userbase{
                 'address'=>$address,
             ];
             $service=new UserService();
-            $res=$service->ordersVerify($this->base_userinfo['id'],$param);
-            $code='0028';
+            $res=$service->ordersVerify($this->base_userinfo,$param);
+            $code='0026';
             $data=[];
             if($res['code']==200){
                 $code='0001';
@@ -238,23 +238,23 @@ class User extends Userbase{
         if($info['status']==5){
             return jsondata('0021','订单正在退款中');
         }
-        $payno=$service->payno_create();
+        //$payno=$service->payno_create();
         require_once WXPAYPATH.'WxPay.JsApiPay.php';
         $tools = new \JsApiPay();
         $input = new \WxPayUnifiedOrder();
         $input->SetBody("宽带套餐费用");
         $input->SetAttach('orderno='.$info['orderno'].'&pay_way=1');
-        $input->SetOut_trade_no($payno);
+        $input->SetOut_trade_no($info['payno']);
         $input->SetTotal_fee($info['money']);
         $input->SetNotify_url(config('app_host').'/Api/Payment/sypayment_notify');
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($this->base_userinfo['openid']);
         $config = new \WxPayConfig();
         $order = \WxPayApi::unifiedOrder($config, $input);
+        ptr($order);exit;
         $jsApiParameters = $tools->GetJsApiParameters($order);
         $jsApiParameters=json_decode($jsApiParameters,true);
         $data['data']=$jsApiParameters;
-        DB::name('orders')->where([['id','=',$info['id']],['user_id','=',$this->base_userinfo['id']]])->update(['payno'=>$payno,'update_time'=>date('Y-m-d H:i:s')]);
         return jsondata('0001','获取成功',$data);
     }
 

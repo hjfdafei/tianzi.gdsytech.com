@@ -239,7 +239,7 @@ class Index extends Sytechadminbase{
         $map[]=['status','=',1];
         $map[]=['isuse','=',2];
         $map[]=['id','<>',$id];
-        $info=DB::name('broadband')->field('id,keyaccount,keypassword')->where($map)->limit(1)->order(rand())->find();
+        $info=DB::name('broadband')->field('id,keyaccount,keypassword')->where($map)->limit(1)->orderRand()->find();
         if(empty($info)){
             return jsondata('400','暂无数据');
         }

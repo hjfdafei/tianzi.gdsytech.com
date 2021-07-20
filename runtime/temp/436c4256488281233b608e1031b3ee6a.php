@@ -1,4 +1,4 @@
-<?php /*a:3:{s:101:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_add.html";i:1626321948;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626322115;}*/ ?>
+<?php /*a:3:{s:101:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_add.html";i:1626750088;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626750123;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -54,6 +54,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class='td_right'><label class="layui-form-label">校区logo</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block" style='position:relative;'>
+                            <button type="button" class="layui-btn">
+                                <i class="layui-icon">&#xe67c;</i>上传图片
+                            </button>
+                            <input type="file" name="logo" id="logo" class="layui-btn shoplogo_file logo" accept="image/gif,image/jpeg,image/jpg,image/png" />
+                            <div class='preimg_content'><img class="layui-upload-img" id="preimg_view"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td class='td_right'><label class="layui-form-label">是否启用<span class='musttip'>*</span></label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
@@ -93,6 +105,16 @@
         var table=layui.table;
         var form=layui.form;
         var upload=layui.upload;
+        var uploadInst = upload.render({
+            elem: '#logo',
+            auto:false,
+            //bindAction:'#savedata_subbtn',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('#preimg_view').attr('src', result);
+                });
+            }
+        });
         form.on('submit(savedata_addbtn)', function(data){
             var url="<?php echo url('School/school_add'); ?>";
             savedata(url);
@@ -183,7 +205,7 @@
 
     function school_hide(dataid){
         if(dataid!=''){
-            layer.confirm('隐藏后前端将不再显示，确定隐藏吗?',{icon:3,title:'操作提示'},function(index){
+            layer.confirm('禁用后前端将不再显示，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
                 var sindex=layer.load(1,{'time':3*1000});
                 $.post("<?php echo url('School/school_hide'); ?>",{'schoolid':dataid},function(data){
                     layer.msg(data.msg);
@@ -214,6 +236,10 @@
     function school_search(){
         var url="<?php echo url('School/school_list'); ?>?a=1";
         var keyword=$('.keyword').val();
+        var status=$('.status').val();
+        if(status!=''){
+            url+="&status="+status;
+        }
         if(keyword!=''){
             url+='&keyword='+keyword;
         }

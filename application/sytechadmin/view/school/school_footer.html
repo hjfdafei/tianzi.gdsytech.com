@@ -4,6 +4,16 @@
         var table=layui.table;
         var form=layui.form;
         var upload=layui.upload;
+        var uploadInst = upload.render({
+            elem: '#logo',
+            auto:false,
+            //bindAction:'#savedata_subbtn',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('#preimg_view').attr('src', result);
+                });
+            }
+        });
         form.on('submit(savedata_addbtn)', function(data){
             var url="{:url('School/school_add')}";
             savedata(url);

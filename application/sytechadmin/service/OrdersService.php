@@ -246,7 +246,8 @@ class OrdersService extends Base{
         $res2=DB::name('broadband')->where($bumap)->update($budata);
         if($res && $res2){
             DB::commit();
-            //微信公众号发送模板通知
+            //send_broadbandtpl($info['openid'],$info['realname'],$info['orderno']);
+            send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2));
             return jsondata('200','分配宽带账号成功');
         }else{
             DB::rollback();

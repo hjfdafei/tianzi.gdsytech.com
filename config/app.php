@@ -151,8 +151,10 @@ return [
     'aliaccesskeyid'=>env('app.aliaccesskeyid', ''),
     'aliaccesskeysecret'=>env('app.aliaccesskeysecret', ''),
     'premsg'=>env('app.premsg',''),
-    'miniappid'=>env('app.miniappid',''),
-    'minisecret'=>env('app.minisecret',''),
+    'miniappid'=>env('app.miniappid',''),//小程序
+    'minisecret'=>env('app.minisecret',''),//小程序
+    'appid'=>env('app.appid',''),//服务号
+    'secret'=>env('app.secret',''),//服务号
     'mchid'=>env('app.mchid',''),
     'mchkey'=>env('app.mchkey',''),
     'avatarpath'=>env('app.avatarpath','./upload/avatar'),

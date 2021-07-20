@@ -113,16 +113,64 @@ class Generic extends Base{
         if($keyword!=''){
             $map[]=['title','like',"%$keyword%"];
         }
-        $field='id,title,address';
+        $field='id,title,address,logo';
         $orderby=['sortby'=>'desc','id'=>'asc'];
         $style=1;
         $service=new GenericService();
         $list=$service->schoolList($style,$map,$field,$start,$limit,$orderby);
         $listdata=$list['list'];
         $count=$list['count'];
+        if(!empty($listdata)){
+            foreach($listdata as &$v){
+                if($v['logo']!=''){
+                    $v['logo']=$this->weburl.getabpath($v['logo'],'upload');
+                }else{
+                    $v['logo']=$this->weburl.'/static/images/school_logo.png';
+                }
+            }
+        }
         $data['list']=$listdata;
         $data['count']=$count;
         return jsondata('0001','获取成功',$data);
+    }
+
+    //校区详情
+    public function getSchoolDetail(){
+        $school_id=input('school_id','0','intval');
+        if($school_id<=0){
+            return jsondata('0019','请选择校区');
+        }
+        $map=[];
+        $map[]=['id','=',$school_id];
+        $field='id,title,address,logo';
+        $service=new GenericService();
+        $info=$service->schoolDetail($map,$field);
+        if(empty($info)){
+            return jsondata('0018','校区信息不存在');
+        }
+        if($info['logo']!=''){
+            $info['logo']=$this->weburl.getabpath($info['logo'],'upload');
+        }else{
+            $info['logo']=$this->weburl.'/static/images/school_logo.png';
+        }
+        $data['data']=$info;
+        return jsondata('0001','获取成功',$data);
+    }
+
+    //小程序订阅消息模板
+    public function getSubTemplate(){
+        $list=[
+            [
+                'template_id'=>'grFWUPWUQvG1D6cr3dqjhjr1S2BxndHc_5DaLg-RI4w',
+            ],
+        ];
+        $data['list']=$list;
+        return jsondata('0001','获取成功',$data);
+    }
+
+    public function testpush(){
+        //send_broadbandtpl('oLzrE4u1Vhfnylyjv9BKpE3CvJbE','大飞','202107201601561929');
+        send_mini_broadbandtpl('oLzrE4u1Vhfnylyjv9BKpE3CvJbE','宽带套餐','dafei ','30');
     }
 
     //上传证件

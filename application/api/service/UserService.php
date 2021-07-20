@@ -123,7 +123,9 @@ class UserService extends Base{
     }
 
     //新增订单
-    public function ordersVerify($user_id,$param){
+    public function ordersVerify($userinfo,$param){
+        $user_id=$userinfo['id'];
+        $openid=$userinfo['openid'];
         $school_id=$param['school_id'];
         $goods_id=$param['goods_id'];
         $realname=$param['realname'];
@@ -133,47 +135,48 @@ class UserService extends Base{
         $studentnumber=$param['studentnumber'];
         $address=$param['address'];
         if($school_id<=0){
-            return jsondata('400','请选择校区');
+            return ['code'=>'400','msg'=>'请选择校区'];
         }
         if($goods_id<=0){
-            return jsondata('400','请选择宽带套餐');
+            return ['code'=>'400','msg'=>'请选择宽带套餐'];
         }
         if($realname==''){
-            return jsondata('400','请输入姓名');
+            return ['code'=>'400','msg'=>'请输入姓名'];
         }
         if($mobile==''){
-            return jsondata('400','请输入联系电话');
+            return ['code'=>'400','msg'=>'请输入联系电话'];
         }
         if($idcardnum==''){
-            return jsondata('400','请输入身份证号码');
+            return ['code'=>'400','msg'=>'请输入身份证号码'];
         }
         if($department==''){
-            return jsondata('400','请输入院系');
+            return ['code'=>'400','msg'=>'请输入院系'];
         }
         if($studentnumber==''){
-            return jsondata('400','请输入学号');
+            return ['code'=>'400','msg'=>'请输入学号'];
         }
         if($address==''){
-            return jsondata('400','请输入宿舍地址');
+            return ['code'=>'400','msg'=>'请输入宿舍地址'];
         }
         $checkmobile_res=checkformat_mobile($mobile);
         if($checkmobile_res['code']!='0001'){
-            return jsondata('400',$checkmobile_res['msg']);
+            return ['code'=>'400','msg'=>$checkmobile_res['msg']];
         }
+        exit;
         $gservice=new GenericService();
         $smap=[];
         $smap[]=['id','=',$school_id];
         $smap[]=['status','=',1];
         $school_info=$gservice->schoolDetail($smap);
         if(empty($school_info)){
-            return jsondata('400','选择的校区暂未开通服务');
+            return ['code'=>'400','msg'=>'选择的校区暂未开通服务'];
         }
         $gmap=[];
         $gmap[]=['id','=',$goods_id];
         $gmap[]=['goods_status','=',1];
         $goods_info=$gservice->goodsDetail($gmap);
         if(empty($goods_info)){
-            return jsondata('400','宽带套餐已下架');
+            return ['code'=>'400','msg'=>'宽带套餐已下架'];
         }
         $data=[];
         $orderno=$this->orderno_create();
@@ -187,6 +190,7 @@ class UserService extends Base{
         }
         $data=[
             'user_id'=>$user_id,
+            'openid'=>$openid,
             'school_id'=>$school_id,
             'goods_id'=>$goods_id,
             'orderno'=>$orderno,
@@ -260,6 +264,17 @@ class UserService extends Base{
         }
         return $no;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     //创建验证码
     public function createVerifyCode($mobile,$type){

@@ -176,6 +176,55 @@
             ]
         }
         ]
+    },
+    {
+        "path":"/generic/getSchoolDetail",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-20 10:49:11",
+            "httpMethod":"POST",
+            "summary":"校区详情",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getSchoolDetail",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "id@int": "校区id",
+                "title@string": "校区名称",
+                "address@string": "校区地址"
+            },
+            "parameters":[
+                {
+                    "description":"school_id 校区id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"school_id"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getSubTemplate",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-20 18:03:58",
+            "httpMethod":"POST",
+            "summary":"获取小程序订阅消息模板",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getSubTemplate",
+            "revisionHighlight":true,
+            "fieldDesc":{
+            },
+            "parameters":[]
+        }
+        ]
     }
     ]
 }

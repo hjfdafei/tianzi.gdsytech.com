@@ -467,7 +467,13 @@ function curl_post_ssl($url,$postxml,$second=60){
 
 //获取发送模板的access_token
 function getaccess_token($appid,$appsecret){
-    $data=json_decode(file_get_contents("./access_token.json"),true);
+    $path='./'.$appid.'_access_token.json';
+    if(!file_exists($path)){
+        $data['expire_time']=0;
+        $data['access_token']='';
+        file_put_contents($path,json_encode($data));
+    }
+    $data=json_decode(file_get_contents($path),true);
     $access_token='';
     if($data['expire_time']<time()){
         $url="https://api.weixin.qq.com/cgi-bin/token";
@@ -478,7 +484,7 @@ function getaccess_token($appid,$appsecret){
         if(isset($res['access_token']) && $res['access_token']!=''){
             $data['expire_time']=time() + 7000;
             $data['access_token']=$res['access_token'];
-            file_put_contents('./access_token.json',json_encode($data));
+            file_put_contents($path,json_encode($data));
             $access_token=$res['access_token'];
         }
     }else{
@@ -557,6 +563,66 @@ function send_newtpl($openid,$assistant_id,$assistant_name,$doctor_name){
     }
 }
 
+//发送宽带账号(服务号模板消息通知小程序)
+function send_broadbandtpl($openid,$realname,$orderno){
+    $miniappid=config('app.miniappid');
+    $minisecret=config('app.minisecret');
+    $appid=config('app.appid');
+    $access_token=getaccess_token($miniappid,$minisecret);
+    $url="https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send";
+    $postdata=[
+        'access_token'=>$access_token,
+        'touser'=>$openid,
+        'mp_template_msg'=>[
+            'appid'=>$appid,
+            'template_id'=>'4xxImIkdfAonHVbffLbrNPhC27dMFVi4mvcGY8c_Smc',
+            'url'=>'11',
+            'miniprogram'=>[
+                'appid'=>config('app.miniappid'),
+                'path'=>'pages/index',
+            ],
+            'data'=>[
+                'first'=>['value'=>'尊敬的客户，您的宽带订单已包装成功'],
+                'keyword1'=>['value'=>$realname],
+                'keyword2'=>['value'=>$orderno],
+                'remark'=>['value'=>'你已成功办理佛大校园宽带报装，请前往《佛大校园服务》小程序个人中心查看办理账号和密码'],
+            ]
+        ],
+    ];
+    $postdata=json_encode($postdata);
+    if($access_token!=''){
+        $param['access_token']=$access_token;
+        $res=http_send($url,$param,$postdata,'POST');
+    }
+}
+
+//发送小程序订阅通知
+function send_mini_broadbandtpl($openid,$goods_title,$realname,$money){
+    $url="https://api.weixin.qq.com/cgi-bin/message/subscribe/send";
+    $miniappid=config('app.miniappid');
+    $minisecret=config('app.minisecret');
+    $appid=config('app.appid');
+    $access_token=getaccess_token($miniappid,$minisecret);
+    $postdata=[
+        'access_token'=>$access_token,
+        'touser'=>$openid,
+        'template_id'=>'grFWUPWUQvG1D6cr3dqjhjr1S2BxndHc_5DaLg-RI4w',
+        'page'=>'pages/index',
+        'data'=>[
+            'thing1'=>$goods_title,
+            'name3'=>$realname,
+            'amount16'=>$money,
+        ],
+    ];
+    $postdata=json_encode($postdata);
+    if($access_token!=''){
+        $param['access_token']=$access_token;
+        $res=http_send($url,$param,$postdata,'POST');
+        ptr($res);
+    }
+
+}
+
 //发送模板
 function sendtmpl($data){
     if(!empty($data)){
@@ -568,8 +634,6 @@ function sendtmpl($data){
         file_put_contents('msg.log',date('Y-m-d H:i:s').'----'.$res."\r\n",FILE_APPEND);
     }
 }
-
-
 
 //发送短信
 function base_sendcontent($mobile,$code,$type=1,$msg=''){

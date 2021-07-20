@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html";i:1626423237;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626422886;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html";i:1626748373;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626750123;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -40,7 +40,6 @@
             <div class="layui-row">
                 <div class="layui-col-md12">
                     <button class="layui-btn layui-btn" onclick="school_add()">新增校区</button>
-                    <button class="layui-btn layui-btn-danger" onclick="school_del();">删除校区</button>
                 </div>
             </div>
             <div style='height:20px;'></div>
@@ -134,6 +133,16 @@
         var table=layui.table;
         var form=layui.form;
         var upload=layui.upload;
+        var uploadInst = upload.render({
+            elem: '#logo',
+            auto:false,
+            //bindAction:'#savedata_subbtn',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('#preimg_view').attr('src', result);
+                });
+            }
+        });
         form.on('submit(savedata_addbtn)', function(data){
             var url="<?php echo url('School/school_add'); ?>";
             savedata(url);

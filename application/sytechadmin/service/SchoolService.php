@@ -61,6 +61,14 @@ class SchoolService extends Base{
             'status'=>$status,
             'sortby'=>$sortby
         ];
+        if(!empty(request()->file('logo'))){
+            $upload=new Upload;
+            $uploadres=$upload->file_upload_param('attach','logo','2');
+            if($uploadres['code']!='1'){
+                return jsondata('400',$uploadres['msg']);
+            }
+            $data['logo']=$uploadres['url'];
+        }
         if(empty($info)){
             if($status==1){
                 $data['enable_time']=date('Y-m-d H:i:s');
@@ -129,6 +137,7 @@ class SchoolService extends Base{
 
     //删除校区
     public function school_delete($id){
+        return jsondata('400','删除失败');
         $delid=array();
         $delimg=[];
         foreach($id as $v){
