@@ -22,6 +22,9 @@ class Orders extends Sytechadminbase{
         $keyword=input('keyword','','trim');
         $applytime_start=input('applytime_start','','trim');
         $applytime_end=input('applytime_end',date('Y-m-d 23:59:59'),'trim');
+        if($this->base_admininfo['school_id']>0){
+            $school_id=$this->base_admininfo['school_id'];
+        }
         $map=[];
         $map[]=['o.isdel','=',2];
         if($school_id>0){
@@ -62,6 +65,9 @@ class Orders extends Sytechadminbase{
         $data=$service->getOrdersList(1,$map,$field,$search,20,$orderby);
         $schoolservice=new SchoolService();
         $smap=[];
+        if($school_id>0){
+            $smap[]=['id','=',$school_id];
+        }
         $sfield='*';
         $sorderby=['sortby'=>'desc','id'=>'desc'];
         $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
@@ -82,6 +88,9 @@ class Orders extends Sytechadminbase{
         }
         $service=new OrdersService();
         $map=[];
+        if($this->base_admininfo['school_id']>0){
+            $map[]=['school_id','=',$this->base_admininfo['school_id']];
+        }
         $map[]=['isdel','=',2];
         $map[]=['id','=',$ordersid];
         $info=$service->ordersDetail($map);
@@ -136,21 +145,28 @@ class Orders extends Sytechadminbase{
             if($ordersid<=0){
                 return jsondata('400','请选择宽带订单');
             }
-            return $service->orders_verify($ordersid);
+            return $service->orders_verify($ordersid,$this->base_admininfo);
         }
         $ordersid=input('ordersid','0','intval');
         if($ordersid<=0){
             return jsondata('400','请选择宽带订单');
         }
         $map=[];
+        if($this->base_admininfo['school_id']>0){
+            $map[]=['school_id','=',$this->base_admininfo['school_id']];
+        }
         $map[]=['id','=',$ordersid];
         $map[]=['isdel','=',2];
         $info=$service->ordersDetail($map);
         if(empty($info)){
             return jsondata('400','宽带订单信息不存在');
         }
+        $info['money']=round($info['money']/100,2);
         $schoolservice=new SchoolService();
         $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
+        }
         $sfield='*';
         $sorderby=['sortby'=>'desc','id'=>'desc'];
         $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
@@ -171,7 +187,7 @@ class Orders extends Sytechadminbase{
             if(empty($ordersid)){
                 return jsondata('400','请选择需要清空宽带信息的订单');
             }
-            return $service->orders_clearing($ordersid);
+            return $service->orders_clearing($ordersid,$this->base_admininfo);
         }
         return jsondata('400','网络请求错误');
     }
@@ -184,7 +200,7 @@ class Orders extends Sytechadminbase{
             if($ordersid<=0){
                 return jsondata('400','请选择宽带订单');
             }
-            return $service->orders_settingbroadband($ordersid);
+            return $service->orders_settingbroadband($ordersid,$this->base_admininfo);
         }
         $ordersid=input('ordersid','0','intval');
         if($ordersid<=0){
@@ -228,7 +244,7 @@ class Orders extends Sytechadminbase{
             if($ordersid<=0){
                 return jsondata('400','请选择宽带订单');
             }
-            return $service->orders_settingtime($ordersid);
+            return $service->orders_settingtime($ordersid,$this->base_admininfo);
         }
         $ordersid=input('ordersid','0','intval');
         if($ordersid<=0){
@@ -274,6 +290,9 @@ class Orders extends Sytechadminbase{
         $keyword=input('keyword','','trim');
         $applytime_start=input('applytime_start','','trim');
         $applytime_end=input('applytime_end',date('Y-m-d 23:59:59'),'trim');
+        if($this->base_admininfo['school_id']>0){
+            $school_id=$this->base_admininfo['school_id'];
+        }
         $map=[];
         $map[]=['o.isdel','=',2];
         if($school_id>0){
@@ -328,7 +347,7 @@ class Orders extends Sytechadminbase{
             }
             $ordersid=array_unique($ordersid);
             $service=new OrdersService();
-            return $service->orders_delete($ordersid);
+            return $service->orders_delete($ordersid,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }

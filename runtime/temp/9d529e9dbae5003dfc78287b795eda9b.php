@@ -1,4 +1,4 @@
-<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_list.html";i:1626424401;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626424710;}*/ ?>
+<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_list.html";i:1626855105;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626424710;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -59,6 +59,21 @@
                     <div class="layui-row">
                         <div class="layui-col-md5">
                             <div class="layui-form-item">
+                                <label class="layui-form-label">所属校区</label>
+                                <div class="layui-input-block">
+                                    <select name="school_id" class='school_id'>
+                                        <option value='0'>全部</option>
+                                        <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($search['school_id']==$vo['id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                        <?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">使用状态</label>
                                 <div class="layui-input-block">
                                     <select name='usestatus' class='usestatus'>
@@ -102,6 +117,7 @@
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>所属校区</th>
                             <th>宽带账号</th>
                             <th>宽带密码</th>
                             <th>使用状态</th>
@@ -112,6 +128,7 @@
                         <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                         <tr class='table_tr'>
                             <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='<?php echo htmlentities($vo['id']); ?>'></td>
+                            <td><?php echo htmlentities($vo['schoolname']); ?></td>
                             <td><?php echo htmlentities($vo['keyaccount']); ?></td>
                             <td><?php echo htmlentities($vo['keypassword']); ?></td>
                             <td><?php echo htmlentities($vo['usename']); ?></td>

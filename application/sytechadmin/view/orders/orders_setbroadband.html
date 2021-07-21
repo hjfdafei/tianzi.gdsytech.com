@@ -9,7 +9,7 @@
                     <td class='td_right'><label class="layui-form-label">宽带账号<span class='musttip'>*</span></label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <input type="text" name='keyaccount' id="keyaccount" placeholder="宽带账号" autocomplete="off" class="layui-input keyaccount" value='{$info.keyaccount}' /><span class="layui-btn layui-btn-sm" onclick="orders_getrandaccount();">随机获取账号</span>
+                            <input type="text" name='keyaccount' id="keyaccount" placeholder="宽带账号" autocomplete="off" class="layui-input keyaccount" value='{$info.keyaccount}' /><span class="layui-btn layui-btn-sm" onclick="orders_getrandaccount({$info.school_id});">随机获取账号</span>
                         </div>
                     </td>
                 </tr>
@@ -43,7 +43,6 @@
                     <td colspan="2" style="text-align: center">
                         <div class="layui-input-block">
                             <input type="hidden" name="ordersid" value='{$info.id}' />
-                            <input type="hidden" name="broadband_id" class='broadband_id' value='{$info.broadband_id}' />
                             <button class="layui-btn" lay-submit lay-filter="savedata_setbtn" id='savedata_setbtn'>提交</button>
                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                         </div>

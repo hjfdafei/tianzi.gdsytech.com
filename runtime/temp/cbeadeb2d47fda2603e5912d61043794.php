@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_edit.html";i:1626849629;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626849988;}*/ ?>
+<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\adminuser\adminuser_edit.html";i:1626853933;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\adminuser\adminuser_footer.html";i:1626853987;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -27,7 +27,7 @@
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
             <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <title>管理后台--修改校区</title>
+        <title>管理后台--修改管理员</title>
     </head>
     <body>
         
@@ -35,67 +35,76 @@
         
 <body class="index">
     <div class="setting_form">
-        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='goodsform'>
             <table class="layui-table">
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">校区标题<span class='musttip'>*</span></label></td>
+                    <td class='td_right'><label class="layui-form-label">所属校区</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <input type="text" name='title' id="title" placeholder="校区标题" autocomplete="off" class="layui-input title" value='<?php echo htmlentities($info['title']); ?>' />
+                            <select name='school_id' class='school_id'>
+                                <option value='0'>平台</option>
+                                <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($vo['id']==$info['school_id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                            </select>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">校区地址</label></td>
+                    <td class='td_right'><label class="layui-form-label">选择角色</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <input type="text" name='address' id="address" placeholder="校区地址" autocomplete="off" class="layui-input address" value='<?php echo htmlentities($info['address']); ?>' />
+                            <select name='roleid' class='roleid'>
+                                <option value='0'>选择角色</option>
+                                {if !empty($info['role_list'])}
+                                    <?php if(is_array($info['role_list']) || $info['role_list'] instanceof \think\Collection || $info['role_list'] instanceof \think\Paginator): $i = 0; $__LIST__ = $info['role_list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                    <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($info['roleid']==$vo['id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                    <?php endforeach; endif; else: echo "" ;endif; ?>
+                                {if}
+                            </select>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">校区Logo<span class='musttip'>*</span></label></td>
+                    <td class='td_right'><label class="layui-form-label">管理员账号<span class='musttip'>*</span></label></td>
                     <td class='td_left'>
-                        <div class="layui-input-block" style='position:relative;'>
-                            <button type="button" class="layui-btn">
-                                <i class="layui-icon">&#xe67c;</i>上传图片
-                            </button>
-                            <input type="file" name="logo" id="logo" class="layui-btn shoplogo_file logo" accept="image/gif,image/jpeg,image/jpg,image/png" />
-                            <div class='preimg_content'><?php if($info['logo']!=''): ?><a href='<?php echo htmlentities($info['logo']); ?>' target='_blank'><img class="layui-upload-img" id="preimg_view" src='<?php echo htmlentities($info['logo']); ?>'></a><?php else: ?><img class="layui-upload-img" id="preimg_view"><?php endif; ?></div>
+                        <div class="layui-input-block">
+                            <input type="text" name='username' id="username" placeholder="管理员账号" autocomplete="off" class="layui-input username" value='<?php echo htmlentities($info['username']); ?>' />
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">宽带办理条款<span class='musttip'>*</span></label></td>
+                    <td class='td_right'><label class="layui-form-label">管理员密码</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <textarea name="content" id='content' placeholder="宽带办理条款" class="layui-textarea content"><?php echo htmlentities($info['content']); ?></textarea>
+                            <input type="password" name='userpassword' id="userpassword" placeholder="管理员密码" autocomplete="off" class="layui-input userpassword" value='' />
+                            <span>(不修改密码请留空)</span>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">是否启用<span class='musttip'>*</span></label></td>
+                    <td class='td_right'><label class="layui-form-label">联系方式</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <input type="radio" name="status" value="1" title="是" <?php if($info['status']==1): ?>checked<?php endif; ?>>
-                            <input type="radio" name="status" value="2" title="否" <?php if($info['status']==2): ?>checked<?php endif; ?>>
+                            <input type="text" name='mobile' id="mobile" placeholder="联系方式" autocomplete="off" class="layui-input mobile" value='<?php echo htmlentities($info['mobile']); ?>' />
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_right'><label class="layui-form-label">是否启用</label></td>
                     <td class='td_left'>
-                        <div class="layui-input-block">
-                            <input type="number" name='sortby' id="sortby" placeholder="校区排序" autocomplete="off" class="layui-input sortby" value='<?php echo htmlentities($info['sortby']); ?>' />
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="status" class='status' value="1" title="是" <?php if($info['status']==1): ?>checked='checked'<?php endif; ?> />
+                                <input type="radio" name="status" class='status' value="2" title="否" <?php if($info['status']==2): ?>checked='checked'<?php endif; ?> />
+                            </div>
                         </div>
-                        <span class='inputnote_span'>(排序值越大排在越前)</span>
                     </td>
                 </tr>
-
                 <tr>
                     <td colspan="2" style="text-align: center">
                         <div class="layui-input-block">
-                            <input type="hidden" name="schoolid" value='<?php echo htmlentities($info['id']); ?>' />
+                            <input type="hidden" name="adminuserid" value='<?php echo htmlentities($info['id']); ?>' />
                             <button class="layui-btn" lay-submit lay-filter="savedata_editbtn" id='savedata_editbtn'>提交</button>
                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                         </div>
@@ -108,58 +117,27 @@
 
         
         
-    <script type="text/javascript">
-    tinymce.init({
-        'selector':'#content',
-        'language':'zh_CN',
-        'width':'100%',
-        'height':'500px',
-        'resize':false,
-        'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
-        'toolbar':
-            'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
-            styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-            table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
-        'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
-        'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
-        'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
-        'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
-        'image_caption': true,
-        'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
-    });
-    $('#goodsform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
-</script>
 <script type="text/javascript">
     layui.use(['laydate','form','table','upload'], function(){
         var laydate=layui.laydate;
         var table=layui.table;
         var form=layui.form;
         var upload=layui.upload;
-        var uploadInst = upload.render({
-            elem: '#logo',
-            auto:false,
-            //bindAction:'#savedata_subbtn',
-            choose: function(obj){
-                obj.preview(function(index, file, result){
-                    $('#preimg_view').attr('src', result);
-                });
-            }
-        });
         form.on('submit(savedata_addbtn)', function(data){
-            var url="<?php echo url('School/school_add'); ?>";
-            savedata(url);
+            var url="<?php echo url('Adminuser/adminuser_add'); ?>";
+            savedata(url,1);
             return false;
         });
         form.on('submit(savedata_editbtn)', function(data){
-            var url="<?php echo url('School/school_edit'); ?>";
-            savedata(url);
+            var url="<?php echo url('Adminuser/adminuser_edit'); ?>";
+            savedata(url,2);
             return false;
         });
     })
 
-    function school_add(){
-        var url='<?php echo url("School/school_add"); ?>';
-        var title='添加校区';
+    function adminuser_add(){
+        var url='<?php echo url("Adminuser/adminuser_add"); ?>';
+        var title='添加管理员';
         layer.open({
             type: 2,
             title:title,
@@ -170,10 +148,10 @@
         });
     }
 
-    function school_edit(dataid){
+    function adminuser_edit(dataid){
         if(dataid>0){
-            var url='<?php echo url("School/school_edit"); ?>?schoolid='+dataid;
-            var title='修改校区';
+            var url='<?php echo url("Adminuser/adminuser_edit"); ?>?adminuserid='+dataid;
+            var title='修改管理员';
             layer.open({
                 type: 2,
                 title:title,
@@ -185,18 +163,26 @@
         }
     }
 
-    function savedata(url){
+    function savedata(url,optype=2){
         var sindex=layer.load(1,{time:5*1000});
         $('#goodsform').ajaxSubmit({
             url:url,
             type:'post',
             dataType:'json',
             beforeSubmit: function(){
-                var title=$.trim($('.title').val());
-                if(title==''){
-                    layer.msg('请输入校区标题');
+                var username=$.trim($('.username').val());
+                if(username==''){
+                    layer.msg('请输入管理员账号');
                     layer.close(sindex);
                     return false;
+                }
+                if(optype==1){
+                    var userpassword=$.trim($('.userpassword').val());
+                    if(userpassword==''){
+                        layer.msg('请输入管理员密码');
+                        layer.close(sindex);
+                        return false;
+                    }
                 }
             },
             success: function(data){
@@ -212,16 +198,47 @@
         return false;
     }
 
-    function school_del(){
+    function adminuser_assign(dataid){
+        if(dataid>0){
+            var url='<?php echo url("Adminuser/adminuser_assign"); ?>?adminuserid='+dataid;
+            var title='分配权限';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function adminuser_cancelassign(dataid){
+        if(dataid>0){
+            layer.confirm('取消权限后,属于该管理员将不再有权限操作相关内容,确定取消权限吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Adminuser/adminuser_cancelassign'); ?>",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function adminuser_del(){
         var dataid='';
-        $("[name='checkgoods[]']:checked").each(function(){
+        $("[name='ids[]']:checked").each(function(){
             dataid+=$(this).val()+',';
         })
         dataid=$.trim(dataid);
         if(dataid!=''){
-            layer.confirm('确定删除选中的校区吗?',{icon:3,title:'操作提示'},function(index){
+            layer.confirm('确定删除选中的管理员吗?',{icon:3,title:'操作提示'},function(index){
                 var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('School/school_del'); ?>",{'schoolid':dataid},function(data){
+                $.post("<?php echo url('Adminuser/adminuser_del'); ?>",{'adminuserid':dataid},function(data){
                     layer.msg(data.msg);
                     layer.close(sindex);
                     if(data.code==200){
@@ -233,26 +250,10 @@
         }
     }
 
-    function school_hide(dataid){
-        if(dataid!=''){
-            layer.confirm('禁用后前端将不再显示，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('School/school_hide'); ?>",{'schoolid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function school_show(dataid){
+    function adminuser_open(dataid){
         if(dataid!=''){
             var sindex=layer.load(1,{'time':3*1000});
-            $.post("<?php echo url('School/school_show'); ?>",{'schoolid':dataid},function(data){
+            $.post("<?php echo url('Adminuser/adminuser_open'); ?>",{'adminuserid':dataid},function(data){
                 layer.msg(data.msg);
                 layer.close(sindex);
                 if(data.code==200){
@@ -263,19 +264,34 @@
         }
     }
 
-    function school_search(){
-        var url="<?php echo url('School/school_list'); ?>?a=1";
-        var keyword=$('.keyword').val();
-        var status=$('.status').val();
-        if(status!=''){
-            url+="&status="+status;
+    function adminuser_close(dataid){
+        if(dataid!=''){
+            layer.confirm('禁用后，管理员将不能登录，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Adminuser/adminuser_close'); ?>",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
         }
+    }
+
+    function adminuser_search(){
+        var url="<?php echo url('Adminuser/adminuser_list'); ?>?a=1";
+        var keyword=$('.keyword').val();
         if(keyword!=''){
             url+='&keyword='+keyword;
         }
+        var school_id=$('.school_id').val();
+        if(school_id!=''){
+            url+='&school_id='+school_id;
+        }
         window.location.href=url;
     }
-
 </script>
 
         <div class='mainfoot'>

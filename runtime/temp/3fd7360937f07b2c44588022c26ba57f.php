@@ -1,4 +1,4 @@
-<?php /*a:3:{s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_setbroadband.html";i:1626669232;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626688835;}*/ ?>
+<?php /*a:3:{s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_setbroadband.html";i:1626858329;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626858312;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -41,7 +41,7 @@
                     <td class='td_right'><label class="layui-form-label">宽带账号<span class='musttip'>*</span></label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <input type="text" name='keyaccount' id="keyaccount" placeholder="宽带账号" autocomplete="off" class="layui-input keyaccount" value='<?php echo htmlentities($info['keyaccount']); ?>' /><span class="layui-btn layui-btn-sm" onclick="orders_getrandaccount();">随机获取账号</span>
+                            <input type="text" name='keyaccount' id="keyaccount" placeholder="宽带账号" autocomplete="off" class="layui-input keyaccount" value='<?php echo htmlentities($info['keyaccount']); ?>' /><span class="layui-btn layui-btn-sm" onclick="orders_getrandaccount(<?php echo htmlentities($info['school_id']); ?>);">随机获取账号</span>
                         </div>
                     </td>
                 </tr>
@@ -75,7 +75,6 @@
                     <td colspan="2" style="text-align: center">
                         <div class="layui-input-block">
                             <input type="hidden" name="ordersid" value='<?php echo htmlentities($info['id']); ?>' />
-                            <input type="hidden" name="broadband_id" class='broadband_id' value='<?php echo htmlentities($info['broadband_id']); ?>' />
                             <button class="layui-btn" lay-submit lay-filter="savedata_setbtn" id='savedata_setbtn'>提交</button>
                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                         </div>
@@ -315,15 +314,12 @@
         return false;
     }
 
-    function orders_getrandaccount(dataid=''){
-        if(dataid==''){
-            dataid=$('.broadband_id').val();
-        }
-        $.post("<?php echo url('Index/getRandAccount'); ?>",{'id':dataid},function(data){
+    function orders_getrandaccount(school_id){
+
+        $.post("<?php echo url('Index/getRandAccount'); ?>",{'school_id':school_id},function(data){
             if(data.code==200){
                 $('.keyaccount').val(data.data.data.keyaccount)
                 $('.keypassword').val(data.data.data.keypassword);
-                $('.broadband_id').val(data.data.data.id);
             }else{
                 layer.msg(data.msg);
             }

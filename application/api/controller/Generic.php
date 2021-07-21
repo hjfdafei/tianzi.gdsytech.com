@@ -39,9 +39,25 @@ class Generic extends Base{
 
     //获取宽带套餐办理须知
     public function getNotice(){
-        $path='../config/webconfig.json';
-        $webconfig=json_decode(file_get_contents($path),true);
-        $data['content']=htmlspecialchars_decode($webconfig['content']);
+        $content='';
+        $school_id=input('school_id',0,'intval');
+        if($school_id>0){
+            $map=[];
+            $map[]=['id','=',$school_id];
+            $service=new GenericService();
+            $info=$service->schoolDetail($map);
+            if(!empty($info)){
+                if($info['content']!=''){
+                    $content=htmlspecialchars_decode($info['content']);
+                }
+            }
+        }
+        if($content==''){
+            $path='../config/webconfig.json';
+            $webconfig=json_decode(file_get_contents($path),true);
+            $content=htmlspecialchars_decode($webconfig['content']);
+        }
+        $data['content']=$content;
         return jsondata('0001','获取成功',$data);
     }
 
@@ -161,16 +177,32 @@ class Generic extends Base{
     public function getSubTemplate(){
         $list=[
             [
-                'template_id'=>'grFWUPWUQvG1D6cr3dqjhjr1S2BxndHc_5DaLg-RI4w',
+                'template_id'=>'grFWUPWUQvG1D6cr3dqjhsHBT3ewuHDsUyCf6gh05Rg',
             ],
         ];
         $data['list']=$list;
         return jsondata('0001','获取成功',$data);
     }
 
+    //推送小程序通知
+    public function pushMessage(){
+        $type=input('type','1','intval');
+        $orders_id=input('orders_id','0','intval');
+        if($orders_id>0){
+            $map=[];
+            $map[]=['id','=',$orders_id];
+            $map[]=['ispay','=',1];
+            $map[]=['isdel','=',2];
+            $info=DB::name('orders')->where($map)->find();
+            if(!empty($info)){
+                echo send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2),$info['id']);
+            }
+        }
+    }
+
     public function testpush(){
         //send_broadbandtpl('oLzrE4u1Vhfnylyjv9BKpE3CvJbE','大飞','202107201601561929');
-        send_mini_broadbandtpl('oLzrE4u1Vhfnylyjv9BKpE3CvJbE','宽带套餐','dafei ','30');
+        echo send_mini_broadbandtpl('oLzrE4u1Vhfnylyjv9BKpE3CvJbE','宽带套餐','dafei ','30',16);
     }
 
     //上传证件

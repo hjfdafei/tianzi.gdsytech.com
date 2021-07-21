@@ -1,4 +1,4 @@
-<?php /*a:3:{s:100:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_list.html";i:1626429538;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_footer.html";i:1626853978;}*/ ?>
+<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\adminuser\adminuser_list.html";i:1626853429;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\adminuser\adminuser_footer.html";i:1626853987;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -27,7 +27,7 @@
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
             <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <title>管理后台--宽带套餐列表</title>
+        <title>管理后台--管理员列表</title>
     </head>
     <body>
         
@@ -39,18 +39,31 @@
             <div style='height:10px;'></div>
             <div class="layui-row">
                 <div class="layui-col-md12">
-                    <button class="layui-btn layui-btn" onclick="goods_add()">新增宽带套餐</button>
-                    <button class="layui-btn layui-btn-danger" onclick="goods_del();">删除宽带套餐</button>
+                    <button class="layui-btn layui-btn" onclick="adminuser_add()">新增管理员</button>
+                    <button class="layui-btn layui-btn-danger" onclick="adminuser_del();">删除管理员</button>
                 </div>
             </div>
             <div style='height:20px;'></div>
+            <?php if(count($list)<=0): ?>
+                <table class="layui-table layui-form" id="goods_table">
+                    <tr>
+                        <td style='text-align:center;'>暂无数据</td>
+                    </tr>
+                </table>
+            <?php else: ?>
                 <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
-                    <div class="layui-row">
+                    <div class="layui-row layui-form">
                         <div class="layui-col-md5">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">关键词</label>
+                                <label class="layui-form-label">所属校区</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="keyword" name="keyword" placeholder="宽带套餐标题" autocomplete="off" class="layui-input keyword" value='<?php echo htmlentities($search['keyword']); ?>'>
+                                    <select name='school_id' class='school_id'>
+                                        <option value='0'>全部</option>
+                                        <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <option value="<?php echo htmlentities($vo['id']); ?>" <?php if($vo['id']==$search['school_id']): ?>selected<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                        <?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+
                                 </div>
                             </div>
                         </div>
@@ -58,65 +71,51 @@
                     <div class="layui-row">
                         <div class="layui-col-md5">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">状态</label>
+                                <label class="layui-form-label">关键词</label>
                                 <div class="layui-input-block">
-                                    <select name='status' class='status'>
-                                        <option value='0'>全部</option>
-                                        <option value='1' <?php if($search['status']==1): ?>selected<?php endif; ?>>上架</option>
-                                        <option value='2' <?php if($search['status']==2): ?>selected<?php endif; ?>>下架</option>
-                                    </select>
+                                    <input type="text" id="keyword" name="keyword" placeholder="管理员账号/电话" autocomplete="off" class="layui-input keyword" value='<?php echo htmlentities($search['keyword']); ?>'>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="layui-row">
                         <label class="layui-form-label"></label>
-                        <span class="layui-btn" onclick="goods_search()">搜索</span>
-                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Goods/goods_list'); ?>">刷新</a>
+                        <span class="layui-btn" onclick="adminuser_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Adminuser/adminuser_list'); ?>">刷新</a>
                     </div>
                 </form>
-                <?php if(count($list)<=0): ?>
-                    <table class="layui-table layui-form" id="goods_table">
-                        <tr>
-                            <td style='text-align:center;'>暂无数据</td>
-                        </tr>
-                    </table>
-                <?php else: ?>
                 <div style='height:10px;'></div>
                 <div class='layui-row'>
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
-                            <th>标题</th>
-                            <th>封面图</th>
-                            <th>价格</th>
-                            <th>已售数量</th>
+                            <th>管理员所属</th>
+                            <th>管理员账号</th>
+                            <th>管理员角色</th>
                             <th>状态</th>
-                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                         <tr class='table_tr'>
-                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='<?php echo htmlentities($vo['id']); ?>'></td>
-                            <td><?php echo htmlentities($vo['goods_title']); ?></td>
-                            <td><?php if($vo['goods_img']!=''): ?><a href='<?php echo htmlentities($vo['goods_img']); ?>' target="_blank"><img src='<?php echo htmlentities($vo['goods_img']); ?>' height='50'/></a><?php else: ?>暂未上传<?php endif; ?><?php echo htmlentities($vo['goods_price']); ?></td>
-                            <td><?php echo htmlentities($vo['goods_price']); ?></td>
-                            <td><?php echo htmlentities($vo['sale_num']); ?></td>
-                            <td><?php echo htmlentities($vo['statusname']); ?></td>
-                            <td><?php echo htmlentities($vo['create_time']); ?></td>
+                            <td style='min-width:20px;'><input type="checkbox" name="ids[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='<?php echo htmlentities($vo['id']); ?>'></td>
+                            <td><?php echo htmlentities($vo['admin_belong']); ?></td>
+                            <td><?php echo htmlentities($vo['username']); ?></td>
+                            <td><?php echo htmlentities($vo['admin_rolename']); ?></td>
+                            <td><?php if($vo['status']==1): ?>正常<?php else: ?>禁用<?php endif; ?></td>
                             <td>
-                                <?php if($vo['goods_status']==1): ?>
-                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="goods_hide(<?php echo htmlentities($vo['id']); ?>)">下架</a>
-                                <?php else: ?>
-                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="goods_show(<?php echo htmlentities($vo['id']); ?>)">上架</a>
+                                <?php if($vo['status']==2): ?>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="adminuser_open(<?php echo htmlentities($vo['id']); ?>)">启用</a>
+                                <?php elseif($vo['status']==1): ?>
+                                <a class="layui-btn layui-btn-danger layui-btn-sm" onclick="adminuser_close(<?php echo htmlentities($vo['id']); ?>)">禁用</a>
                                 <?php endif; ?>
-                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="goods_edit(<?php echo htmlentities($vo['id']); ?>)">修改</a>
-                                <a class="layui-btn layui-btn-sm" onclick="goods_orders_list(<?php echo htmlentities($vo['id']); ?>)">订单列表</a>
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="adminuser_edit(<?php echo htmlentities($vo['id']); ?>)">修改</a>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="adminuser_assign(<?php echo htmlentities($vo['id']); ?>)">分配权限</a>
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="adminuser_cancelassign(<?php echo htmlentities($vo['id']); ?>)">取消权限</a>
                             </td>
                         </tr>
                         <?php endforeach; endif; else: echo "" ;endif; ?>
                         <tr>
-                            <td colspan="8" class='page_wrap'><span class='page_count'>共<font><?php echo htmlentities($count); ?></font>条记录</span><?php echo $page; ?></td>
+                            <td colspan="7" class='page_wrap'><span class='page_count'>共<font><?php echo htmlentities($count); ?></font>条记录</span><?php echo $page; ?></td>
                         </tr>
                     </table>
                 </div>
@@ -134,57 +133,26 @@
     }
 </script>
 <script type="text/javascript">
-    tinymce.init({
-        'selector':'#goods_content',
-        'language':'zh_CN',
-        'width':'100%',
-        'height':'500px',
-        'resize':false,
-        'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
-        'toolbar':
-            'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
-            styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-            table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
-        'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
-        'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
-        'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
-        'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
-        'image_caption': true,
-        'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
-    });
-    $('#goodsform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
-</script>
-<script type="text/javascript">
     layui.use(['laydate','form','table','upload'], function(){
         var laydate=layui.laydate;
         var table=layui.table;
         var form=layui.form;
         var upload=layui.upload;
-        var uploadInst = upload.render({
-            elem: '#goods_img',
-            auto:false,
-            //bindAction:'#savedata_subbtn',
-            choose: function(obj){
-                obj.preview(function(index, file, result){
-                    $('#preimg_view').attr('src', result);
-                });
-            }
-        });
         form.on('submit(savedata_addbtn)', function(data){
-            var url="<?php echo url('Goods/goods_add'); ?>";
-            savedata(url);
+            var url="<?php echo url('Adminuser/adminuser_add'); ?>";
+            savedata(url,1);
             return false;
         });
         form.on('submit(savedata_editbtn)', function(data){
-            var url="<?php echo url('Goods/goods_edit'); ?>";
-            savedata(url);
+            var url="<?php echo url('Adminuser/adminuser_edit'); ?>";
+            savedata(url,2);
             return false;
         });
     })
 
-    function goods_add(){
-        var url='<?php echo url("Goods/goods_add"); ?>';
-        var title='添加宽带套餐';
+    function adminuser_add(){
+        var url='<?php echo url("Adminuser/adminuser_add"); ?>';
+        var title='添加管理员';
         layer.open({
             type: 2,
             title:title,
@@ -195,10 +163,10 @@
         });
     }
 
-    function goods_edit(dataid){
+    function adminuser_edit(dataid){
         if(dataid>0){
-            var url='<?php echo url("Goods/goods_edit"); ?>?goodsid='+dataid;
-            var title='修改宽带套餐';
+            var url='<?php echo url("Adminuser/adminuser_edit"); ?>?adminuserid='+dataid;
+            var title='修改管理员';
             layer.open({
                 type: 2,
                 title:title,
@@ -210,24 +178,26 @@
         }
     }
 
-    function savedata(url){
+    function savedata(url,optype=2){
         var sindex=layer.load(1,{time:5*1000});
         $('#goodsform').ajaxSubmit({
             url:url,
             type:'post',
             dataType:'json',
             beforeSubmit: function(){
-                var goods_title=$.trim($('.goods_title').val());
-                if(goods_title==''){
-                    layer.msg('请输入宽带套餐标题');
+                var username=$.trim($('.username').val());
+                if(username==''){
+                    layer.msg('请输入管理员账号');
                     layer.close(sindex);
                     return false;
                 }
-                var goods_price=$.trim($('.goods_price').val());
-                if(goods_price==''){
-                    layer.msg('请输入宽带套餐价格');
-                    layer.close(sindex);
-                    return false;
+                if(optype==1){
+                    var userpassword=$.trim($('.userpassword').val());
+                    if(userpassword==''){
+                        layer.msg('请输入管理员密码');
+                        layer.close(sindex);
+                        return false;
+                    }
                 }
             },
             success: function(data){
@@ -243,10 +213,10 @@
         return false;
     }
 
-    function goods_orders_list(dataid){
+    function adminuser_assign(dataid){
         if(dataid>0){
-            var url='<?php echo url("Orders/orders_list"); ?>?goods_id='+dataid;
-            var title='宽带套餐订单列表';
+            var url='<?php echo url("Adminuser/adminuser_assign"); ?>?adminuserid='+dataid;
+            var title='分配权限';
             layer.open({
                 type: 2,
                 title:title,
@@ -258,16 +228,32 @@
         }
     }
 
-    function goods_del(){
+    function adminuser_cancelassign(dataid){
+        if(dataid>0){
+            layer.confirm('取消权限后,属于该管理员将不再有权限操作相关内容,确定取消权限吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Adminuser/adminuser_cancelassign'); ?>",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function adminuser_del(){
         var dataid='';
-        $("[name='checkgoods[]']:checked").each(function(){
+        $("[name='ids[]']:checked").each(function(){
             dataid+=$(this).val()+',';
         })
         dataid=$.trim(dataid);
         if(dataid!=''){
-            layer.confirm('确定删除选中的宽带套餐吗?',{icon:3,title:'操作提示'},function(index){
+            layer.confirm('确定删除选中的管理员吗?',{icon:3,title:'操作提示'},function(index){
                 var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Goods/goods_del'); ?>",{'goodsid':dataid},function(data){
+                $.post("<?php echo url('Adminuser/adminuser_del'); ?>",{'adminuserid':dataid},function(data){
                     layer.msg(data.msg);
                     layer.close(sindex);
                     if(data.code==200){
@@ -279,26 +265,10 @@
         }
     }
 
-    function goods_hide(dataid){
-        if(dataid!=''){
-            layer.confirm('下架后前端将不再显示，确定下架吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Goods/goods_hide'); ?>",{'goodsid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function goods_show(dataid){
+    function adminuser_open(dataid){
         if(dataid!=''){
             var sindex=layer.load(1,{'time':3*1000});
-            $.post("<?php echo url('Goods/goods_show'); ?>",{'goodsid':dataid},function(data){
+            $.post("<?php echo url('Adminuser/adminuser_open'); ?>",{'adminuserid':dataid},function(data){
                 layer.msg(data.msg);
                 layer.close(sindex);
                 if(data.code==200){
@@ -309,19 +279,34 @@
         }
     }
 
-    function goods_search(){
-        var url="<?php echo url('Goods/goods_list'); ?>?a=1";
-        var keyword=$('.keyword').val();
-        var status=$('.status').val();
-        if(status!=''){
-            url+='&status='+status;
+    function adminuser_close(dataid){
+        if(dataid!=''){
+            layer.confirm('禁用后，管理员将不能登录，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Adminuser/adminuser_close'); ?>",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
         }
+    }
+
+    function adminuser_search(){
+        var url="<?php echo url('Adminuser/adminuser_list'); ?>?a=1";
+        var keyword=$('.keyword').val();
         if(keyword!=''){
             url+='&keyword='+keyword;
         }
+        var school_id=$('.school_id').val();
+        if(school_id!=''){
+            url+='&school_id='+school_id;
+        }
         window.location.href=url;
     }
-
 </script>
 
         <div class='mainfoot'>

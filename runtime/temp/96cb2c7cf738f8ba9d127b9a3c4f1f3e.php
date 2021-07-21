@@ -1,4 +1,4 @@
-<?php /*a:3:{s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html";i:1614657099;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:94:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\menu.html";i:1626419659;}*/ ?>
+<?php /*a:3:{s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html";i:1614657099;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:94:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\menu.html";i:1626850379;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -67,12 +67,12 @@
                 <ul id="nav">
     <?php if(is_array($menu) || $menu instanceof \think\Collection || $menu instanceof \think\Paginator): $i = 0; $__LIST__ = $menu;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
         <li>
-            <a href="<?php echo htmlentities($vo['rule_url']); ?>">
+            <?php if(!empty($vo['item'])): ?>
+            <a href="javascript:void(0);">
                 <i class="iconfont left-nav-li" lay-tips="<?php echo htmlentities($vo['rule_title']); ?>"> <i class="fa <?php echo htmlentities($vo['rule_class']); ?>"></i></i>
                 <cite><?php echo htmlentities($vo['rule_title']); ?></cite>
                 <i class="iconfont nav_right"></i>
             </a>
-            <?php if(!empty($vo['item'])): ?>
             <ul class="sub-menu">
                 <?php if(is_array($vo['item']) || $vo['item'] instanceof \think\Collection || $vo['item'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['item'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo2): $mod = ($i % 2 );++$i;?>
                 <li>
@@ -83,106 +83,15 @@
                 </li>
                 <?php endforeach; endif; else: echo "" ;endif; ?>
             </ul>
+            <?php else: ?>
+            <a onclick="xadmin.add_tab('<?php echo htmlentities($vo['rule_title']); ?>','<?php echo htmlentities($vo['rule_url']); ?>')">
+                <i class="iconfont left-nav-li" lay-tips="<?php echo htmlentities($vo['rule_title']); ?>"> <i class="fa <?php echo htmlentities($vo['rule_class']); ?>"></i></i>
+                <cite><?php echo htmlentities($vo['rule_title']); ?></cite>
+                <i class="iconfont nav_right"></i>
+            </a>
             <?php endif; ?>
         </li>
     <?php endforeach; endif; else: echo "" ;endif; ?>
-    <li>
-        <a onclick="xadmin.add_tab('系统设置','<?php echo url("Index/setting"); ?>')">
-            <i class="iconfont left-nav-li" lay-tips="系统设置"> <i class="fa fa-cog"></i></i>
-            <cite>系统设置</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="Banner图片管理"> <i class="fa fa-picture-o"></i></i>
-            <cite>Banner图片管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('Banner列表','<?php echo url("Banner/banner_list"); ?>')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>Banner列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="校区管理"> <i class="fa fa-life-ring"></i></i>
-            <cite>校区管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('校区列表','<?php echo url("School/school_list"); ?>')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>校区列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="用户管理"> <i class="fa fa-user-circle"></i></i>
-            <cite>用户管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('用户列表','<?php echo url("User/user_list"); ?>')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>用户列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="宽带套餐管理"> <i class="fa fa-asterisk"></i></i>
-            <cite>宽带套餐管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('宽带套餐列表','<?php echo url("Goods/goods_list"); ?>')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>宽带套餐列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="宽带账号管理"> <i class="fa fa-futbol-o"></i></i>
-            <cite>宽带账号管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('宽带账号列表','<?php echo url("Broadband/broadband_list"); ?>')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>宽带账号列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="订单管理"> <i class="fa fa-first-order"></i></i>
-            <cite>订单管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('订单列表','<?php echo url("Orders/orders_list"); ?>')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>订单列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
     <!-- <li>
         <a href="javascript:void(0);">
             <i class="iconfont left-nav-li" lay-tips="权限管理"> <i class="fa fa-sitemap"></i></i>

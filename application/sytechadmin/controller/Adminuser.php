@@ -6,7 +6,7 @@ use think\db\Query;
 use think\Request;
 use app\sytechadmin\controller\Sytechadminbase;
 use app\sytechadmin\service\AdminuserService;
-use app\sytechadmin\service\MeetingsiteService;
+use app\sytechadmin\service\SchoolService;
 use app\sytechadmin\model\Rule;
 
 class Adminuser extends Sytechadminbase{
@@ -14,31 +14,34 @@ class Adminuser extends Sytechadminbase{
     public function adminuser_list(){
         $keyword=input('keyword','','trim');
         $status=input('status','','intval');
-        $meetingsiteid=input('meetingsiteid','0','intval');
+        $school_id=input('school_id','0','intval');
+        if($this->base_admininfo['school_id']>0){
+            $school_id=$this->base_admininfo['school_id'];
+        }
         $map=[];
         $map[]=['id','<>',1];
         if($status>0){
             $map[]=['status','=',$status];
         }
-        if($meetingsiteid>0){
-            $map[]=['meetingsiteid','=',$meetingsiteid];
+        if($school_id>0){
+            $map[]=['school_id','=',$school_id];
         }
         if($keyword!=''){
             $map[]=['username|mobile','like',"%$keyword%"];
         }
         $search['keyword']=$keyword;
         $search['status']=$status;
-        $search['meetingsiteid']=$meetingsiteid;
+        $search['school_id']=$school_id;
         $field='*';
         $adminuserservice=new AdminuserService();
         $data=$adminuserservice->getAdminuserList($field,$map,$search,20);
-        $meetingsiteservice=new MeetingsiteService();
-        $meetmap=[];
-        if($this->base_admininfo['meetingsiteid']>0){
-            $meetmap[]=['id','=',$this->base_admininfo['meetingsiteid']];
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
         }
-        $meetingsitelist=$meetingsiteservice->getMeetingsiteList(2,$meetmap);
-        $this->assign(['search'=>$search,'list'=>$data['list'],'count'=>$data['count'],'page'=>$data['page'],'meetingsitelist'=>$meetingsitelist['list']]);
+        $school_list=$schoolservice->getSchoolList(2,$smap)['list'];
+        $this->assign(['search'=>$search,'list'=>$data['list'],'count'=>$data['count'],'page'=>$data['page'],'school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -46,17 +49,17 @@ class Adminuser extends Sytechadminbase{
     public function adminuser_add(){
         $adminuserservice=new AdminuserService();
         if(request()->isPost() || request()->isAjax()){
-            $adminuserservice->admin_verify(0);
+            $adminuserservice->admin_verify(0,$this->base_admininfo);
             return ;
         }
-        $meetingsiteservice=new MeetingsiteService();
-        $meetmap=[];
-        if($this->base_admininfo['meetingsiteid']>0){
-            $meetmap[]=['id','=',$this->base_admininfo['meetingsiteid']];
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
         }
-        $meetingsitelist=$meetingsiteservice->getMeetingsiteList(2,$meetmap);
+        $school_list=$schoolservice->getSchoolList(2,$smap)['list'];
         $rolist=$adminuserservice->admin_rolelist();
-        $this->assign(['rolist'=>$rolist,'meetingsitelist'=>$meetingsitelist['list']]);
+        $this->assign(['rolist'=>$rolist,'school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -65,7 +68,7 @@ class Adminuser extends Sytechadminbase{
         $adminuserservice=new AdminuserService();
         if(request()->isPost() || request()->isAjax()){
             $adminuserid=input('post.adminuserid','0','intval');
-            $adminuserservice->admin_verify($adminuserid);
+            $adminuserservice->admin_verify($adminuserid,$this->base_admininfo);
             return ;
         }
         $adminuserid=input('adminuserid','0','intval');
@@ -77,16 +80,14 @@ class Adminuser extends Sytechadminbase{
         if(empty($info)){
             return jsondata('400','选择编辑的管理员信息不存在');
         }
-        //$info['admintype_list']=config('admintypelist');
-        //$info['admintypeid_list']=$adminuserservice->admin_gettypelist($info['admintype']);
         $info['role_list']=$adminuserservice->admin_rolelist();
-        $meetingsiteservice=new MeetingsiteService();
-        $meetmap=[];
-        if($this->base_admininfo['meetingsiteid']>0){
-            $meetmap[]=['id','=',$this->base_admininfo['meetingsiteid']];
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
         }
-        $meetingsitelist=$meetingsiteservice->getMeetingsiteList(2,$meetmap);
-        $this->assign(['info'=>$info,'meetingsitelist'=>$meetingsitelist['list']]);
+        $school_list=$schoolservice->getSchoolList(2,$smap)['list'];
+        $this->assign(['info'=>$info,'school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -103,7 +104,7 @@ class Adminuser extends Sytechadminbase{
                 return jsondata('400','请选择要删除的角色');
             }
             $adminuserservice=new AdminuserService();
-            return $adminuserservice->admin_delete($adminuserid);
+            return $adminuserservice->admin_delete($adminuserid,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }
@@ -115,7 +116,7 @@ class Adminuser extends Sytechadminbase{
             $status=2;
             $adminuserid=input('post.adminuserid','0','intval');
             $adminiuserservice=new AdminuserService();
-            return $adminiuserservice->admin_openorclose($adminuserid,$status);
+            return $adminiuserservice->admin_openorclose($adminuserid,$status,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }
@@ -127,7 +128,7 @@ class Adminuser extends Sytechadminbase{
             $status=1;
             $adminuserid=input('post.adminuserid','0','intval');
             $adminiuserservice=new AdminuserService();
-            return $adminiuserservice->admin_openorclose($adminuserid,$status);
+            return $adminiuserservice->admin_openorclose($adminuserid,$status,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }
@@ -194,7 +195,7 @@ class Adminuser extends Sytechadminbase{
         if(request()->isPost() || request()->isAjax()){
             $adminuserid=input('post.adminuserid','0','intval');
             $adminuserservice=new AdminuserService();
-            return $adminuserservice->admin_cancelassign($adminuserid);
+            return $adminuserservice->admin_cancelassign($adminuserid,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }

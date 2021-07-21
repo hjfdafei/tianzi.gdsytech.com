@@ -38,6 +38,7 @@ class SchoolService extends Base{
         $address=input('post.address','','trim');
         $status=input('post.status','1','intval');
         $sortby=input('post.sortby','0','intval');
+        $content=input('post.content','','trim');
         if(!in_array($status,[1,2])){
             $status=1;
         }
@@ -59,7 +60,8 @@ class SchoolService extends Base{
             'title'=>$title,
             'address'=>$address,
             'status'=>$status,
-            'sortby'=>$sortby
+            'sortby'=>$sortby,
+            'content'=>$content,
         ];
         if(!empty(request()->file('logo'))){
             $upload=new Upload;

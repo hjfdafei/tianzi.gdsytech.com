@@ -1,4 +1,4 @@
-<?php /*a:2:{s:97:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\setting.html";i:1626849645;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
+<?php /*a:2:{s:97:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\rule\rule_add.html";i:1583834612;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -27,7 +27,7 @@
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
             <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <title>系统管理后台</title>
+        <title>管理后台--添加权限</title>
     </head>
     <body>
         
@@ -35,13 +35,83 @@
         
 <body class="index">
     <div class="setting_form">
-        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='settingform'>
+        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='goodsform'>
             <table class="layui-table">
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">办理条款<span class='musttip'>*</span></label></td>
+                    <td class='td_right'><label class="layui-form-label">选择层级</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <select name="parentid">
+                                    <option value="0">顶级</option>
+                                    <?php if(is_array($parentlist) || $parentlist instanceof \think\Collection || $parentlist instanceof \think\Paginator): $i = 0; $__LIST__ = $parentlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                    <option value="<?php echo htmlentities($vo['id']); ?>"><?php echo htmlentities($vo['rule_title']); ?></option>
+                                    <?php endforeach; endif; else: echo "" ;endif; ?>
+                                </select>
+                            </div>
+                          </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">权限名称</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <textarea name="content" id='content' placeholder="办理条款" class="layui-textarea content"><?php echo htmlentities($webconfig['content']); ?></textarea>
+                            <input type="text" name='rule_title' id="rule_title" placeholder="权限名称" autocomplete="off" class="layui-input rule_title" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">模块名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_module' id="rule_module" placeholder="模块名称" autocomplete="off" class="layui-input rule_module" value='sytechadmin' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">控制器名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_controller' id="rule_controller" placeholder="控制器名称" autocomplete="off" class="layui-input rule_controller" value='' />
+                            <span class='inputnote_span'>(如果没有，请填写#)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">方法名称</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_action' id="rule_action" placeholder="方法名称" autocomplete="off" class="layui-input rule_action" value='' />
+                            <span class='inputnote_span'>(如果没有，请填写#)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">权限css样式类</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='rule_class' id="rule_class" placeholder="权限css样式类" autocomplete="off" class="layui-input rule_class" value='' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='rule_sort' id="rule_sort" placeholder="排序" autocomplete="off" class="layui-input rule_sort" value='0' />
+                            <span class='inputnote_span'>(值越大排在越前)</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否菜单</label></td>
+                    <td class='td_left'>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="rule_ismenu" class='rule_ismenu' value="1" title="是" />
+                                <input type="radio" name="rule_ismenu" class='rule_ismenu' value="2" title="否" checked='checked' />
+                            </div>
+                            <span class='inputnote_span'>(设置为菜单的权限，才会在分配权限后在左侧栏显示)</span>
                         </div>
                     </td>
                 </tr>
@@ -60,52 +130,50 @@
 
         
         
-    <style>
-        .mapsearch{padding-top:10px;}
-        .amap-icon img, .amap-marker-content img {width:19px;height:33px;}
-    </style>
-    <script type="text/javascript">
-        tinymce.init({
-            'selector':'#content',
-            'language':'zh_CN',
-            'width':'100%',
-            'height':'500px',
-            'resize':false,
-            'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
-            'toolbar':
-                'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
-                styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-                table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
-            'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
-            'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
-            'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
-            'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
-            'image_caption': true,
-            'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
-        });
-        $('#settingform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
-    </script>
     <script type="text/javascript">
         layui.use(['laydate','form','table','upload'], function(){
             var laydate = layui.laydate;
             var table = layui.table;
             var form = layui.form;
-            var upload=layui.upload;
             form.on('submit(savedata_subbtn)', function(data){
                 savedata();
                 return false;
             });
+
         })
 
         //保存数据
         function savedata(){
             var sindex=layer.load(1,{time:5*1000});
-            $('#settingform').ajaxSubmit({
-                url:"<?php echo url('Index/setting'); ?>",
+            $('#goodsform').ajaxSubmit({
+                url:"<?php echo url('rule/rule_add'); ?>",
                 type:'post',
                 dataType:'json',
                 beforeSubmit: function(){
-
+                    var rule_title=$.trim($('.rule_title').val());
+                    var rule_module=$.trim($('.rule_module').val());
+                    var rule_controller=$.trim($('.rule_controller').val());
+                    var rule_action=$.trim($('.rule_action').val());
+                    if(rule_title==''){
+                        layer.msg('请输入权限名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(rule_module==''){
+                        layer.msg('请输入模块名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(rule_controller==''){
+                        layer.msg('请输入控制器名称');
+                        layer.close(sindex);
+                        return false;
+                    }
+                    if(rule_action==''){
+                        layer.msg('请输入方法名称');
+                        layer.close(sindex);
+                        return false;
+                    }
                 },
                 success: function(data){
                     layer.close(sindex);

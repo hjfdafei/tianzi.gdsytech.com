@@ -162,7 +162,6 @@ class UserService extends Base{
         if($checkmobile_res['code']!='0001'){
             return ['code'=>'400','msg'=>$checkmobile_res['msg']];
         }
-        exit;
         $gservice=new GenericService();
         $smap=[];
         $smap[]=['id','=',$school_id];

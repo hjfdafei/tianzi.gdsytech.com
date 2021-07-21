@@ -23,9 +23,12 @@ class Sytechadminbase extends Controller{
         if(!config('isopen_auth')) {
             return;
         }
-        if($con==='index') {
-            return;
+        if(in_array($con,['index','upload'])){
+            return ;
         }
+        // if($con=='index') {
+        //     return;
+        // }
         if($admininfo['issuperadmin']!=1){
             $adminuserservice=new AdminuserService();
             $ainfos=$adminuserservice->admin_gettypeandrole($admininfo['id']);

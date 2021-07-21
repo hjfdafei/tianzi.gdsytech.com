@@ -1,4 +1,4 @@
-<?php /*a:3:{s:101:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_add.html";i:1626750088;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626750123;}*/ ?>
+<?php /*a:3:{s:101:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_add.html";i:1626849636;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626849889;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -54,7 +54,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">校区logo</label></td>
+                    <td class='td_right'><label class="layui-form-label">校区Logo</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block" style='position:relative;'>
                             <button type="button" class="layui-btn">
@@ -62,6 +62,14 @@
                             </button>
                             <input type="file" name="logo" id="logo" class="layui-btn shoplogo_file logo" accept="image/gif,image/jpeg,image/jpg,image/png" />
                             <div class='preimg_content'><img class="layui-upload-img" id="preimg_view"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">宽带办理条款<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <textarea name="content" id='content' placeholder="宽带办理条款" class="layui-textarea content"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -100,6 +108,27 @@
         
         
     <script type="text/javascript">
+    tinymce.init({
+        'selector':'#content',
+        'language':'zh_CN',
+        'width':'100%',
+        'height':'500px',
+        'resize':false,
+        'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
+        'toolbar':
+            'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+            styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+            table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
+        'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+        'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
+        'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
+        'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
+        'image_caption': true,
+        'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
+    });
+    $('#settingform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
+</script>
+<script type="text/javascript">
     layui.use(['laydate','form','table','upload'], function(){
         var laydate=layui.laydate;
         var table=layui.table;

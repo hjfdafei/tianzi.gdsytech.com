@@ -6,6 +6,7 @@ use think\db\Query;
 use think\Request;
 use app\sytechadmin\controller\Sytechadminbase;
 use app\sytechadmin\service\BroadbandService;
+use app\sytechadmin\service\SchoolService;
 //宽带账号管理
 class Broadband extends Sytechadminbase{
     //宽带账号列表
@@ -13,6 +14,10 @@ class Broadband extends Sytechadminbase{
         $keyword=input('keyword','','trim');
         $usestatus=input('usestatus','0','intval');
         $status=input('status','0','intval');
+        $school_id=input('school_id','0','intval');
+        if($this->base_admininfo['school_id']>0){
+            $school_id=$this->base_admininfo['school_id'];
+        }
         $map=[];
         if($status>0){
             $map[]=['status','=',$status];
@@ -20,17 +25,29 @@ class Broadband extends Sytechadminbase{
         if($usestatus>0){
             $map[]=['isuse','=',$usestatus];
         }
+        if($school_id>0){
+            $map[]=['school_id','=',$school_id];
+        }
         if($keyword!=''){
             $map[]=['keyaccount','like',"%$keyword%"];
         }
         $search['keyword']=$keyword;
         $search['usestatus']=$usestatus;
         $search['status']=$status;
+        $search['school_id']=$school_id;
         $field='*';
         $orderby=['isuse'=>'desc','status'=>'asc'];
         $service=new BroadbandService();
         $data=$service->getBroadbandList(1,$map,$field,$search,20,$orderby);
-        $this->assign(['search'=>$search,'list'=>$data['list'],'count'=>$data['count'],'page'=>$data['page']]);
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($school_id>0){
+            $smap[]=['id','=',$school_id];
+        }
+        $sfield='*';
+        $sorderby=['sortby'=>'desc','id'=>'desc'];
+        $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+        $this->assign(['search'=>$search,'list'=>$data['list'],'count'=>$data['count'],'page'=>$data['page'],'school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -38,8 +55,17 @@ class Broadband extends Sytechadminbase{
     public function broadband_add(){
         if(request()->isPost() || request()->isAjax()){
             $service=new BroadbandService();
-            return $service->broadband_verify(0);
+            return $service->broadband_verify(0,$this->base_admininfo);
         }
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
+        }
+        $sfield='*';
+        $sorderby=['sortby'=>'desc','id'=>'desc'];
+        $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+        $this->assign(['school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -51,7 +77,7 @@ class Broadband extends Sytechadminbase{
             if($broadbandid<=0){
                 return jsondata('400','请选择宽带账号信息');
             }
-            return $service->broadband_verify($broadbandid);
+            return $service->broadband_verify($broadbandid,$this->base_admininfo);
         }
         $broadbandid=input('broadbandid','0','intval');
         if($broadbandid<=0){
@@ -63,7 +89,15 @@ class Broadband extends Sytechadminbase{
         if(empty($info)){
             return jsondata('400','请选择宽带账号信息');
         }
-        $this->assign(['info'=>$info]);
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
+        }
+        $sfield='*';
+        $sorderby=['sortby'=>'desc','id'=>'desc'];
+        $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+        $this->assign(['info'=>$info,'school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -87,8 +121,17 @@ class Broadband extends Sytechadminbase{
                 return jsondata('400','请选择上传文件');
             }
             $service=new BroadbandService();
-            return $service->broadband_importdata($fileinfo);
+            return $service->broadband_importdata($fileinfo,$this->base_admininfo);
         }
+        $schoolservice=new SchoolService();
+        $smap=[];
+        if($this->base_admininfo['school_id']>0){
+            $smap[]=['id','=',$this->base_admininfo['school_id']];
+        }
+        $sfield='*';
+        $sorderby=['sortby'=>'desc','id'=>'desc'];
+        $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+        $this->assign(['school_list'=>$school_list]);
         return $this->fetch();
     }
 
@@ -100,7 +143,7 @@ class Broadband extends Sytechadminbase{
                 return jsondata('400','请选择需要启用的宽带账号');
             }
             $service=new BroadbandService();
-            return $service->broadband_showhide($broadbandid,1);
+            return $service->broadband_showhide($broadbandid,1,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }
@@ -113,7 +156,7 @@ class Broadband extends Sytechadminbase{
                 return jsondata('400','请选择需要禁用的宽带账号');
             }
             $service=new BroadbandService();
-            return $service->broadband_showhide($broadbandid,2);
+            return $service->broadband_showhide($broadbandid,2,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }
@@ -131,7 +174,7 @@ class Broadband extends Sytechadminbase{
                 return jsondata('400','请选择要删除的宽带账号');
             }
             $service=new BroadbandService();
-            return $service->broadband_delete($broadbandid);
+            return $service->broadband_delete($broadbandid,$this->base_admininfo);
         }
         return jsondata('400','网络错误');
     }

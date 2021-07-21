@@ -58,6 +58,7 @@ class School extends Sytechadminbase{
         if(empty($info)){
             return jsondata('400','请选择校区信息');
         }
+        $info['content']=htmlspecialchars_decode($info['content']);
         $this->assign(['info'=>$info]);
         return $this->fetch();
     }

@@ -1,4 +1,4 @@
-<?php /*a:3:{s:100:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_list.html";i:1626429538;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_footer.html";i:1626853978;}*/ ?>
+<?php /*a:2:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\adminrole\adminrole_list.html";i:1602572525;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -27,7 +27,7 @@
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
             <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <title>管理后台--宽带套餐列表</title>
+        <title>管理后台--角色列表</title>
     </head>
     <body>
         
@@ -39,84 +39,65 @@
             <div style='height:10px;'></div>
             <div class="layui-row">
                 <div class="layui-col-md12">
-                    <button class="layui-btn layui-btn" onclick="goods_add()">新增宽带套餐</button>
-                    <button class="layui-btn layui-btn-danger" onclick="goods_del();">删除宽带套餐</button>
+                    <button class="layui-btn layui-btn" onclick="adminrole_add()">新增角色</button>
+                    <button class="layui-btn layui-btn-danger" onclick="adminrole_del();">删除角色</button>
                 </div>
             </div>
             <div style='height:20px;'></div>
+            <?php if(count($list)<=0): ?>
+                <table class="layui-table layui-form" id="goods_table">
+                    <tr>
+                        <td style='text-align:center;'>暂无数据</td>
+                    </tr>
+                </table>
+            <?php else: ?>
                 <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
                     <div class="layui-row">
                         <div class="layui-col-md5">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">关键词</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="keyword" name="keyword" placeholder="宽带套餐标题" autocomplete="off" class="layui-input keyword" value='<?php echo htmlentities($search['keyword']); ?>'>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row">
-                        <div class="layui-col-md5">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">状态</label>
-                                <div class="layui-input-block">
-                                    <select name='status' class='status'>
-                                        <option value='0'>全部</option>
-                                        <option value='1' <?php if($search['status']==1): ?>selected<?php endif; ?>>上架</option>
-                                        <option value='2' <?php if($search['status']==2): ?>selected<?php endif; ?>>下架</option>
-                                    </select>
+                                    <input type="text" id="keyword" name="keyword" placeholder="角色名称" autocomplete="off" class="layui-input keyword" value='<?php echo htmlentities($search['keyword']); ?>'>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="layui-row">
                         <label class="layui-form-label"></label>
-                        <span class="layui-btn" onclick="goods_search()">搜索</span>
-                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Goods/goods_list'); ?>">刷新</a>
+                        <span class="layui-btn" onclick="adminrole_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Adminrole/adminrole_list'); ?>">刷新</a>
                     </div>
                 </form>
-                <?php if(count($list)<=0): ?>
-                    <table class="layui-table layui-form" id="goods_table">
-                        <tr>
-                            <td style='text-align:center;'>暂无数据</td>
-                        </tr>
-                    </table>
-                <?php else: ?>
                 <div style='height:10px;'></div>
                 <div class='layui-row'>
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
-                            <th>标题</th>
-                            <th>封面图</th>
-                            <th>价格</th>
-                            <th>已售数量</th>
+                            <th>角色名称</th>
+                            <th>角色归属</th>
                             <th>状态</th>
-                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                         <tr class='table_tr'>
-                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='<?php echo htmlentities($vo['id']); ?>'></td>
-                            <td><?php echo htmlentities($vo['goods_title']); ?></td>
-                            <td><?php if($vo['goods_img']!=''): ?><a href='<?php echo htmlentities($vo['goods_img']); ?>' target="_blank"><img src='<?php echo htmlentities($vo['goods_img']); ?>' height='50'/></a><?php else: ?>暂未上传<?php endif; ?><?php echo htmlentities($vo['goods_price']); ?></td>
-                            <td><?php echo htmlentities($vo['goods_price']); ?></td>
-                            <td><?php echo htmlentities($vo['sale_num']); ?></td>
-                            <td><?php echo htmlentities($vo['statusname']); ?></td>
-                            <td><?php echo htmlentities($vo['create_time']); ?></td>
+                            <td style='min-width:20px;'><input type="checkbox" name="ids[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='<?php echo htmlentities($vo['id']); ?>'></td>
+                            <td><?php echo htmlentities($vo['role_title']); ?></td>
+                            <td><?php echo htmlentities($vo['role_belong']); ?></td>
+                            <td><?php if($vo['role_status']==1): ?>正常<?php else: ?>禁用<?php endif; ?></td>
                             <td>
-                                <?php if($vo['goods_status']==1): ?>
-                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="goods_hide(<?php echo htmlentities($vo['id']); ?>)">下架</a>
-                                <?php else: ?>
-                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="goods_show(<?php echo htmlentities($vo['id']); ?>)">上架</a>
+                                <?php if($vo['role_status']==2): ?>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="adminrole_open(<?php echo htmlentities($vo['id']); ?>)">启用</a>
+                                <?php elseif($vo['role_status']==1): ?>
+                                <a class="layui-btn layui-btn-danger layui-btn-sm" onclick="adminrole_close(<?php echo htmlentities($vo['id']); ?>)">禁用</a>
                                 <?php endif; ?>
-                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="goods_edit(<?php echo htmlentities($vo['id']); ?>)">修改</a>
-                                <a class="layui-btn layui-btn-sm" onclick="goods_orders_list(<?php echo htmlentities($vo['id']); ?>)">订单列表</a>
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="adminrole_edit(<?php echo htmlentities($vo['id']); ?>)">修改</a>
+                                <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="adminrole_assign(<?php echo htmlentities($vo['id']); ?>)">分配权限</a>
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="adminrole_cancelassign(<?php echo htmlentities($vo['id']); ?>)">取消权限</a>
                             </td>
                         </tr>
                         <?php endforeach; endif; else: echo "" ;endif; ?>
                         <tr>
-                            <td colspan="8" class='page_wrap'><span class='page_count'>共<font><?php echo htmlentities($count); ?></font>条记录</span><?php echo $page; ?></td>
+                            <td colspan="5" class='page_wrap'><span class='page_count'>共<font><?php echo htmlentities($count); ?></font>条记录</span><?php echo $page; ?></td>
                         </tr>
                     </table>
                 </div>
@@ -128,146 +109,91 @@
         
         
 <script type="text/javascript">
-    function closealllayer(){
-        layer.closeAll();
-        window.location.reload();
-    }
-</script>
-<script type="text/javascript">
-    tinymce.init({
-        'selector':'#goods_content',
-        'language':'zh_CN',
-        'width':'100%',
-        'height':'500px',
-        'resize':false,
-        'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
-        'toolbar':
-            'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
-            styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-            table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
-        'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
-        'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
-        'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
-        'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
-        'image_caption': true,
-        'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
-    });
-    $('#goodsform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
-</script>
-<script type="text/javascript">
     layui.use(['laydate','form','table','upload'], function(){
         var laydate=layui.laydate;
         var table=layui.table;
         var form=layui.form;
         var upload=layui.upload;
-        var uploadInst = upload.render({
-            elem: '#goods_img',
-            auto:false,
-            //bindAction:'#savedata_subbtn',
-            choose: function(obj){
-                obj.preview(function(index, file, result){
-                    $('#preimg_view').attr('src', result);
-                });
-            }
-        });
-        form.on('submit(savedata_addbtn)', function(data){
-            var url="<?php echo url('Goods/goods_add'); ?>";
-            savedata(url);
-            return false;
-        });
-        form.on('submit(savedata_editbtn)', function(data){
-            var url="<?php echo url('Goods/goods_edit'); ?>";
-            savedata(url);
-            return false;
-        });
     })
 
-    function goods_add(){
-        var url='<?php echo url("Goods/goods_add"); ?>';
-        var title='添加宽带套餐';
+    function adminrole_add(){
+        var url='<?php echo url("Adminrole/adminrole_add"); ?>';
+        var title='添加角色';
         layer.open({
             type: 2,
             title:title,
             shadeClose: false,
             shade: 0.8,
             area: ['95%', '90%'],
-            content: url
-        });
-    }
-
-    function goods_edit(dataid){
-        if(dataid>0){
-            var url='<?php echo url("Goods/goods_edit"); ?>?goodsid='+dataid;
-            var title='修改宽带套餐';
-            layer.open({
-                type: 2,
-                title:title,
-                shadeClose: false,
-                shade: 0.8,
-                area: ['95%', '90%'],
-                content: url
-            });
-        }
-    }
-
-    function savedata(url){
-        var sindex=layer.load(1,{time:5*1000});
-        $('#goodsform').ajaxSubmit({
-            url:url,
-            type:'post',
-            dataType:'json',
-            beforeSubmit: function(){
-                var goods_title=$.trim($('.goods_title').val());
-                if(goods_title==''){
-                    layer.msg('请输入宽带套餐标题');
-                    layer.close(sindex);
-                    return false;
-                }
-                var goods_price=$.trim($('.goods_price').val());
-                if(goods_price==''){
-                    layer.msg('请输入宽带套餐价格');
-                    layer.close(sindex);
-                    return false;
-                }
-            },
-            success: function(data){
-                layer.close(sindex);
-                layer.msg(data.msg);
-                if(data.code==400){
-                    return false;
-                }else if(data.code==200){
-                    setTimeout("parent.closealllayer()",2000)
-                }
+            content: url, //iframe的url
+            end:function () {
+                location.reload()
             }
         });
-        return false;
     }
 
-    function goods_orders_list(dataid){
+    function adminrole_edit(dataid){
         if(dataid>0){
-            var url='<?php echo url("Orders/orders_list"); ?>?goods_id='+dataid;
-            var title='宽带套餐订单列表';
+            var url='<?php echo url("Adminrole/adminrole_edit"); ?>?roleid='+dataid;
+            var title='修改角色';
             layer.open({
                 type: 2,
                 title:title,
                 shadeClose: false,
                 shade: 0.8,
                 area: ['95%', '90%'],
-                content: url
+                content: url, //iframe的url
+                end:function () {
+                    location.reload()
+                }
             });
         }
     }
 
-    function goods_del(){
+    function adminrole_assign(dataid){
+        if(dataid>0){
+            var url='<?php echo url("Adminrole/adminrole_assign"); ?>?roleid='+dataid;
+            var title='分配权限';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url, //iframe的url
+                end:function () {
+                    location.reload()
+                }
+            });
+        }
+    }
+
+    function adminrole_cancelassign(dataid){
+        if(dataid>0){
+            layer.confirm('取消角色权限后,属于该角色的管理员将不再有权限操作相关内容,确定取消角色权限吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Adminrole/adminrole_cancelassign'); ?>",{'roleid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function adminrole_del(){
         var dataid='';
-        $("[name='checkgoods[]']:checked").each(function(){
+        $("[name='ids[]']:checked").each(function(){
             dataid+=$(this).val()+',';
         })
         dataid=$.trim(dataid);
         if(dataid!=''){
-            layer.confirm('确定删除选中的宽带套餐吗?',{icon:3,title:'操作提示'},function(index){
+            layer.confirm('只有没有属于该角色的管理员才能删除，确定删除选中的角色吗?',{icon:3,title:'操作提示'},function(index){
                 var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Goods/goods_del'); ?>",{'goodsid':dataid},function(data){
+                $.post("<?php echo url('Adminrole/adminrole_del'); ?>",{'roleid':dataid},function(data){
                     layer.msg(data.msg);
                     layer.close(sindex);
                     if(data.code==200){
@@ -279,26 +205,10 @@
         }
     }
 
-    function goods_hide(dataid){
-        if(dataid!=''){
-            layer.confirm('下架后前端将不再显示，确定下架吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Goods/goods_hide'); ?>",{'goodsid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function goods_show(dataid){
+    function adminrole_open(dataid){
         if(dataid!=''){
             var sindex=layer.load(1,{'time':3*1000});
-            $.post("<?php echo url('Goods/goods_show'); ?>",{'goodsid':dataid},function(data){
+            $.post("<?php echo url('Adminrole/adminrole_open'); ?>",{'roleid':dataid},function(data){
                 layer.msg(data.msg);
                 layer.close(sindex);
                 if(data.code==200){
@@ -309,17 +219,25 @@
         }
     }
 
+    function adminrole_close(dataid){
+        if(dataid!=''){
+            layer.confirm('禁用角色后，属于该角色的管理员将不能登录，确定禁用角色吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Adminrole/adminrole_close'); ?>",{'roleid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
     function goods_search(){
-        var url="<?php echo url('Goods/goods_list'); ?>?a=1";
-        var keyword=$('.keyword').val();
-        var status=$('.status').val();
-        if(status!=''){
-            url+='&status='+status;
-        }
-        if(keyword!=''){
-            url+='&keyword='+keyword;
-        }
-        window.location.href=url;
+        var url="<?php echo url('Adminrole/adminrole_list'); ?>";
+        $('#searchform').attr('action',url).submit();
     }
 
 </script>

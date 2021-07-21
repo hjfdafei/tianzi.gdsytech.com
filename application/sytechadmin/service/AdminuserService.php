@@ -4,7 +4,7 @@ use think\facade\Request;
 use think\Db;
 use think\db\Query;
 use app\sytechadmin\model\Adminuser;
-use app\sytechadmin\service\MeetingsiteService;
+use app\sytechadmin\service\SchoolService;
 //管理员
 class AdminuserService extends Base{
     //field:查询字段 map:查询条件 search:搜索条件显示在分页链接 orderby:排序 pernum:每页多少条 type:获取数据类别 1获取分页 2获取全部
@@ -13,19 +13,17 @@ class AdminuserService extends Base{
         $list=array();
         $page='';
         $count=0;
-        $meetingsiteservice=new MeetingsiteService();
-        $meetingsitelist=$meetingsiteservice->getMeetingsiteList(2);
-        $meetingsitename=[];
-        foreach($meetingsitelist['list'] as $v){
-            $meetingsitename[$v['id']]=$v['title'];
+        $meetingsiteservice=new SchoolService();
+        $school_list=$meetingsiteservice->getSchoolList(2);
+        $schoolname=[];
+        foreach($school_list['list'] as $v){
+            $schoolname[$v['id']]=$v['title'];
         }
         if($type==1){
-            $list=DB::name('adminuser')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($meetingsitename){
-                    //$item['admin_belong']=$this->admin_getdetailname($item['admintype'],$item['admintypeid']);
-                    //$item['admin_typename']=$this->admin_gettypename($item['admintype']);
+            $list=DB::name('adminuser')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($schoolname){
                     $tmpname='平台';
-                    if(isset($meetingsitename[$item['meetingsiteid']])){
-                        $tmpname=$meetingsitename[$item['meetingsiteid']];
+                    if(isset($schoolname[$item['school_id']])){
+                        $tmpname=$schoolname[$item['school_id']];
                     }
                     $item['admin_belong']=$tmpname;
                     $item['admin_rolename']=$this->admin_getrolename($item['roleid']);
@@ -44,16 +42,17 @@ class AdminuserService extends Base{
     }
 
     //添加/修改管理员
-    public function admin_verify($adminuserid=0){
+    public function admin_verify($adminuserid,$admininfo){
         $username=input('post.username','','trim');
         $userpassword=input('post.userpassword','','trim');
         $mobile=input('post.mobile','','trim');
         $status=input('post.status','','intval');
         $roleid=input('post.roleid','','intval');
-        $meetingsiteid=input('post.meetingsiteid','0','intval');
-        $admintype=input('post.admintype','0','intval');
-        $admintypeid=input('post.admintypeid','0','intval');
+        $school_id=input('post.school_id','0','intval');
         $adminuserid=intval($adminuserid);
+        if($admininfo['school_id']>0){
+            $school_id=$admininfo['school_id'];
+        }
         if($username==''){
             return jsondata('400','请输入管理员账号');
         }
@@ -63,18 +62,13 @@ class AdminuserService extends Base{
         if($roleid<=0){
             return jsondata('400','请选择管理员角色');
         }
-        if($admintype>0){
-            if($admintypeid<=0){
-                return jsondata('400','请选择管理员类型');
-            }
-        }
-        if($meetingsiteid>0){
-            $meetingsiteservice=new MeetingsiteService();
-            $meetmap=[];
-            $meetmap[]=['id','=',$meetingsiteid];
-            $meetingsiteinfo=$meetingsiteservice->getMeetingsiteDetail($meetmap);
-            if(empty($meetingsiteinfo)){
-                return jsondata('400','选择的站点不存在');
+        if($school_id>0){
+            $schoolservice=new SchoolService();
+            $smap=[];
+            $smap[]=['id','=',$school_id];
+            $school_info=$schoolservice->schoolDetail($smap);
+            if(empty($school_info)){
+                return jsondata('400','选择的校区不存在');
             }
         }
         $map=[];
@@ -93,23 +87,21 @@ class AdminuserService extends Base{
         $data['mobile']=$mobile;
         $data['status']=$status;
         $data['roleid']=$roleid;
-        $data['meetingsiteid']=$meetingsiteid;
-        //$data['admintype']=$admintype;
-        //$data['admintypeid']=$admintypeid;
+        $data['school_id']=$school_id;
         if(empty($info)){
             if($userpassword==''){
                 return jsondata('400','请输入密码');
             }
             $userpassword=md5(md5($userpassword));
             $data['password']=$userpassword;
-            if(session('admininfo.preadminids')!=''){
-                $tmppreadminids=explode(',',session('admininfo.preadminids'));
+            if($admininfo['preadminids']!=''){
+                $tmppreadminids=explode(',',$admininfo['preadminids']);
             }
             $tmppreadminids[]=session('admininfo.id');
             $data['preadminids']=implode(',',array_unique($tmppreadminids));
-            $data['parentid']=session('admininfo.id');
+            $data['parentid']=$admininfo['id'];
             $data['create_time']=date('Y-m-d H:i:s');
-            $data['adminid']=session('admininfo.id');
+            $data['adminid']=$admininfo['id'];
             $res=DB::name('adminuser')->insert($data);
         }else{
             if($userpassword!=''){
@@ -127,11 +119,14 @@ class AdminuserService extends Base{
     }
 
     //删除管理员
-    public function admin_delete($adminuserid){
+    public function admin_delete($adminuserid,$admininfo){
         $deladminuserid=array();
         foreach($adminuserid as $v){
             $map=[];
             $map[]=['id','=',intval($v)];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $info=DB::name('adminuser')->where($map)->find();
             if(!empty($info)){
                 $deladminuserid[]=$info['id'];
@@ -140,9 +135,13 @@ class AdminuserService extends Base{
         if(empty($deladminuserid)){
             return jsondata('400','请选择要删除的管理员');
         }
-        $map=array();
+        $map=[];
         $num=0;
+        $map[]=['id','<>',1];
         $map[]=['id','in',$deladminuserid];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $res=DB::name('adminuser')->where($map)->delete();
         if($res){
             return jsondata('200','删除管理员成功');
@@ -152,7 +151,7 @@ class AdminuserService extends Base{
     }
 
     //启用/禁用管理员
-    public function admin_openorclose($adminuserid,$status){
+    public function admin_openorclose($adminuserid,$status,$admininfo){
         $statusname=['1'=>'启用','2'=>'禁用'];
         $adminuserid=intval($adminuserid);
         if(!in_array($status,array(1,2))){
@@ -162,6 +161,9 @@ class AdminuserService extends Base{
             return jsondata('400','请选择需要'.$statusname[$status].'的管理员');
         }
         $map[]=['id','=',$adminuserid];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $info=DB::name('adminuser')->where($map)->find();
         if(empty($info)){
             return jsondata('400','请选择需要'.$statusname[$status].'的管理员');
@@ -217,13 +219,16 @@ class AdminuserService extends Base{
     }
 
     //取消权限
-    public function admin_cancelassign($adminuserid){
+    public function admin_cancelassign($adminuserid,$admininfo){
         $adminuserid=intval($adminuserid);
         if($adminuserid<=0){
             return jsondata('400','请选择需要取消权限的管理员');
         }
         $map=[];
         $map[]=['id','=',$adminuserid];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $info=DB::name('adminuser')->where($map)->find();
         if(empty($info)){
             return jsondata('400','选择的角色不存在');

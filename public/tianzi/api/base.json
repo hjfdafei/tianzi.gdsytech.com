@@ -50,7 +50,15 @@
             "revisionHighlight":true,
             "fieldDesc":{
             },
-            "parameters":[]
+            "parameters":[
+                {
+                    "description":"school_id 校区id",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"school_id"
+                }
+            ]
         }
         ]
     },
@@ -223,6 +231,40 @@
             "fieldDesc":{
             },
             "parameters":[]
+        }
+        ]
+    },
+    {
+        "path":"/generic/pushMessage",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-07-21 17:35:37",
+            "httpMethod":"POST",
+            "summary":"推送小程序通知",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"pushMessage",
+            "revisionHighlight":true,
+            "fieldDesc":{
+            },
+            "parameters":[
+                {
+                    "description":"type 类型 1服务申请",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"type"
+                },
+                {
+                    "description":"orders_id 订单id",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"orders_id"
+                }
+            ]
         }
         ]
     }

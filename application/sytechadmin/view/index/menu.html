@@ -1,12 +1,12 @@
 <ul id="nav">
     {volist name='menu' id='vo'}
         <li>
-            <a href="{$vo.rule_url}">
+            {if !empty($vo['item'])}
+            <a href="javascript:void(0);">
                 <i class="iconfont left-nav-li" lay-tips="{$vo.rule_title}"> <i class="fa {$vo.rule_class}"></i></i>
                 <cite>{$vo.rule_title}</cite>
                 <i class="iconfont nav_right"></i>
             </a>
-            {if !empty($vo['item'])}
             <ul class="sub-menu">
                 {volist name='vo.item' id='vo2'}
                 <li>
@@ -17,106 +17,15 @@
                 </li>
                 {/volist}
             </ul>
+            {else /}
+            <a onclick="xadmin.add_tab('{$vo.rule_title}','{$vo.rule_url}')">
+                <i class="iconfont left-nav-li" lay-tips="{$vo.rule_title}"> <i class="fa {$vo.rule_class}"></i></i>
+                <cite>{$vo.rule_title}</cite>
+                <i class="iconfont nav_right"></i>
+            </a>
             {/if}
         </li>
     {/volist}
-    <li>
-        <a onclick="xadmin.add_tab('系统设置','{:url("Index/setting")}')">
-            <i class="iconfont left-nav-li" lay-tips="系统设置"> <i class="fa fa-cog"></i></i>
-            <cite>系统设置</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="Banner图片管理"> <i class="fa fa-picture-o"></i></i>
-            <cite>Banner图片管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('Banner列表','{:url("Banner/banner_list")}')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>Banner列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="校区管理"> <i class="fa fa-life-ring"></i></i>
-            <cite>校区管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('校区列表','{:url("School/school_list")}')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>校区列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="用户管理"> <i class="fa fa-user-circle"></i></i>
-            <cite>用户管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('用户列表','{:url("User/user_list")}')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>用户列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="宽带套餐管理"> <i class="fa fa-asterisk"></i></i>
-            <cite>宽带套餐管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('宽带套餐列表','{:url("Goods/goods_list")}')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>宽带套餐列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="宽带账号管理"> <i class="fa fa-futbol-o"></i></i>
-            <cite>宽带账号管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('宽带账号列表','{:url("Broadband/broadband_list")}')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>宽带账号列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="javascript:void(0);">
-            <i class="iconfont left-nav-li" lay-tips="订单管理"> <i class="fa fa-first-order"></i></i>
-            <cite>订单管理</cite>
-            <i class="iconfont nav_right"></i>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a onclick="xadmin.add_tab('订单列表','{:url("Orders/orders_list")}')">
-                    <i class="layui-icon layui-icon-right"></i>
-                    <cite>订单列表</cite>
-                </a>
-            </li>
-        </ul>
-    </li>
     <!-- <li>
         <a href="javascript:void(0);">
             <i class="iconfont left-nav-li" lay-tips="权限管理"> <i class="fa fa-sitemap"></i></i>

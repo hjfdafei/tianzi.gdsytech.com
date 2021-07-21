@@ -1,4 +1,4 @@
-<?php /*a:3:{s:107:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_add.html";i:1626421300;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626423094;}*/ ?>
+<?php /*a:3:{s:107:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_add.html";i:1626855723;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626424710;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -37,6 +37,18 @@
     <div class="setting_form">
         <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
             <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">所属校区<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name='school_id' class='school_id'>
+                                <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                    <option value='<?php echo htmlentities($vo['id']); ?>'><?php echo htmlentities($vo['title']); ?></option>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td class='td_right'><label class="layui-form-label">宽带账号<span class='musttip'>*</span></label></td>
                     <td class='td_left'>
@@ -94,6 +106,21 @@
             savedata(url);
             return false;
         });
+        var uploadInst = upload.render({
+            elem: '#uploadfiles',
+            auto:false,
+            exts: 'xls|xlsx|csv',
+            choose: function(obj){
+                obj.preview(function(index, file, result){
+                    $('.prefile_content').html(file.name);
+                });
+            }
+        });
+
+        form.on('submit(savedata_uploadbtn)',function(data){
+            savedata_upload();
+            return false;
+        })
     })
 
     function broadband_add(){
@@ -143,6 +170,40 @@
                     layer.close(sindex);
                     return false;
                 }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    //导入宽带账号
+    function broadband_import(){
+        var url='<?php echo url("Broadband/broadband_import"); ?>';
+        layer.open({
+            type: 2,
+            title:'导入宽带账号',
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url
+        });
+    }
+
+    function savedata_upload(){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:"<?php echo url('Broadband/broadband_import'); ?>",
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
             },
             success: function(data){
                 layer.close(sindex);

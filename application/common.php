@@ -597,7 +597,7 @@ function send_broadbandtpl($openid,$realname,$orderno){
 }
 
 //发送小程序订阅通知
-function send_mini_broadbandtpl($openid,$goods_title,$realname,$money){
+function send_mini_broadbandtpl($openid,$goods_title,$realname,$money,$orders_id){
     $url="https://api.weixin.qq.com/cgi-bin/message/subscribe/send";
     $miniappid=config('app.miniappid');
     $minisecret=config('app.minisecret');
@@ -606,19 +606,21 @@ function send_mini_broadbandtpl($openid,$goods_title,$realname,$money){
     $postdata=[
         'access_token'=>$access_token,
         'touser'=>$openid,
-        'template_id'=>'grFWUPWUQvG1D6cr3dqjhjr1S2BxndHc_5DaLg-RI4w',
-        'page'=>'pages/index',
+        'template_id'=>'grFWUPWUQvG1D6cr3dqjhsHBT3ewuHDsUyCf6gh05Rg',
+        'page'=>'pages/order-detail/index?id='.$orders_id,
         'data'=>[
-            'thing1'=>$goods_title,
-            'name3'=>$realname,
-            'amount16'=>$money,
+            'thing1'=>['value'=>$goods_title],
+            'name3'=>['value'=>$realname],
+            'amount16'=>['value'=>$money],
+            'thing5'=>['value'=>"你已成功办理佛大校园宽带报装"],
         ],
+        'miniprogram_state'=>'trial',
     ];
     $postdata=json_encode($postdata);
     if($access_token!=''){
         $param['access_token']=$access_token;
         $res=http_send($url,$param,$postdata,'POST');
-        ptr($res);
+        return $res;
     }
 
 }

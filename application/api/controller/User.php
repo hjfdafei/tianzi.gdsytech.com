@@ -210,52 +210,54 @@ class User extends Userbase{
 
     //预约费用支付(返回jsapi支付参数)
     public function ordersPay(){
-        $orders_id=input('orders_id','0','intval');
-        if($orders_id<=0){
-            return jsondata('0021','请选择预约信息');
+        if(request()->isPost() || request()->isAjax()){
+            $orders_id=input('orders_id','0','intval');
+            if($orders_id<=0){
+                return jsondata('0021','请选择预约信息');
+            }
+            $field='*';
+            $map=[];
+            $map[]=['user_id','=',$this->base_userinfo['id']];
+            $map[]=['id','=',$orders_id];
+            $service=new UserService();
+            $info=$service->ordersDetail($map,$field);
+            if(empty($info)){
+                return jsondata('0021','选择预约信息不存在');
+            }
+            if($info['money']<=0){
+                return jsondata('0021','订单还没设置费用');
+            }
+            if($info['ispay']==1){
+                return jsondata('0021','订单已支付,无需重复支付');
+            }
+            if($info['status']==3){
+                return jsondata('0021','订单已完成,无需重复支付');
+            }
+            if($info['status']==4){
+                return jsondata('0021','订单已关闭');
+            }
+            if($info['status']==5){
+                return jsondata('0021','订单正在退款中');
+            }
+            //$payno=$service->payno_create();
+            require_once WXPAYPATH.'WxPay.JsApiPay.php';
+            $tools = new \JsApiPay();
+            $input = new \WxPayUnifiedOrder();
+            $input->SetBody("宽带套餐费用");
+            $input->SetAttach('orderno='.$info['orderno'].'&pay_way=1');
+            $input->SetOut_trade_no($info['payno']);
+            $input->SetTotal_fee($info['money']);
+            $input->SetNotify_url(config('app_host').'/Api/Payment/sypayment_notify');
+            $input->SetTrade_type("JSAPI");
+            $input->SetOpenid($this->base_userinfo['openid']);
+            $config = new \WxPayConfig();
+            $order = \WxPayApi::unifiedOrder($config, $input);
+            $jsApiParameters = $tools->GetJsApiParameters($order);
+            $jsApiParameters=json_decode($jsApiParameters,true);
+            $data['data']=$jsApiParameters;
+            return jsondata('0001','获取成功',$data);
         }
-        $field='*';
-        $map=[];
-        $map[]=['user_id','=',$this->base_userinfo['id']];
-        $map[]=['id','=',$orders_id];
-        $service=new UserService();
-        $info=$service->ordersDetail($map,$field);
-        if(empty($info)){
-            return jsondata('0021','选择预约信息不存在');
-        }
-        if($info['money']<=0){
-            return jsondata('0021','订单还没设置费用');
-        }
-        if($info['ispay']==1){
-            return jsondata('0021','订单已支付,无需重复支付');
-        }
-        if($info['status']==3){
-            return jsondata('0021','订单已完成,无需重复支付');
-        }
-        if($info['status']==4){
-            return jsondata('0021','订单已关闭');
-        }
-        if($info['status']==5){
-            return jsondata('0021','订单正在退款中');
-        }
-        //$payno=$service->payno_create();
-        require_once WXPAYPATH.'WxPay.JsApiPay.php';
-        $tools = new \JsApiPay();
-        $input = new \WxPayUnifiedOrder();
-        $input->SetBody("宽带套餐费用");
-        $input->SetAttach('orderno='.$info['orderno'].'&pay_way=1');
-        $input->SetOut_trade_no($info['payno']);
-        $input->SetTotal_fee($info['money']);
-        $input->SetNotify_url(config('app_host').'/Api/Payment/sypayment_notify');
-        $input->SetTrade_type("JSAPI");
-        $input->SetOpenid($this->base_userinfo['openid']);
-        $config = new \WxPayConfig();
-        $order = \WxPayApi::unifiedOrder($config, $input);
-        ptr($order);exit;
-        $jsApiParameters = $tools->GetJsApiParameters($order);
-        $jsApiParameters=json_decode($jsApiParameters,true);
-        $data['data']=$jsApiParameters;
-        return jsondata('0001','获取成功',$data);
+        return jsondata('0028','网络请求错误');
     }
 
     //申请退款

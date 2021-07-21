@@ -1,4 +1,4 @@
-<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_edit.html";i:1626423346;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626424710;}*/ ?>
+<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_edit.html";i:1626855925;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626424710;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -37,6 +37,18 @@
     <div class="setting_form">
         <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
             <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">所属校区<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name='school_id' class='school_id'>
+                                <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                    <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($info['school_id']==$vo['id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td class='td_right'><label class="layui-form-label">宽带账号<span class='musttip'>*</span></label></td>
                     <td class='td_left'>

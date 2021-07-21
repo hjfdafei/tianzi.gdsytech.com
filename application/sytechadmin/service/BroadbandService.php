@@ -8,7 +8,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
-//use app\sytechadmin\model\Banner;
+use app\sytechadmin\service\SchoolService;
+
 //宽带账号管理
 class BroadbandService extends Base{
     //field:查询字段 map:查询条件 search:搜索条件显示在分页链接 orderby:排序 pernum:每页多少条 type:获取数据类别 1获取分页 2获取全部
@@ -20,7 +21,23 @@ class BroadbandService extends Base{
         $statusname=['1'=>'启用','2'=>'禁用'];
         $usename=['1'=>'已使用','2'=>'未使用'];
         if($type==1){
-            $list=DB::name('broadband')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$usename){
+            $schoolnamearr=[];
+            $schoolservice=new SchoolService();
+            $smap=[];
+            $sfield='*';
+            $sorderby=['sortby'=>'desc','id'=>'desc'];
+            $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+            if(!empty($school_list)){
+                foreach($school_list as $v){
+                    $schoolnamearr[$v['id']]=$v['title'];
+                }
+            }
+            $list=DB::name('broadband')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$usename,$schoolnamearr){
+                $schoolname='';
+                if(isset($schoolnamearr[$item['school_id']])){
+                    $schoolname=$schoolnamearr[$item['school_id']];
+                }
+                $item['schoolname']=$schoolname;
                 $item['statusname']=$statusname[$item['status']];
                 $item['usename']=$usename[$item['isuse']];
                 return $item;
@@ -38,13 +55,33 @@ class BroadbandService extends Base{
     }
 
     //宽带账号数据校验
-    public function broadband_verify($id){
+    public function broadband_verify($id,$admininfo){
         $id=intval($id);
         $keyaccount=input('post.keyaccount','','trim');
         $keypassword=input('post.keypassword','','trim');
         $status=input('post.status','1','intval');
+        $school_id=input('post.school_id','0','intval');
+        if($admininfo['school_id']>0){
+            $school_id=$admininfo['school_id'];
+        }
         if(!in_array($status,[1,2])){
             $status=1;
+        }
+        if($keyaccount==''){
+            return jsondata('400','请输入宽带账号');
+        }
+        if($keypassword==''){
+            return jsondata('400','请输入宽带密码');
+        }
+        if($school_id<=0){
+            return jsondata('400','请选择宽带所在校区');
+        }
+        $schoolservice=new SchoolService();
+        $smap=[];
+        $smap[]=['id','=',$school_id];
+        $school_info=$schoolservice->schoolDetail($smap);
+        if(empty($school_info)){
+            return jsondata('400','选择的校区不存在');
         }
         $info=[];
         if($id>0){
@@ -64,6 +101,7 @@ class BroadbandService extends Base{
             'keyaccount'=>$keyaccount,
             'keypassword'=>$keypassword,
             'status'=>$status,
+            'school_id'=>$school_id,
         ];
         if(empty($info)){
             if($status==1){
@@ -97,7 +135,7 @@ class BroadbandService extends Base{
     }
 
     //导入宽带账号
-    public function broadband_importdata($filedata){
+    public function broadband_importdata($filedata,$admininfo){
         set_time_limit(0);
         $fileext=substr(strrchr($filedata['name'],'.'),1);
         $objReader=IOFactory::createReader(ucfirst($fileext));
@@ -111,6 +149,20 @@ class BroadbandService extends Base{
         $data=[];
         if($allnum>2000){
             return jsondata('400','一次最多只能导入2000条数据');
+        }
+        $school_id=input('post.school_id','0','intval');
+        if($admininfo['school_id']>0){
+            $school_id=$admininfo['school_id'];
+        }
+        if($school_id<=0){
+            return jsondata('400','请选择宽带所在校区');
+        }
+        $schoolservice=new SchoolService();
+        $smap=[];
+        $smap[]=['id','=',$school_id];
+        $school_info=$schoolservice->schoolDetail($smap);
+        if(empty($school_info)){
+            return jsondata('400','选择的校区不存在');
         }
         $num=0;
         $num2=0;
@@ -127,6 +179,7 @@ class BroadbandService extends Base{
                 $data['keyaccount']=$keyaccount;
                 $data['keypassword']=$keypassword;
                 $data['status']=1;
+                $data['school_id']=$school_id;
                 $data['create_time']=date('Y-m-d H:i:s');
                 $res=DB::name('broadband')->insertGetId($data);
                 if($res){
@@ -156,9 +209,12 @@ class BroadbandService extends Base{
     }
 
     //宽带账号启用/禁用
-    public function broadband_showhide($id,$status=1){
+    public function broadband_showhide($id,$status=1,$admininfo){
         $map=[];
         $map[]=['id','=',$id];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $info=$this->broadbandDetail($map);
         if(empty($info)){
             return jsondata('400','需要操作的宽带账号不存在');
@@ -183,12 +239,15 @@ class BroadbandService extends Base{
     }
 
     //删除宽带账号
-    public function broadband_delete($id){
+    public function broadband_delete($id,$admininfo){
         $delid=array();
         $delimg=[];
         foreach($id as $v){
             $map=[];
             $map[]=['id','=',intval($v)];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $info=$this->broadbandDetail($map);
             if(!empty($info)){
                 $omap=[];

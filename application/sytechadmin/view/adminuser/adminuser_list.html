@@ -23,12 +23,12 @@
                     <div class="layui-row layui-form">
                         <div class="layui-col-md5">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">预约站点</label>
+                                <label class="layui-form-label">所属校区</label>
                                 <div class="layui-input-block">
-                                    <select name='meetingsiteid' class='meetingsiteid'>
+                                    <select name='school_id' class='school_id'>
                                         <option value='0'>全部</option>
-                                        {volist name='meetingsitelist' id='vo'}
-                                        <option value="{$vo.id}" {if $vo['id']==$search['meetingsiteid']}selected{/if}>{$vo.title}</option>
+                                        {volist name='school_list' id='vo'}
+                                        <option value="{$vo.id}" {if $vo['id']==$search['school_id']}selected{/if}>{$vo.title}</option>
                                         {/volist}
                                     </select>
 
@@ -94,127 +94,10 @@
 {/block}
 {block name="footer"}
 <script type="text/javascript">
-    layui.use(['laydate','form','table','upload'], function(){
-        var laydate=layui.laydate;
-        var table=layui.table;
-        var form=layui.form;
-        var upload=layui.upload;
-    })
-
-    function adminuser_add(){
-        var url='{:url("Adminuser/adminuser_add")}';
-        var title='添加管理员';
-        layer.open({
-            type: 2,
-            title:title,
-            shadeClose: false,
-            shade: 0.8,
-            area: ['95%', '90%'],
-            content: url
-        });
+    function closealllayer(){
+        layer.closeAll();
+        window.location.reload();
     }
-
-    function adminuser_edit(dataid){
-        if(dataid>0){
-            var url='{:url("Adminuser/adminuser_edit")}?adminuserid='+dataid;
-            var title='修改管理员';
-            layer.open({
-                type: 2,
-                title:title,
-                shadeClose: false,
-                shade: 0.8,
-                area: ['95%', '90%'],
-                content: url
-            });
-        }
-    }
-
-    function adminuser_assign(dataid){
-        if(dataid>0){
-            var url='{:url("Adminuser/adminuser_assign")}?adminuserid='+dataid;
-            var title='分配权限';
-            layer.open({
-                type: 2,
-                title:title,
-                shadeClose: false,
-                shade: 0.8,
-                area: ['95%', '90%'],
-                content: url
-            });
-        }
-    }
-
-    function adminuser_cancelassign(dataid){
-        if(dataid>0){
-            layer.confirm('取消权限后,属于该管理员将不再有权限操作相关内容,确定取消权限吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("{:url('Adminuser/adminuser_cancelassign')}",{'adminuserid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function adminuser_del(){
-        var dataid='';
-        $("[name='ids[]']:checked").each(function(){
-            dataid+=$(this).val()+',';
-        })
-        dataid=$.trim(dataid);
-        if(dataid!=''){
-            layer.confirm('确定删除选中的管理员吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("{:url('Adminuser/adminuser_del')}",{'adminuserid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function adminuser_open(dataid){
-        if(dataid!=''){
-            var sindex=layer.load(1,{'time':3*1000});
-            $.post("{:url('Adminuser/adminuser_open')}",{'adminuserid':dataid},function(data){
-                layer.msg(data.msg);
-                layer.close(sindex);
-                if(data.code==200){
-                    setTimeout("window.location.reload();",2000);
-                }
-            },'json')
-            layer.close(index);
-        }
-    }
-
-    function adminuser_close(dataid){
-        if(dataid!=''){
-            layer.confirm('禁用后，管理员将不能登录，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("{:url('Adminuser/adminuser_close')}",{'adminuserid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function adminuser_search(){
-        var url="{:url('Adminuser/adminuser_list')}";
-        $('#searchform').attr('action',url).submit();
-    }
-
 </script>
+{include file='adminuser/adminuser_footer' /}
 {/block}

@@ -1,0 +1,176 @@
+<script type="text/javascript">
+    layui.use(['laydate','form','table','upload'], function(){
+        var laydate=layui.laydate;
+        var table=layui.table;
+        var form=layui.form;
+        var upload=layui.upload;
+        form.on('submit(savedata_addbtn)', function(data){
+            var url="{:url('Adminuser/adminuser_add')}";
+            savedata(url,1);
+            return false;
+        });
+        form.on('submit(savedata_editbtn)', function(data){
+            var url="{:url('Adminuser/adminuser_edit')}";
+            savedata(url,2);
+            return false;
+        });
+    })
+
+    function adminuser_add(){
+        var url='{:url("Adminuser/adminuser_add")}';
+        var title='添加管理员';
+        layer.open({
+            type: 2,
+            title:title,
+            shadeClose: false,
+            shade: 0.8,
+            area: ['95%', '90%'],
+            content: url
+        });
+    }
+
+    function adminuser_edit(dataid){
+        if(dataid>0){
+            var url='{:url("Adminuser/adminuser_edit")}?adminuserid='+dataid;
+            var title='修改管理员';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function savedata(url,optype=2){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:url,
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var username=$.trim($('.username').val());
+                if(username==''){
+                    layer.msg('请输入管理员账号');
+                    layer.close(sindex);
+                    return false;
+                }
+                if(optype==1){
+                    var userpassword=$.trim($('.userpassword').val());
+                    if(userpassword==''){
+                        layer.msg('请输入管理员密码');
+                        layer.close(sindex);
+                        return false;
+                    }
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("parent.closealllayer()",2000)
+                }
+            }
+        });
+        return false;
+    }
+
+    function adminuser_assign(dataid){
+        if(dataid>0){
+            var url='{:url("Adminuser/adminuser_assign")}?adminuserid='+dataid;
+            var title='分配权限';
+            layer.open({
+                type: 2,
+                title:title,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['95%', '90%'],
+                content: url
+            });
+        }
+    }
+
+    function adminuser_cancelassign(dataid){
+        if(dataid>0){
+            layer.confirm('取消权限后,属于该管理员将不再有权限操作相关内容,确定取消权限吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Adminuser/adminuser_cancelassign')}",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function adminuser_del(){
+        var dataid='';
+        $("[name='ids[]']:checked").each(function(){
+            dataid+=$(this).val()+',';
+        })
+        dataid=$.trim(dataid);
+        if(dataid!=''){
+            layer.confirm('确定删除选中的管理员吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Adminuser/adminuser_del')}",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function adminuser_open(dataid){
+        if(dataid!=''){
+            var sindex=layer.load(1,{'time':3*1000});
+            $.post("{:url('Adminuser/adminuser_open')}",{'adminuserid':dataid},function(data){
+                layer.msg(data.msg);
+                layer.close(sindex);
+                if(data.code==200){
+                    setTimeout("window.location.reload();",2000);
+                }
+            },'json')
+            layer.close(index);
+        }
+    }
+
+    function adminuser_close(dataid){
+        if(dataid!=''){
+            layer.confirm('禁用后，管理员将不能登录，确定禁用吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("{:url('Adminuser/adminuser_close')}",{'adminuserid':dataid},function(data){
+                    layer.msg(data.msg);
+                    layer.close(sindex);
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
+    }
+
+    function adminuser_search(){
+        var url="{:url('Adminuser/adminuser_list')}?a=1";
+        var keyword=$('.keyword').val();
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        var school_id=$('.school_id').val();
+        if(school_id!=''){
+            url+='&school_id='+school_id;
+        }
+        window.location.href=url;
+    }
+</script>

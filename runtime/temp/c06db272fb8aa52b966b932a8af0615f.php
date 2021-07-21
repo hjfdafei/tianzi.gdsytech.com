@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1626679633;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626688835;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1626833319;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626858312;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -178,9 +178,9 @@
                                 <?php echo htmlentities($vo['ispayname']); if($vo['ispay']!=2): ?><span style='color:#337ab7;display:block;'>支付时间:<?php echo htmlentities($vo['pay_time']); ?></span><?php endif; ?>
                             </td>
                             <td>
-                                <span style='color:#337ab7;display:block;'>应付金额:<?php echo htmlentities($vo['money']/100); ?></span>
-                                <span style='color:#337ab7;display:block;'>折扣金额:<?php echo htmlentities($vo['discount_money']/100); ?></span>
-                                <span style='color:#337ab7;display:block;'>实付金额:<?php echo htmlentities($vo['pay_money']/100); ?></span>
+                                <span style='color:#337ab7;display:block;'>应付金额:<?php echo htmlentities($vo['money']); ?></span>
+                                <span style='color:#337ab7;display:block;'>折扣金额:<?php echo htmlentities($vo['discount_money']); ?></span>
+                                <span style='color:#337ab7;display:block;'>实付金额:<?php echo htmlentities($vo['pay_money']); ?></span>
                             </td>
                             <td><?php echo htmlentities($vo['create_time']); ?></td>
                             <td>
@@ -440,15 +440,12 @@
         return false;
     }
 
-    function orders_getrandaccount(dataid=''){
-        if(dataid==''){
-            dataid=$('.broadband_id').val();
-        }
-        $.post("<?php echo url('Index/getRandAccount'); ?>",{'id':dataid},function(data){
+    function orders_getrandaccount(school_id){
+
+        $.post("<?php echo url('Index/getRandAccount'); ?>",{'school_id':school_id},function(data){
             if(data.code==200){
                 $('.keyaccount').val(data.data.data.keyaccount)
                 $('.keypassword').val(data.data.data.keypassword);
-                $('.broadband_id').val(data.data.data.id);
             }else{
                 layer.msg(data.msg);
             }

@@ -1,4 +1,4 @@
-<?php /*a:2:{s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\login\login.html";i:1589630446;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1614850497;}*/ ?>
+<?php /*a:2:{s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\login\login.html";i:1589630446;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -170,30 +170,30 @@
                 });
             }
 
-            function checknums(){
-                $.post('<?php echo url("sytechadmin/index/chekcnums"); ?>',{},function(data){
-                    if(data.code==200){
-                        var resdata=data.data.data;
-                        if(resdata.allnum>0){
-                            $('.mainfoot').show();
-                            if(resdata.ordernum>0){
-                                $('.hasneworder').show();
-                            }else{
-                                $('.hasneworder').hide();
-                            }
-                            if(resdata.chatnum>0){
-                                $('.hasnewchat').show();
-                            }else{
-                                $('.hasnewchat').show();
-                            }
-                        }else{
-                            $('.mainfoot').hide();
-                        }
-                    }
-                },'json');
-            }
-            checknums();
-            setInterval(checknums,1000*60);
+            // function checknums(){
+            //     $.post('<?php echo url("sytechadmin/index/chekcnums"); ?>',{},function(data){
+            //         if(data.code==200){
+            //             var resdata=data.data.data;
+            //             if(resdata.allnum>0){
+            //                 $('.mainfoot').show();
+            //                 if(resdata.ordernum>0){
+            //                     $('.hasneworder').show();
+            //                 }else{
+            //                     $('.hasneworder').hide();
+            //                 }
+            //                 if(resdata.chatnum>0){
+            //                     $('.hasnewchat').show();
+            //                 }else{
+            //                     $('.hasnewchat').show();
+            //                 }
+            //             }else{
+            //                 $('.mainfoot').hide();
+            //             }
+            //         }
+            //     },'json');
+            // }
+            // checknums();
+            // setInterval(checknums,1000*60);
         </script>
     </body>
 </html>

@@ -27,6 +27,21 @@
                     <div class="layui-row">
                         <div class="layui-col-md5">
                             <div class="layui-form-item">
+                                <label class="layui-form-label">所属校区</label>
+                                <div class="layui-input-block">
+                                    <select name="school_id" class='school_id'>
+                                        <option value='0'>全部</option>
+                                        {volist name='school_list' id='vo'}
+                                        <option value='{$vo.id}' {if $search['school_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md5">
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">使用状态</label>
                                 <div class="layui-input-block">
                                     <select name='usestatus' class='usestatus'>
@@ -70,6 +85,7 @@
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>所属校区</th>
                             <th>宽带账号</th>
                             <th>宽带密码</th>
                             <th>使用状态</th>
@@ -80,6 +96,7 @@
                         {volist name='$list' id='vo'}
                         <tr class='table_tr'>
                             <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.schoolname}</td>
                             <td>{$vo.keyaccount}</td>
                             <td>{$vo.keypassword}</td>
                             <td>{$vo.usename}</td>

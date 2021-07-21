@@ -234,11 +234,11 @@ class Index extends Sytechadminbase{
     }
 
     public function getRandAccount(){
-        $id=input('id','0','intval');
+        $school_id=input('school_id','0','intval');
         $map=[];
         $map[]=['status','=',1];
         $map[]=['isuse','=',2];
-        $map[]=['id','<>',$id];
+        $map[]=['school_id','=',$school_id];
         $info=DB::name('broadband')->field('id,keyaccount,keypassword')->where($map)->limit(1)->orderRand()->find();
         if(empty($info)){
             return jsondata('400','暂无数据');

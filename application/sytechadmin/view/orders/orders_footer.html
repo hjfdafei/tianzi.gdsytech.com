@@ -225,15 +225,12 @@
         return false;
     }
 
-    function orders_getrandaccount(dataid=''){
-        if(dataid==''){
-            dataid=$('.broadband_id').val();
-        }
-        $.post("{:url('Index/getRandAccount')}",{'id':dataid},function(data){
+    function orders_getrandaccount(school_id){
+
+        $.post("{:url('Index/getRandAccount')}",{'school_id':school_id},function(data){
             if(data.code==200){
                 $('.keyaccount').val(data.data.data.keyaccount)
                 $('.keypassword').val(data.data.data.keypassword);
-                $('.broadband_id').val(data.data.data.id);
             }else{
                 layer.msg(data.msg);
             }

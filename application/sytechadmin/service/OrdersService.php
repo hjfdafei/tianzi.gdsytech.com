@@ -75,7 +75,7 @@ class OrdersService extends Base{
     }
 
     //编辑订单
-    public function orders_verify($id){
+    public function orders_verify($id,$admininfo){
         $id=intval($id);
         $school_id=input('post.school_id','0','intval');
         $realname=input('post.realname','','trim');
@@ -86,6 +86,9 @@ class OrdersService extends Base{
         $address=input('post.address','','trim');
         $money=input('post.money','','trim');
         $money=$money*100;
+        if($admininfo['school_id']>0){
+            $school_id=$admininfo['school_id'];
+        }
         if($school_id<=0){
             return jsondata('400','请选择所在校区');
         }
@@ -118,6 +121,9 @@ class OrdersService extends Base{
             return jsondata('400','选择的校区不存在');
         }
         $map=[];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $map[]=['id','=',$id];
         $map[]=['isdel','=',2];
         $info=$this->ordersDetail($map);
@@ -148,11 +154,14 @@ class OrdersService extends Base{
     }
 
     //清空订单宽带信息
-    public function orders_clearing($id){
+    public function orders_clearing($id,$admininfo){
         $num=0;
         DB::startTrans();
         foreach($id as $v){
             $map=[];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $map[]=['id','=',intval($v)];
             $map[]=['isdel','=',2];
             $info=$this->ordersDetail($map);
@@ -187,7 +196,7 @@ class OrdersService extends Base{
     }
 
     //设置宽带账号
-    public function orders_settingbroadband($id){
+    public function orders_settingbroadband($id,$admininfo){
         $id=intval($id);
         $keyaccount=input('post.keyaccount','','trim');
         $keypassword=input('post.keypassword','','trim');
@@ -201,6 +210,9 @@ class OrdersService extends Base{
             return jsondata('400','请输入宽带密码');
         }
         $map=[];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $map[]=['id','=',$id];
         $map[]=['isdel','=',2];
         $info=$this->ordersDetail($map);
@@ -215,6 +227,9 @@ class OrdersService extends Base{
         }
         $bservice=new BroadbandService();
         $bmap=[];
+        if($admininfo['school_id']>0){
+            $bmap[]=['school_id','=',$admininfo['school_id']];
+        }
         $bmap[]=['keyaccount','=',$keyaccount];
         $bmap[]=['keypassword','=',$keypassword];
         $bmap[]=['isuse','=',2];
@@ -247,7 +262,7 @@ class OrdersService extends Base{
         if($res && $res2){
             DB::commit();
             //send_broadbandtpl($info['openid'],$info['realname'],$info['orderno']);
-            send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2));
+            send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2),$info['id']);
             return jsondata('200','分配宽带账号成功');
         }else{
             DB::rollback();
@@ -281,6 +296,9 @@ class OrdersService extends Base{
         }
         $bservice=new BroadbandService();
         $bmap=[];
+        if($admininfo['school_id']>0){
+            $bmap[]=['school_id','=',$admininfo['school_id']];
+        }
         $bmap[]=['id','=',$info['broadband_id']];
         $bmap[]=['isuse','=',1];
         $broadbandinfo=$bservice->broadbandDetail($bmap);
@@ -345,18 +363,21 @@ class OrdersService extends Base{
             $discount_money=round($v['discount_money']/100,2);
             $pay_money=round($v['pay_money']/100,2);
             $statusname=$statusnamearr[$v['status']];
-            $data[]=[$schoolname,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],$v['idcardnum'],$v['department'],$v['studentnumber'],$v['address'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
+            $data[]=[$schoolname,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],$v['studentnumber'],$v['address'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
         }
         exportdatas($filename,$head,$data);
         return ;
     }
 
     //删除订单
-    public function orders_delete($id){
+    public function orders_delete($id,$admininfo){
         $num=0;
         $truedelid=[];
         foreach($id as $v){
             $map=[];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $map[]=['id','=',intval($v)];
             $map[]=['isdel','=',2];
             $info=$this->ordersDetail($map);

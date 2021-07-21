@@ -28,7 +28,7 @@ class WxPayConfig extends WxPayConfigInterface
 	 * MCHID：商户号（必须配置，开户邮件中可查看）
 	 *
 	 */
-	const APPID = 'wx3361d0befe30cf39';
+	const APPID = 'wxbc9d35337bd0930c';//公众号jsapi支付就是公众号appid,小程序支付就小程序appid
 	const MCHID = '1579915801';
 	const KEY = 'tianzitongxunqicaiyouxiangongsi1';
 	const APPSECRET = 'f9f1733a0c4eab79876132c3177a493c';

@@ -43,6 +43,7 @@ class Payment extends Controller{
                     if($info['ispay']!=1){
                         $updateData['pay_money']=$rescontent['total_fee'];
                         $updateData['ispay']=1;
+                        $updateData['status']=2;
                         $updateData['pay_way']=$attachdata['pay_way'];
                         $updateData['pay_tradeno']=$rescontent['transaction_id'];
                         $updateData['pay_time']=date('Y-m-d H:i:s',strtotime($rescontent['time_end']));
@@ -62,6 +63,7 @@ class Payment extends Controller{
                         $bmap=[];
                         $bmap[]=['status','=',1];
                         $bmap[]=['isuse','=',2];
+                        $bmap[]=['school_id','=',$info['school_id']];
                         $broadbandinfo=DB::name('broadband')->field('id,keyaccount,keypassword')->where($bmap)->limit(1)->orderRand()->find();
                         if(!empty($broadbandinfo)){
                             $oumap=[];
@@ -80,7 +82,7 @@ class Payment extends Controller{
                             $budata['update_time']=date('Y-m-d H:i:s');
                             $res2=DB::name('broadband')->where($bumap)->update($budata);
                             //send_broadbandtpl($info['openid'],$info['realname'],$info['orderno']);
-                            send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2));
+                            //send_mini_broadbandtpl($info['openid'],'宽带安装',$info['realname'],round($info['money']/100,2),$info['id']);
                         }
                     }
                 }

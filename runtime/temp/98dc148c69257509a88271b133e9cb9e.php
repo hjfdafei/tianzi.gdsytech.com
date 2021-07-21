@@ -1,4 +1,4 @@
-<?php /*a:2:{s:97:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\setting.html";i:1626849645;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
+<?php /*a:2:{s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\adminrole\adminrole_assign.html";i:1586341680;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -27,99 +27,135 @@
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
             <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <title>系统管理后台</title>
+        <title>管理后台--分配权限</title>
     </head>
     <body>
         
         
         
 <body class="index">
-    <div class="setting_form">
-        <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='settingform'>
-            <table class="layui-table">
-                <tr>
-                    <td class='td_right'><label class="layui-form-label">办理条款<span class='musttip'>*</span></label></td>
-                    <td class='td_left'>
-                        <div class="layui-input-block">
-                            <textarea name="content" id='content' placeholder="办理条款" class="layui-textarea content"><?php echo htmlentities($webconfig['content']); ?></textarea>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: center">
-                        <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
-                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </form>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:20px;'></div>
+            <?php if(empty($list)): ?>
+                <div class='nodata'>暂无数据</div>
+            <?php else: ?>
+                <form class="layui-form" id='goodsform'>
+                    <div class="layui-form-item">
+                        <?php foreach($list as $key=>$item): ?>
+                        <dl class="rule_ul">
+                            <dt>
+                                <div class="layui-row layui-rowlevel1" style='padding-bottom:10px;'>
+                                    <div class="layui-col-md">
+                                      <input type="checkbox" name="ids[]" value="<?php echo htmlentities($item['id']); ?>" lay-filter="level-1" class="checkbox-ids" lay-skin="primary" title="<?php echo htmlentities($item['rule_title']); ?>" <?php if(in_array($item['id'],$info['role_ruleid'])): ?>checked='checked'<?php endif; ?> />
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd style='background:#f2f2f2;padding-left:20px;'>
+                            <?php if(!(empty($item['son']) || (($item['son'] instanceof \think\Collection || $item['son'] instanceof \think\Paginator ) && $item['son']->isEmpty()))): foreach($item['son'] as $key2=>$item2): ?>
+                                <dl class="rule_ul menu-son">
+                                    <dt>
+                                        <div class="layui-row" style='padding-bottom:10px;'>
+                                            <div class="layui-col-md">
+                                                <input type="checkbox" name="ids[]" value="<?php echo htmlentities($item2['id']); ?>" lay-filter="level-2" class="checkbox-ids" lay-skin="primary" title="<?php echo htmlentities($item2['rule_title']); ?>" <?php if(in_array($item2['id'],$info['role_ruleid'])): ?>checked='checked'<?php endif; ?> />
+                                            </div>
+                                        </div>
+                                    </dt>
+                                </dl>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            </dd>
+                        </dl>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="layui-input-block" style='text-align:center;margin:0;'>
+                        <input type="hidden" name="roleid" value='<?php echo htmlentities($info['id']); ?>' />
+                        <button class="layui-btn" lay-submit lay-filter="savedata_subbtn" id='savedata_subbtn'>提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </form>
+            <?php endif; ?>
+        </div>
     </div>
 </body>
+<style type="text/css">
+    .menu-son{min-width:120px;display:inline-block;}
+</style>
+
 
         
         
-    <style>
-        .mapsearch{padding-top:10px;}
-        .amap-icon img, .amap-marker-content img {width:19px;height:33px;}
-    </style>
-    <script type="text/javascript">
-        tinymce.init({
-            'selector':'#content',
-            'language':'zh_CN',
-            'width':'100%',
-            'height':'500px',
-            'resize':false,
-            'plugins': 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen uploadimage link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help powerpaste emoticons autosave',
-            'toolbar':
-                'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
-                styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-                table uploadimage media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
-            'fontsize_formats': '12px 14px 16px 18px 24px 36px 48px 56px 72px',
-            'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
-            'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
-            'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
-            'image_caption': true,
-            'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
+<script type="text/javascript">
+    layui.use(['form','jquery','layer'], function(){
+        var $=layui.jquery;
+        form = layui.form;
+        layer= layui.layer;
+        //隔行换色
+        //$('.layui-form .layui-rowlevel1:odd').css('background-color','#f2f2f2');
+        form.on('checkbox(level-1)', function(data){
+            $(data.elem).parent().parent().parent().next().find('input').prop('checked',data.elem.checked);
+            form.render('checkbox');
         });
-        $('#settingform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
-    </script>
-    <script type="text/javascript">
-        layui.use(['laydate','form','table','upload'], function(){
-            var laydate = layui.laydate;
-            var table = layui.table;
-            var form = layui.form;
-            var upload=layui.upload;
-            form.on('submit(savedata_subbtn)', function(data){
-                savedata();
-                return false;
+        form.on('checkbox(level-2)', function(data){
+            var aa=0;
+            var bb=new Array();
+            $(data.elem).parent().parent().parent().parent().parent().siblings().find('input').prop('checked',data.elem.checked);
+            $($(data.elem).parent().parent().parent().parent().siblings()).each(function(){
+                bb.push($(this).find('input').prop('checked'));
             });
-        })
-
-        //保存数据
-        function savedata(){
-            var sindex=layer.load(1,{time:5*1000});
-            $('#settingform').ajaxSubmit({
-                url:"<?php echo url('Index/setting'); ?>",
-                type:'post',
-                dataType:'json',
-                beforeSubmit: function(){
-
-                },
-                success: function(data){
-                    layer.close(sindex);
-                    layer.msg(data.msg);
-                    if(data.code==400){
-                        return false;
-                    }else if(data.code==200){
-                        setTimeout("window.location.reload()",2000)
-                    }
+            bb.push(data.elem.checked);
+            for(var i=0;i<bb.length;i++){
+                if(bb[i]==false){
+                    aa+=0;
+                }else{
+                    aa+=1;
                 }
-            });
+            }
+            if(aa==0){
+                $(data.elem).parent().parent().parent().parent().parent().siblings().find('input').prop('checked',false);
+            }else{
+                $(data.elem).parent().parent().parent().parent().parent().siblings().find('input').prop('checked',true);
+            }
+            form.render('checkbox');
+        });
+        form.on('submit(savedata_subbtn)', function(data){
+            savedata();
             return false;
-        }
-    </script>
+        });
+    });
+
+    //保存数据
+    function savedata(){
+        var sindex=layer.load(1,{time:5*1000});
+        $('#goodsform').ajaxSubmit({
+            url:"<?php echo url('Adminrole/adminrole_assign'); ?>",
+            type:'post',
+            dataType:'json',
+            beforeSubmit: function(){
+                var dataid='';
+                $('input[type=checkbox]:checked').each(function(){
+                    dataid+=$(this).val()+',';
+                });
+                dataid=$.trim(dataid);
+                if(dataid==''){
+                    layer.msg('请选择权限');
+                    layer.close(sindex);
+                    return false;
+                }
+            },
+            success: function(data){
+                layer.close(sindex);
+                layer.msg(data.msg);
+                if(data.code==400){
+                    return false;
+                }else if(data.code==200){
+                    setTimeout("window.location.reload()",2000)
+                }
+            }
+        });
+        return false;
+    }
+</script>
 
         <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
