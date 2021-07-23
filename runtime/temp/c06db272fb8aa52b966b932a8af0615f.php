@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1626833319;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626858312;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1626833319;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626918213;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626858312;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
         <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
         <script type="text/javascript" src="/static/plugins/tinymce4.9.2/tinymce.min.js"></script>
-        <script type="text/javascript" src='https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js'></script>
+        <script type="text/javascript" src='/static/js/md5.min.js'></script>
         <link rel="stylesheet" href="/static/xadmin/css/font.css">
         <link rel="stylesheet" href="/static/css/weui.min.css">
         <link rel="stylesheet" href="/static/xadmin/css/xadmin.css">

@@ -612,9 +612,9 @@ function send_mini_broadbandtpl($openid,$goods_title,$realname,$money,$orders_id
             'thing1'=>['value'=>$goods_title],
             'name3'=>['value'=>$realname],
             'amount16'=>['value'=>$money],
-            'thing5'=>['value'=>"你已成功办理佛大校园宽带报装"],
+            'thing5'=>['value'=>"业务已成功办理，前往个人中心查看宽带账号"],
         ],
-        'miniprogram_state'=>'trial',
+        //'miniprogram_state'=>'trial',
     ];
     $postdata=json_encode($postdata);
     if($access_token!=''){

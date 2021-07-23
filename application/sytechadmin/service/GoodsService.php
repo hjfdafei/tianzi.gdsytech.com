@@ -18,7 +18,11 @@ class GoodsService extends Base{
             $list=DB::name('goods')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname){
                 $item['statusname']=$statusname[$item['goods_status']];
                 $omap=[];
+                $omap[]=['isdel','=',2];
                 $omap[]=['goods_id','=',$item['id']];
+                if(session('admininfo.school_id')>0){
+                    $omap[]=['school_id','=',session('admininfo.school_id')];
+                }
                 $item['sale_num']=DB::name('orders')->where($omap)->count();
                 return $item;
             });
