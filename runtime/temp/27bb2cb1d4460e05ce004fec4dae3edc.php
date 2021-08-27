@@ -1,4 +1,4 @@
-<?php /*a:2:{s:97:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\setting.html";i:1626849645;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;}*/ ?>
+<?php /*a:2:{s:97:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\setting.html";i:1630036323;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
         <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
         <script type="text/javascript" src="/static/plugins/tinymce4.9.2/tinymce.min.js"></script>
-        <script type="text/javascript" src='https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js'></script>
+        <script type="text/javascript" src='/static/js/md5.min.js'></script>
         <link rel="stylesheet" href="/static/xadmin/css/font.css">
         <link rel="stylesheet" href="/static/css/weui.min.css">
         <link rel="stylesheet" href="/static/xadmin/css/xadmin.css">
@@ -37,6 +37,14 @@
     <div class="setting_form">
         <form class='layui-form dataform' enctype="multipart/form-data" method="post" id='settingform'>
             <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">办理指引<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <textarea name="guide" id='guide' placeholder="办理指引" class="layui-textarea guide"><?php echo htmlentities($webconfig['guide']); ?></textarea>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td class='td_right'><label class="layui-form-label">办理条款<span class='musttip'>*</span></label></td>
                     <td class='td_left'>
@@ -66,7 +74,7 @@
     </style>
     <script type="text/javascript">
         tinymce.init({
-            'selector':'#content',
+            'selector':'#content,#guide',
             'language':'zh_CN',
             'width':'100%',
             'height':'500px',
@@ -81,6 +89,7 @@
             'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
             'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
             'image_caption': true,
+            'convert_urls':false,
             'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
         });
         $('#settingform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });
@@ -121,10 +130,10 @@
         }
     </script>
 
-        <div class='mainfoot'>
+        <!-- <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
             <div class='hasnewchat' onclick="parent.xadmin.add_tab('客服消息列表','<?php echo url("Servicechat/servicechat_list"); ?>')">你有新的消息需要回复</div>
-        </div>
+        </div> -->
         <style type="text/css">
             .mainfoot{position:fixed;right:0;bottom:0;background:#333;height:70px;padding:8px;display:none;}
             .hasneworder{display:block;border:1px solid #1E9FFF;border-radius:5px;padding:5px;cursor:pointer;color:#fff;display:none;}

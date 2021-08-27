@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_edit.html";i:1626849629;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626849988;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_edit.html";i:1630033318;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1630033337;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
         <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
         <script type="text/javascript" src="/static/plugins/tinymce4.9.2/tinymce.min.js"></script>
-        <script type="text/javascript" src='https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js'></script>
+        <script type="text/javascript" src='/static/js/md5.min.js'></script>
         <link rel="stylesheet" href="/static/xadmin/css/font.css">
         <link rel="stylesheet" href="/static/css/weui.min.css">
         <link rel="stylesheet" href="/static/xadmin/css/xadmin.css">
@@ -66,7 +66,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class='td_right'><label class="layui-form-label">宽带办理条款<span class='musttip'>*</span></label></td>
+                    <td class='td_right'><label class="layui-form-label">宽带办理指引</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <textarea name="guide" id='guide' placeholder="宽带办理指引" class="layui-textarea guide"><?php echo htmlentities($info['guide']); ?></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">宽带办理条款</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
                             <textarea name="content" id='content' placeholder="宽带办理条款" class="layui-textarea content"><?php echo htmlentities($info['content']); ?></textarea>
@@ -110,7 +118,7 @@
         
     <script type="text/javascript">
     tinymce.init({
-        'selector':'#content',
+        'selector':'#content,#guide',
         'language':'zh_CN',
         'width':'100%',
         'height':'500px',
@@ -278,10 +286,10 @@
 
 </script>
 
-        <div class='mainfoot'>
+        <!-- <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
             <div class='hasnewchat' onclick="parent.xadmin.add_tab('客服消息列表','<?php echo url("Servicechat/servicechat_list"); ?>')">你有新的消息需要回复</div>
-        </div>
+        </div> -->
         <style type="text/css">
             .mainfoot{position:fixed;right:0;bottom:0;background:#333;height:70px;padding:8px;display:none;}
             .hasneworder{display:block;border:1px solid #1E9FFF;border-radius:5px;padding:5px;cursor:pointer;color:#fff;display:none;}

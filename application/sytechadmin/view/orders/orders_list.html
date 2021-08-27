@@ -74,6 +74,14 @@
                         </div>
                         <div class="layui-col-md3">
                             <div class="layui-form-item">
+                                <label class="layui-form-label">推荐人</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="promoter" name="promoter" placeholder="推荐人姓名" autocomplete="off" class="layui-input promoter" value='{$search.promoter}'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">下单日期</label>
                                 <div class="layui-input-block">
                                     <input type="text" id="applytime_start" name="applytime_start" placeholder="开始下单日期" autocomplete="off" class="layui-input applytime_start" readonly="readonly" value='{$search.applytime_start}'>
@@ -117,6 +125,7 @@
                             <th>支付状态</th>
                             <th>支付金额</th>
                             <th>下单时间</th>
+                            <th>推荐人</th>
                             <th>操作</th>
                         </tr>
                         {volist name='$list' id='vo'}
@@ -152,6 +161,7 @@
                                 <span style='color:#337ab7;display:block;'>实付金额:{$vo.pay_money}</span>
                             </td>
                             <td>{$vo.create_time}</td>
+                            <td>{$vo.promoter}</td>
                             <td>
                                 <a class="layui-btn layui-btn-sm" onclick="orders_detail({$vo.id})">详情</a>
                                 <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_edit({$vo.id})">修改</a>
@@ -165,7 +175,7 @@
                         </tr>
                         {/volist}
                         <tr>
-                            <td colspan="14" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                            <td colspan="15" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
                         </tr>
                     </table>
                 </div>

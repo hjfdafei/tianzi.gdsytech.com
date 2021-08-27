@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1626833319;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626918213;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626858312;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1629944431;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -106,6 +106,14 @@
                         </div>
                         <div class="layui-col-md3">
                             <div class="layui-form-item">
+                                <label class="layui-form-label">推荐人</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="promoter" name="promoter" placeholder="推荐人姓名" autocomplete="off" class="layui-input promoter" value='<?php echo htmlentities($search['promoter']); ?>'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">下单日期</label>
                                 <div class="layui-input-block">
                                     <input type="text" id="applytime_start" name="applytime_start" placeholder="开始下单日期" autocomplete="off" class="layui-input applytime_start" readonly="readonly" value='<?php echo htmlentities($search['applytime_start']); ?>'>
@@ -149,6 +157,7 @@
                             <th>支付状态</th>
                             <th>支付金额</th>
                             <th>下单时间</th>
+                            <th>推荐人</th>
                             <th>操作</th>
                         </tr>
                         <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
@@ -183,6 +192,7 @@
                                 <span style='color:#337ab7;display:block;'>实付金额:<?php echo htmlentities($vo['pay_money']); ?></span>
                             </td>
                             <td><?php echo htmlentities($vo['create_time']); ?></td>
+                            <td><?php echo htmlentities($vo['promoter']); ?></td>
                             <td>
                                 <a class="layui-btn layui-btn-sm" onclick="orders_detail(<?php echo htmlentities($vo['id']); ?>)">详情</a>
                                 <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_edit(<?php echo htmlentities($vo['id']); ?>)">修改</a>
@@ -196,7 +206,7 @@
                         </tr>
                         <?php endforeach; endif; else: echo "" ;endif; ?>
                         <tr>
-                            <td colspan="14" class='page_wrap'><span class='page_count'>共<font><?php echo htmlentities($count); ?></font>条记录</span><?php echo $page; ?></td>
+                            <td colspan="15" class='page_wrap'><span class='page_count'>共<font><?php echo htmlentities($count); ?></font>条记录</span><?php echo $page; ?></td>
                         </tr>
                     </table>
                 </div>
@@ -498,6 +508,10 @@
         if(applytime_end!=''){
             url+='&applytime_end='+applytime_end;
         }
+        var promoter=$('.promoter').val();
+        if(promoter!=''){
+            url+='&promoter='+promoter;
+        }
         window.location.href=url;
     }
 
@@ -531,6 +545,10 @@
         if(applytime_end!=''){
             url+='&applytime_end='+applytime_end;
         }
+        var promoter=$('.promoter').val();
+        if(promoter!=''){
+            url+='&promoter='+promoter;
+        }
         window.location.href=url;
     }
 
@@ -562,10 +580,10 @@
 
 </script>
 
-        <div class='mainfoot'>
+        <!-- <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
             <div class='hasnewchat' onclick="parent.xadmin.add_tab('客服消息列表','<?php echo url("Servicechat/servicechat_list"); ?>')">你有新的消息需要回复</div>
-        </div>
+        </div> -->
         <style type="text/css">
             .mainfoot{position:fixed;right:0;bottom:0;background:#333;height:70px;padding:8px;display:none;}
             .hasneworder{display:block;border:1px solid #1E9FFF;border-radius:5px;padding:5px;cursor:pointer;color:#fff;display:none;}

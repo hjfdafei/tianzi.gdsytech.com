@@ -45,15 +45,18 @@ class Index extends Sytechadminbase{
         $path='../config/webconfig.json';
         if(!file_exists($path)){
             $data['content']='';
+            $data['guide']='';
             file_put_contents($path,json_encode($data,256));
         }
         $webconfig=json_decode(file_get_contents($path),true);
+        if(!isset($webconfig['guide'])){
+            $webconfig['guide']='';
+        }
         if(request()->isPost() || request()->isAjax()){
             $content=input('post.content','','trim');
-            if($content==''){
-                return jsondata('400','请填写办理条款');
-            }
+            $guide=input('post.guide','','trim');
             $data['content']=$content;
+            $data['guide']=$guide;
             file_put_contents($path,json_encode($data,256));
             return jsondata('200','设置成功');
         }

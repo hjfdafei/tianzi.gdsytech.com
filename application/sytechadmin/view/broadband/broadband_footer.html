@@ -180,8 +180,20 @@
     function broadband_search(){
         var url="{:url('Broadband/broadband_list')}?a=1";
         var keyword=$('.keyword').val();
+        var school_id=$('.school_id').val();
+        var usestatus=$('.usestatus').val();
+        var status=$('.status').val();
         if(keyword!=''){
             url+='&keyword='+keyword;
+        }
+        if(school_id!=''){
+            url+='&school_id='+school_id;
+        }
+        if(usestatus!=''){
+            url+='&usestatus='+usestatus;
+        }
+        if(status!=''){
+            url+='&status='+status;
         }
         window.location.href=url;
     }

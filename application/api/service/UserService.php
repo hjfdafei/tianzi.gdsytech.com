@@ -134,6 +134,7 @@ class UserService extends Base{
         $department=$param['department'];
         $studentnumber=$param['studentnumber'];
         $address=$param['address'];
+        $promoter=$param['promoter'];
         if($school_id<=0){
             return ['code'=>'400','msg'=>'请选择校区'];
         }
@@ -161,6 +162,9 @@ class UserService extends Base{
         $checkmobile_res=checkformat_mobile($mobile);
         if($checkmobile_res['code']!='0001'){
             return ['code'=>'400','msg'=>$checkmobile_res['msg']];
+        }
+        if(!validation_idcard($idcardnum)){
+            return ['code'=>'400','msg'=>'请输入正确的身份证号码'];
         }
         $gservice=new GenericService();
         $smap=[];
@@ -199,6 +203,7 @@ class UserService extends Base{
             'department'=>$department,
             'studentnumber'=>$studentnumber,
             'address'=>$address,
+            'promoter'=>$promoter,
             'payno'=>$payno,
             'status'=>1,
             'money'=>$goods_info['goods_price']*100,

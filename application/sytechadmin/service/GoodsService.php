@@ -46,6 +46,7 @@ class GoodsService extends Base{
         $goods_status=input('post.goods_status','1','intval');
         $goods_sortby=input('post.goods_sortby','0','intval');
         $goods_content=input('post.goods_content','','trim');
+        $goods_price=round($goods_price,2);
         if(!in_array($goods_status,[1,2])){
             $goods_status=1;
         }
@@ -59,6 +60,9 @@ class GoodsService extends Base{
             if(empty(request()->file('goods_img'))){
                 return jsondata('400','请上传宽带套餐封面图');
             }
+        }
+        if($goods_price<=0){
+            return jsondata('400','请输入宽带价格');
         }
         $data=[
             'goods_title'=>$goods_title,

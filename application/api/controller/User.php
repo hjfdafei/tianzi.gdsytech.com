@@ -164,6 +164,7 @@ class User extends Userbase{
             $department=input('post.department','','trim');
             $studentnumber=input('post.studentnumber','','trim');
             $address=input('post.address','','trim');
+            $promoter=input('post.promoter','','trim');
             $param=[
                 'school_id'=>$school_id,
                 'goods_id'=>$goods_id,
@@ -173,6 +174,7 @@ class User extends Userbase{
                 'department'=>$department,
                 'studentnumber'=>$studentnumber,
                 'address'=>$address,
+                'promoter'=>$promoter,
             ];
             $service=new UserService();
             $res=$service->ordersVerify($this->base_userinfo,$param);
@@ -205,7 +207,6 @@ class User extends Userbase{
         }
         $data['data']=$info;
         return jsondata('0001','获取成功',$data);
-
     }
 
     //预约费用支付(返回jsapi支付参数)

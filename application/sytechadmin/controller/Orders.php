@@ -20,6 +20,7 @@ class Orders extends Sytechadminbase{
         $status=input('status','0','intval');
         $orderno=input('orderno','','trim');
         $keyword=input('keyword','','trim');
+        $promoter=input('promoter','','trim');
         $applytime_start=input('applytime_start','','trim');
         $applytime_end=input('applytime_end',date('Y-m-d 23:59:59'),'trim');
         if($this->base_admininfo['school_id']>0){
@@ -37,10 +38,13 @@ class Orders extends Sytechadminbase{
             $map[]=['o.goods_id','=',$goods_id];
         }
         if($status>0){
-            $map[]=['status','=',$status];
+            $map[]=['o.status','=',$status];
         }
         if($keyword!=''){
             $map[]=['o.realname|o.mobile|o.idcardnum','like',"%$keyword%"];
+        }
+        if($promoter!=''){
+            $map[]=['o.promoter','like',"%$promoter%"];
         }
         if($orderno!=''){
             $map[]=['o.orderno','=',$orderno];
@@ -56,6 +60,7 @@ class Orders extends Sytechadminbase{
         $search['school_id']=$school_id;
         $search['status']=$status;
         $search['keyword']=$keyword;
+        $search['promoter']=$promoter;
         $search['orderno']=$orderno;
         $search['applytime_start']=$applytime_start;
         $search['applytime_end']=$applytime_end;
@@ -65,7 +70,7 @@ class Orders extends Sytechadminbase{
         $data=$service->getOrdersList(1,$map,$field,$search,20,$orderby);
         $schoolservice=new SchoolService();
         $smap=[];
-        if($school_id>0){
+        if($this->base_admininfo['school_id']>0){
             $smap[]=['id','=',$school_id];
         }
         $sfield='*';

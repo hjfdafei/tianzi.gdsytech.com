@@ -1,4 +1,4 @@
-<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_list.html";i:1626855105;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626918213;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1626424710;}*/ ?>
+<?php /*a:3:{s:108:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_list.html";i:1629281605;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:110:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_footer.html";i:1629281566;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -102,7 +102,7 @@
                     <div class="layui-row">
                         <label class="layui-form-label"></label>
                         <span class="layui-btn" onclick="broadband_search()">搜索</span>
-                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('School/broadband_list'); ?>">刷新</a>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Broadband/broadband_list'); ?>">刷新</a>
                     </div>
                 </form>
                 <?php if(count($list)<=0): ?>
@@ -344,18 +344,30 @@
     function broadband_search(){
         var url="<?php echo url('Broadband/broadband_list'); ?>?a=1";
         var keyword=$('.keyword').val();
+        var school_id=$('.school_id').val();
+        var usestatus=$('.usestatus').val();
+        var status=$('.status').val();
         if(keyword!=''){
             url+='&keyword='+keyword;
+        }
+        if(school_id!=''){
+            url+='&school_id='+school_id;
+        }
+        if(usestatus!=''){
+            url+='&usestatus='+usestatus;
+        }
+        if(status!=''){
+            url+='&status='+status;
         }
         window.location.href=url;
     }
 
 </script>
 
-        <div class='mainfoot'>
+        <!-- <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
             <div class='hasnewchat' onclick="parent.xadmin.add_tab('客服消息列表','<?php echo url("Servicechat/servicechat_list"); ?>')">你有新的消息需要回复</div>
-        </div>
+        </div> -->
         <style type="text/css">
             .mainfoot{position:fixed;right:0;bottom:0;background:#333;height:70px;padding:8px;display:none;}
             .hasneworder{display:block;border:1px solid #1E9FFF;border-radius:5px;padding:5px;cursor:pointer;color:#fff;display:none;}

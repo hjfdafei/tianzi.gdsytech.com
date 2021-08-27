@@ -61,6 +61,30 @@ class Generic extends Base{
         return jsondata('0001','获取成功',$data);
     }
 
+    //获取宽带办理指引
+    public function getGuide(){
+        $content='';
+        $school_id=input('school_id',0,'intval');
+        if($school_id>0){
+            $map=[];
+            $map[]=['id','=',$school_id];
+            $service=new GenericService();
+            $info=$service->schoolDetail($map);
+            if(!empty($info)){
+                if($info['guide']!=''){
+                    $content=htmlspecialchars_decode($info['guide']);
+                }
+            }
+        }
+        if($content==''){
+            $path='../config/webconfig.json';
+            $webconfig=json_decode(file_get_contents($path),true);
+            $content=htmlspecialchars_decode($webconfig['guide']);
+        }
+        $data['content']=$content;
+        return jsondata('0001','获取成功',$data);
+    }
+
     //获取宽带套餐列表
     public function getGoodsList(){
         $pagenum=input('pagenum',1,'intval');

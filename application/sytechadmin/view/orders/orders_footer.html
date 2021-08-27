@@ -283,6 +283,10 @@
         if(applytime_end!=''){
             url+='&applytime_end='+applytime_end;
         }
+        var promoter=$('.promoter').val();
+        if(promoter!=''){
+            url+='&promoter='+promoter;
+        }
         window.location.href=url;
     }
 
@@ -315,6 +319,10 @@
         var applytime_end=$('.applytime_end').val();
         if(applytime_end!=''){
             url+='&applytime_end='+applytime_end;
+        }
+        var promoter=$('.promoter').val();
+        if(promoter!=''){
+            url+='&promoter='+promoter;
         }
         window.location.href=url;
     }
