@@ -43,6 +43,7 @@ class Payment extends Controller{
                     if($info['ispay']!=1){
                         $updateData['pay_money']=$rescontent['total_fee'];
                         $updateData['ispay']=1;
+                        $updateData['status']=2;
                         $updateData['pay_way']=$attachdata['pay_way'];
                         $updateData['pay_tradeno']=$rescontent['transaction_id'];
                         $updateData['pay_time']=date('Y-m-d H:i:s',strtotime($rescontent['time_end']));
