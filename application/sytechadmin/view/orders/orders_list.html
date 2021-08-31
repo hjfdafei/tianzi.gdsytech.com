@@ -112,11 +112,20 @@
                         </tr>
                     </table>
                 {else /}
+                <div style='height:20px;'></div>
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li {if $search['orders_style']==0}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>0])}">全部</a></li>
+                        <li {if $search['orders_style']==1}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>1])}">新购订单</a></li>
+                        <li {if $search['orders_style']==2}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>2])}">续费订单</a></li>
+                    </ul>
+                </div>
                 <div style='height:10px;'></div>
                 <div class='layui-row' style='overflow: auto;'>
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>订单类型</th>
                             <th>所在校区</th>
                             <th>订单号</th>
                             <th>报装信息</th>
@@ -132,6 +141,7 @@
                         {volist name='$list' id='vo'}
                         <tr class='table_tr'>
                             <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.stylename}</td>
                             <td>{$vo.schoolname}</td>
                             <td>{$vo.orderno}</td>
                             <td>

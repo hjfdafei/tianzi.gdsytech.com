@@ -23,6 +23,7 @@ class Orders extends Sytechadminbase{
         $promoter=input('promoter','','trim');
         $applytime_start=input('applytime_start','','trim');
         $applytime_end=input('applytime_end',date('Y-m-d 23:59:59'),'trim');
+        $orders_style=input('orders_style','0','intval');
         if($this->base_admininfo['school_id']>0){
             $school_id=$this->base_admininfo['school_id'];
         }
@@ -62,6 +63,9 @@ class Orders extends Sytechadminbase{
         if($applytime_end!=''){
             $map[]=['o.create_time','<=',$applytime_end];
         }
+        if($orders_style>0){
+            $map[]=['o.orders_style','=',$orders_style];
+        }
         $search['user_id']=$user_id;
         $search['goods_id']=$goods_id;
         $search['school_id']=$school_id;
@@ -71,6 +75,7 @@ class Orders extends Sytechadminbase{
         $search['orderno']=$orderno;
         $search['applytime_start']=$applytime_start;
         $search['applytime_end']=$applytime_end;
+        $search['orders_style']=$orders_style;
         $field='o.*,g.goods_title,b.keyaccount,b.keypassword,b.start_time,b.end_time';
         $orderby=['o.id'=>'desc'];
         $service=new OrdersService();
@@ -139,6 +144,18 @@ class Orders extends Sytechadminbase{
         if(!empty($school_info)){
             $school_name=$school_info['title'];
         }
+        $orders_stylelist=config('app.orders_style');
+        $orders_stylearr=[];
+        if(!empty($orders_stylelist)){
+            foreach($orders_stylelist as $ov){
+                $orders_stylearr[$ov['id']]=$ov['title'];
+            }
+        }
+        $stylename='';
+        if(isset($orders_stylearr[$info['orders_style']])){
+            $stylename=$orders_stylearr[$info['orders_style']];
+        }
+        $info['stylename']=$stylename;
         $info['school_name']=$school_name;
         $info['goods_title']=$goods_title;
         $info['keyaccount']=$keyaccount;
@@ -302,6 +319,7 @@ class Orders extends Sytechadminbase{
         $keyword=input('keyword','','trim');
         $applytime_start=input('applytime_start','','trim');
         $applytime_end=input('applytime_end',date('Y-m-d 23:59:59'),'trim');
+        $orders_style=input('orders_style','0','intval');
         if($this->base_admininfo['school_id']>0){
             $school_id=$this->base_admininfo['school_id'];
         }
@@ -331,6 +349,9 @@ class Orders extends Sytechadminbase{
         if($applytime_end!=''){
             $map[]=['o.create_time','<=',$applytime_end];
         }
+        if($orders_style>0){
+            $map[]=['o.orders_style','=',$orders_style];
+        }
         $search['user_id']=$user_id;
         $search['goods_id']=$goods_id;
         $search['school_id']=$school_id;
@@ -339,6 +360,7 @@ class Orders extends Sytechadminbase{
         $search['orderno']=$orderno;
         $search['applytime_start']=$applytime_start;
         $search['applytime_end']=$applytime_end;
+        $search['orders_style']=$orders_style;
         $field='o.*,g.goods_title,b.keyaccount,b.keypassword,b.start_time,b.end_time';
         $orderby=['o.id'=>'desc'];
         $service=new OrdersService();

@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html";i:1626748373;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1626849988;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html";i:1626748373;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_footer.html";i:1630036314;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -129,7 +129,7 @@
 </script>
 <script type="text/javascript">
     tinymce.init({
-        'selector':'#content',
+        'selector':'#content,#guide',
         'language':'zh_CN',
         'width':'100%',
         'height':'500px',
@@ -144,6 +144,7 @@
         'template_cdate_format':'[CDATE: %m/%d/%Y : %H:%M:%S]',
         'template_mdate_format':'[MDATE: %m/%d/%Y : %H:%M:%S]',
         'image_caption': true,
+        'convert_urls':false,
         'upload_image_url':"<?php echo url('sytechadmin/upload/file_upload',array('type'=>'attach')); ?>"
     });
     $('#goodsform').bind('form-pre-serialize', function(event, form, options, veto) { tinyMCE.triggerSave(); });

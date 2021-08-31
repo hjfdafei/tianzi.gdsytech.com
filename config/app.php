@@ -161,4 +161,5 @@ return [
     'attachpath'=>env('app.avatarpath','./upload/attachpath'),
     'bannerposition'=>[['id'=>1,'title'=>'首页']],
     'visiturl'=>env('app.visiturl',''),
+    'orders_style'=>[['id'=>1,'title'=>'新购'],['id'=>2,'title'=>'续费']],
 ];

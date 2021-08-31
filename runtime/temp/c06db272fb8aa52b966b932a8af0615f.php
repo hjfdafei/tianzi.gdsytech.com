@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1629944431;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1630383028;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -80,6 +80,7 @@
                                         <option value='2' <?php if($search['status']==2): ?>selected='selected'<?php endif; ?>>已支付</option>
                                         <option value='1' <?php if($search['status']==1): ?>selected='selected'<?php endif; ?>>未支付</option>
                                         <option value='3' <?php if($search['status']==3): ?>selected='selected'<?php endif; ?>>已发放</option>
+                                        <option value='6' <?php if($search['status']==6): ?>selected='selected'<?php endif; ?>>未发放</option>
                                         <option value='4' <?php if($search['status']==4): ?>selected='selected'<?php endif; ?>>已取消</option>
                                         <option value='5' <?php if($search['status']==5): ?>selected='selected'<?php endif; ?>>取消中</option>
                                     </select>
@@ -143,11 +144,20 @@
                         </tr>
                     </table>
                 <?php else: ?>
+                <div style='height:20px;'></div>
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li <?php if($search['orders_style']==0): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>0]); ?>">全部</a></li>
+                        <li <?php if($search['orders_style']==1): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>1]); ?>">新购订单</a></li>
+                        <li <?php if($search['orders_style']==2): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>2]); ?>">续费订单</a></li>
+                    </ul>
+                </div>
                 <div style='height:10px;'></div>
                 <div class='layui-row' style='overflow: auto;'>
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>订单类型</th>
                             <th>所在校区</th>
                             <th>订单号</th>
                             <th>报装信息</th>
@@ -163,6 +173,7 @@
                         <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                         <tr class='table_tr'>
                             <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='<?php echo htmlentities($vo['id']); ?>'></td>
+                            <td><?php echo htmlentities($vo['stylename']); ?></td>
                             <td><?php echo htmlentities($vo['schoolname']); ?></td>
                             <td><?php echo htmlentities($vo['orderno']); ?></td>
                             <td>

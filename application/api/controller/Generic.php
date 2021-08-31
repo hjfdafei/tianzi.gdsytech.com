@@ -149,7 +149,7 @@ class Generic extends Base{
         $pernum=10;
         $start=($pagenum-1)*$pernum;
         $limit=$pernum;
-        $map[]=['status','=',1];
+        //$map[]=['status','=',1];
         if($keyword!=''){
             $map[]=['title','like',"%$keyword%"];
         }
@@ -194,6 +194,13 @@ class Generic extends Base{
             $info['logo']=$this->weburl.'/static/images/school_logo.png';
         }
         $data['data']=$info;
+        return jsondata('0001','获取成功',$data);
+    }
+
+    //订单类别
+    public function getOrdersStyle(){
+        $list=config('app.orders_style');
+        $data['list']=$list;
         return jsondata('0001','获取成功',$data);
     }
 

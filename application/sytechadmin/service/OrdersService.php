@@ -31,7 +31,14 @@ class OrdersService extends Base{
                     $schoolnamearr[$v['id']]=$v['title'];
                 }
             }
-            $list=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$ispayname,$isrefundname,$schoolnamearr){
+            $orders_stylelist=config('app.orders_style');
+            $orders_stylearr=[];
+            if(!empty($orders_stylelist)){
+                foreach($orders_stylelist as $ov){
+                    $orders_stylearr[$ov['id']]=$ov['title'];
+                }
+            }
+            $list=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$ispayname,$isrefundname,$schoolnamearr,$orders_stylearr){
                 $schoolname='';
                 if(isset($schoolnamearr[$item['school_id']])){
                     $schoolname=$schoolnamearr[$item['school_id']];
@@ -42,6 +49,11 @@ class OrdersService extends Base{
                 if($item['end_time']!=''){
                     $item['end_time']=date('Y.m.d',strtotime($item['end_time']));
                 }
+                $stylename='';
+                if(isset($orders_stylearr[$item['orders_style']])){
+                    $stylename=$orders_stylearr[$item['orders_style']];
+                }
+                $item['stylename']=$stylename;
                 $item['money']=round($item['money']/100,2);
                 $item['discount_money']=round($item['discount_money']/100,2);
                 $item['pay_money']=round($item['pay_money']/100,2);
@@ -332,7 +344,7 @@ class OrdersService extends Base{
         }
         $listdata=$list['list'];
         $filename='订单信息表';
-        $head=['所在校区','订单号','姓名','联系电话','身份证号码','院系','学号','宿舍地址','推荐人','宽带套餐','宽带账号','宽带密码','宽带有效期','应付金额','优惠金额','实付金额','支付时间','订单状态','下单时间'];
+        $head=['所在校区','订单类型','订单号','姓名','联系电话','身份证号码','院系','学号','宿舍地址','推荐人','续费宽带账号','宽带套餐','宽带账号','宽带密码','宽带有效期','应付金额','优惠金额','实付金额','支付时间','订单状态','下单时间'];
         $data=[];
         $statusnamearr=['1'=>'待支付','2'=>'已支付','3'=>'已发放','4'=>'已取消','5'=>'取消中'];
         $schoolservice=new SchoolService();
@@ -346,10 +358,21 @@ class OrdersService extends Base{
                 unset($v);
             }
         }
+        $orders_stylelist=config('app.orders_style');
+        $orders_stylearr=[];
+        if(!empty($orders_stylelist)){
+            foreach($orders_stylelist as $ov){
+                $orders_stylearr[$ov['id']]=$ov['title'];
+            }
+        }
         foreach($listdata as $v){
             $schoolname='';
             if(isset($schoolnamearr[$v['school_id']])){
                 $schoolname=$schoolnamearr[$v['school_id']];
+            }
+            $stylename='';
+            if(isset($orders_stylearr[$v['orders_style']])){
+                $stylename=$orders_stylearr[$v['orders_style']];
             }
             $start_time='';
             $end_time='';
@@ -363,7 +386,7 @@ class OrdersService extends Base{
             $discount_money=round($v['discount_money']/100,2);
             $pay_money=round($v['pay_money']/100,2);
             $statusname=$statusnamearr[$v['status']];
-            $data[]=[$schoolname,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],$v['studentnumber'],$v['address'],$v['promoter'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
+            $data[]=[$schoolname,$stylename,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],$v['studentnumber'],$v['address'],$v['promoter'],$v['broadband_account'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
         }
         exportdatas($filename,$head,$data);
         return ;

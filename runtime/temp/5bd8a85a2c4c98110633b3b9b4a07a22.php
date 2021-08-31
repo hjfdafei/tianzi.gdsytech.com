@@ -1,4 +1,4 @@
-<?php /*a:3:{s:105:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_settime.html";i:1626679373;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1626679490;}*/ ?>
+<?php /*a:3:{s:105:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_settime.html";i:1626679373;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
         <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
         <script type="text/javascript" src="/static/plugins/tinymce4.9.2/tinymce.min.js"></script>
-        <script type="text/javascript" src='https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js'></script>
+        <script type="text/javascript" src='/static/js/md5.min.js'></script>
         <link rel="stylesheet" href="/static/xadmin/css/font.css">
         <link rel="stylesheet" href="/static/css/weui.min.css">
         <link rel="stylesheet" href="/static/xadmin/css/xadmin.css">
@@ -116,17 +116,6 @@
         form.on('submit(savedata_settimebtn)', function(data){
             var url="<?php echo url('Orders/orders_settime'); ?>";
             savedata_settingtime(url);
-            return false;
-        });
-
-        form.on('submit(savedata_refusebtn)', function(data){
-            var url="<?php echo url('Orders/orders_refund_refuse'); ?>";
-            savedata_refusing(url);
-            return false;
-        });
-        form.on('submit(savedata_agreebtn)', function(data){
-            var url="<?php echo url('Orders/orders_refund_agree'); ?>";
-            savedata_agreeing(url);
             return false;
         });
         laydate.render({
@@ -325,15 +314,12 @@
         return false;
     }
 
-    function orders_getrandaccount(dataid=''){
-        if(dataid==''){
-            dataid=$('.broadband_id').val();
-        }
-        $.post("<?php echo url('Index/getRandAccount'); ?>",{'id':dataid},function(data){
+    function orders_getrandaccount(school_id){
+
+        $.post("<?php echo url('Index/getRandAccount'); ?>",{'school_id':school_id},function(data){
             if(data.code==200){
                 $('.keyaccount').val(data.data.data.keyaccount)
                 $('.keypassword').val(data.data.data.keypassword);
-                $('.broadband_id').val(data.data.data.id);
             }else{
                 layer.msg(data.msg);
             }
@@ -386,185 +372,12 @@
         if(applytime_end!=''){
             url+='&applytime_end='+applytime_end;
         }
+        var promoter=$('.promoter').val();
+        if(promoter!=''){
+            url+='&promoter='+promoter;
+        }
         window.location.href=url;
     }
-
-
-
-
-
-
-    function orders_setfee(dataid){
-        var url='<?php echo url("Orders/orders_setfee"); ?>?ordersid='+dataid;
-        var title='设置费用';
-        layer.open({
-            type: 2,
-            title:title,
-            shadeClose: false,
-            shade: 0.8,
-            area: ['95%', '90%'],
-            content: url
-        });
-    }
-
-    function savedata_setfeeing(url){
-        var sindex=layer.load(1,{time:5*1000});
-        $('#goodsform').ajaxSubmit({
-            url:url,
-            type:'post',
-            dataType:'json',
-            beforeSubmit: function(){
-                var money=$.trim($('.money').val());
-                if(money<=0 || money==''){
-                    layer.close(sindex);
-                    layer.msg('请设置费用');
-                    return false;
-                }
-            },
-            success: function(data){
-                layer.close(sindex);
-                layer.msg(data.msg);
-                if(data.code==400){
-                    return false;
-                }else if(data.code==200){
-                    setTimeout("parent.closealllayer()",2000)
-                }
-            }
-        });
-        return false;
-    }
-
-
-
-    function orders_close(dataid){
-        if(dataid==''){
-            $("[name='checkgoods[]']:checked").each(function(){
-                dataid+=$(this).val()+',';
-            })
-        }
-        dataid=$.trim(dataid);
-        if(dataid==''){
-            layer.msg('请选择订单');
-            return false;
-        }
-        if(dataid!=''){
-            layer.confirm('确定关闭选择的订单吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Orders/orders_close'); ?>",{'ordersid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function orders_setfinish(dataid=''){
-        if(dataid==''){
-            $("[name='checkgoods[]']:checked").each(function(){
-                dataid+=$(this).val()+',';
-            })
-        }
-        if(dataid==''){
-            layer.msg('请选择订单');
-            return false;
-        }
-        dataid=$.trim(dataid);
-        if(dataid!=''){
-            layer.confirm('确定完成选择的订单吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Orders/orders_setfinish'); ?>",{'ordersid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-    function orders_setintegral(dataid=''){
-        if(dataid==''){
-            $("[name='checkgoods[]']:checked").each(function(){
-                dataid+=$(this).val()+',';
-            })
-        }
-        dataid=$.trim(dataid);
-        if(dataid==''){
-            layer.msg('请选择订单');
-            return false;
-        }
-        var url='<?php echo url("Orders/orders_setintegral"); ?>?ordersid='+dataid;
-        var title='设置积分';
-        layer.open({
-            type: 2,
-            title:title,
-            shadeClose: false,
-            shade: 0.8,
-            area: ['95%', '90%'],
-            content: url
-        });
-    }
-
-    function savedata_setintegraling(url){
-        var sindex=layer.load(1,{time:5*1000});
-        $('#goodsform').ajaxSubmit({
-            url:url,
-            type:'post',
-            dataType:'json',
-            beforeSubmit: function(){
-                var integral=$.trim($('.integral').val());
-                if(integral<0 || integral==''){
-                    layer.close(sindex);
-                    layer.msg('请设置积分');
-                    return false;
-                }
-            },
-            success: function(data){
-                layer.close(sindex);
-                layer.msg(data.msg);
-                if(data.code==400){
-                    return false;
-                }else if(data.code==200){
-                    setTimeout("parent.closealllayer()",2000)
-                }
-            }
-        });
-        return false;
-    }
-
-    function orders_setsettle(dataid=''){
-        if(dataid==''){
-            $("[name='checkgoods[]']:checked").each(function(){
-                dataid+=$(this).val()+',';
-            })
-        }
-        dataid=$.trim(dataid);
-        if(dataid==''){
-            layer.msg('请选择订单');
-            return false;
-        }
-        if(dataid!=''){
-            layer.confirm('确定结算选择的订单吗?',{icon:3,title:'操作提示'},function(index){
-                var sindex=layer.load(1,{'time':3*1000});
-                $.post("<?php echo url('Orders/orders_setsettle'); ?>",{'ordersid':dataid},function(data){
-                    layer.msg(data.msg);
-                    layer.close(sindex);
-                    if(data.code==200){
-                        setTimeout("window.location.reload();",2000);
-                    }
-                },'json')
-                layer.close(index);
-            })
-        }
-    }
-
-
 
     function orders_export(){
         var url="<?php echo url('Orders/orders_export'); ?>?a=1";
@@ -596,110 +409,45 @@
         if(applytime_end!=''){
             url+='&applytime_end='+applytime_end;
         }
-        window.location.href=url;
-    }
-
-    function orders_refund_search(){
-        var url="<?php echo url('Orders/orders_refundlist'); ?>?a=1";
-        var status=$('.status').val();
-        if(status!=''){
-            url+='&status='+status;
-        }
-        var orderno=$('.orderno').val();
-        if(orderno!=''){
-            url+='&orderno='+orderno;
-        }
-        var applytime_start=$('.applytime_start').val();
-        if(applytime_start!=''){
-            url+='&applytime_start='+applytime_start;
-        }
-        var applytime_end=$('.applytime_end').val();
-        if(applytime_end!=''){
-            url+='&applytime_end='+applytime_end;
+        var promoter=$('.promoter').val();
+        if(promoter!=''){
+            url+='&promoter='+promoter;
         }
         window.location.href=url;
     }
 
-    function orders_refund_agree(dataid){
-        var url='<?php echo url("Orders/orders_refund_agree"); ?>?refundid='+dataid;
-        var title='同意退款';
-        layer.open({
-            type: 2,
-            title:title,
-            shadeClose: false,
-            shade: 0.8,
-            area: ['95%', '90%'],
-            content: url
-        });
-    }
-
-    function savedata_agreeing(url){
-        var sindex=layer.load(1,{time:5*1000});
-        $('#goodsform').ajaxSubmit({
-            url:url,
-            type:'post',
-            dataType:'json',
-            beforeSubmit: function(){
-                var money=$.trim($('.money').val());
-                if(money<=0 || money==''){
+    function orders_del(dataid=''){
+        if(dataid==''){
+            $("[name='checkgoods[]']:checked").each(function(){
+                dataid+=$(this).val()+',';
+            })
+        }
+        dataid=$.trim(dataid);
+        if(dataid==''){
+            layer.msg('请选择需要删除的订单');
+            return false;
+        }
+        if(dataid!=''){
+            layer.confirm('确定删除选中的订单信息吗?',{icon:3,title:'操作提示'},function(index){
+                var sindex=layer.load(1,{'time':3*1000});
+                $.post("<?php echo url('Orders/orders_del'); ?>",{'ordersid':dataid},function(data){
+                    layer.msg(data.msg);
                     layer.close(sindex);
-                    layer.msg('请输入退款金额');
-                    return false;
-                }
-            },
-            success: function(data){
-                layer.close(sindex);
-                layer.msg(data.msg);
-                if(data.code==400){
-                    return false;
-                }else if(data.code==200){
-                    setTimeout("parent.closealllayer()",2000)
-                }
-            }
-        });
-        return false;
-    }
-
-    function orders_refund_refuse(dataid){
-        var url='<?php echo url("Orders/orders_refund_refuse"); ?>?refundid='+dataid;
-        var title='拒绝退款';
-        layer.open({
-            type: 2,
-            title:title,
-            shadeClose: false,
-            shade: 0.8,
-            area: ['95%', '90%'],
-            content: url
-        });
-    }
-
-    function savedata_refusing(url){
-        var sindex=layer.load(1,{time:5*1000});
-        $('#goodsform').ajaxSubmit({
-            url:url,
-            type:'post',
-            dataType:'json',
-            beforeSubmit: function(){
-            },
-            success: function(data){
-                layer.close(sindex);
-                layer.msg(data.msg);
-                if(data.code==400){
-                    return false;
-                }else if(data.code==200){
-                    setTimeout("parent.closealllayer()",2000)
-                }
-            }
-        });
-        return false;
+                    if(data.code==200){
+                        setTimeout("window.location.reload();",2000);
+                    }
+                },'json')
+                layer.close(index);
+            })
+        }
     }
 
 </script>
 
-        <div class='mainfoot'>
+        <!-- <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
             <div class='hasnewchat' onclick="parent.xadmin.add_tab('客服消息列表','<?php echo url("Servicechat/servicechat_list"); ?>')">你有新的消息需要回复</div>
-        </div>
+        </div> -->
         <style type="text/css">
             .mainfoot{position:fixed;right:0;bottom:0;background:#333;height:70px;padding:8px;display:none;}
             .hasneworder{display:block;border:1px solid #1E9FFF;border-radius:5px;padding:5px;cursor:pointer;color:#fff;display:none;}

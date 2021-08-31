@@ -108,7 +108,9 @@
                 "data.list.id@int":"宽带套餐id",
                 "data.list.goods_title@string": "宽带套餐标题",
                 "data.list.goods_img@string": "宽带套餐封面图",
-                "data.list.goods_price@string": "宽带套餐售价"
+                "data.list.goods_price@string": "宽带套餐售价",
+                "data.list.goods_type@string":"套餐类型id",
+                "data.list.typename@string":"套餐类型名称"
             },
             "parameters":[
                 {
@@ -254,6 +256,25 @@
             "reviser":"完成",
             "responseClass":"void",
             "nickname":"getSubTemplate",
+            "revisionHighlight":true,
+            "fieldDesc":{
+            },
+            "parameters":[]
+        }
+        ]
+    },
+    {
+        "path":"/generic/getOrdersStyle",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-08-31 11:22:29",
+            "httpMethod":"POST",
+            "summary":"获取订单类别",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getOrdersStyle",
             "revisionHighlight":true,
             "fieldDesc":{
             },

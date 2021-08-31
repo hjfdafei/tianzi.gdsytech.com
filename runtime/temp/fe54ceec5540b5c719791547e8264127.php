@@ -1,4 +1,4 @@
-<?php /*a:3:{s:98:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\user\user_list.html";i:1626429796;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626334813;s:100:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\user\user_footer.html";i:1626429846;}*/ ?>
+<?php /*a:3:{s:98:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\user\user_list.html";i:1626429796;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:100:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\user\user_footer.html";i:1630378080;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
         <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
         <script type="text/javascript" src="/static/plugins/tinymce4.9.2/tinymce.min.js"></script>
-        <script type="text/javascript" src='https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js'></script>
+        <script type="text/javascript" src='/static/js/md5.min.js'></script>
         <link rel="stylesheet" href="/static/xadmin/css/font.css">
         <link rel="stylesheet" href="/static/css/weui.min.css">
         <link rel="stylesheet" href="/static/xadmin/css/xadmin.css">
@@ -200,12 +200,21 @@
             });
         }
     }
+
+    function user_search(){
+        var url="<?php echo url('User/user_list'); ?>?a=1";
+        var keyword=$('.keyword').val();
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        window.location.href=url;
+    }
 </script>
 
-        <div class='mainfoot'>
+        <!-- <div class='mainfoot'>
             <div class='hasneworder' onclick="parent.xadmin.add_tab('预约订单列表','<?php echo url("Orders/orders_list"); ?>')">你有新的订单需要处理</div>
             <div class='hasnewchat' onclick="parent.xadmin.add_tab('客服消息列表','<?php echo url("Servicechat/servicechat_list"); ?>')">你有新的消息需要回复</div>
-        </div>
+        </div> -->
         <style type="text/css">
             .mainfoot{position:fixed;right:0;bottom:0;background:#333;height:70px;padding:8px;display:none;}
             .hasneworder{display:block;border:1px solid #1E9FFF;border-radius:5px;padding:5px;cursor:pointer;color:#fff;display:none;}

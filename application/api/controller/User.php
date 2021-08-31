@@ -126,6 +126,7 @@ class User extends Userbase{
     public function getOrdersList(){
         $pagenum=input('pagenum',1,'intval');
         $status=input('status','0','intval');
+        $orders_style=input('orders_style','0','intval');
         if($pagenum<=0) $pagenum=1;
         $map=[];
         $pernum=10;
@@ -136,7 +137,17 @@ class User extends Userbase{
         if($status>0){
             $map[]=['o.status','=',$status];
         }
-        $field='o.id,o.orderno,o.realname,o.mobile,o.money,o.status,o.create_time,g.goods_title,b.start_time,b.end_time';
+        if($orders_style>0){
+            $map[]=['o.orders_style','=',$orders_style];
+        }
+        $orders_stylelist=config('app.orders_style');
+        $orders_stylearr=[];
+        if(!empty($orders_stylelist)){
+            foreach($orders_stylelist as $ov){
+                $orders_stylearr[$ov['id']]=$ov['title'];
+            }
+        }
+        $field='o.id,o.orders_style,o.orderno,o.realname,o.mobile,o.money,o.status,o.create_time,g.goods_title,b.start_time,b.end_time';
         $orderby=['o.id'=>'desc'];
         $style=1;
         $service=new UserService();
@@ -146,10 +157,25 @@ class User extends Userbase{
         if(!empty($listdata)){
             foreach($listdata as &$v){
                 $v['money']=round($v['money']/100,2);
+                $stylename='';
+                if(isset($orders_stylearr[$v['orders_style']])){
+                    $stylename=$orders_stylearr[$v['orders_style']];
+                }
+                $v['stylename']=$stylename;
             }
         }
         $data['list']=$listdata;
         $data['count']=$count;
+        return jsondata('0001','获取成功',$data);
+    }
+
+    //获取已购买宽带
+    public function getBroadbandList(){
+        $map[]=['o.user_id','=',$this->base_userinfo['id']];
+        $map[]=['o.isdel','=',2];
+        $field='o.realname,b.keyaccount';
+        $list=DB::name('orders o')->field($field)->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->whereNotNull('keyaccount')->group('o.broadband_id')->select();
+        $data['list']=$list;
         return jsondata('0001','获取成功',$data);
     }
 
@@ -165,6 +191,8 @@ class User extends Userbase{
             $studentnumber=input('post.studentnumber','','trim');
             $address=input('post.address','','trim');
             $promoter=input('post.promoter','','trim');
+            $orders_style=input('post.orders_style','1','intval');
+            $keyaccount=input('post.keyaccount','','trim');
             $param=[
                 'school_id'=>$school_id,
                 'goods_id'=>$goods_id,
@@ -175,6 +203,8 @@ class User extends Userbase{
                 'studentnumber'=>$studentnumber,
                 'address'=>$address,
                 'promoter'=>$promoter,
+                'orders_style'=>$orders_style,
+                'keyaccount'=>$keyaccount,
             ];
             $service=new UserService();
             $res=$service->ordersVerify($this->base_userinfo,$param);
@@ -195,7 +225,7 @@ class User extends Userbase{
         if($orders_id<=0){
             return jsondata('0029','请选择订单');
         }
-        $field='o.id,o.orderno,o.payno,o.realname,o.mobile,o.money,o.idcardnum,o.department,o.studentnumber,o.address,o.status,o.create_time,o.finish_time,o.pay_time,g.goods_title,b.keyaccount,b.keypassword,b.start_time,b.end_time';
+        $field='o.id,o.orderno,o.broadband_account,o.orders_style,o.payno,o.realname,o.mobile,o.money,o.idcardnum,o.department,o.studentnumber,o.address,o.status,o.create_time,o.finish_time,o.pay_time,g.goods_title,b.keyaccount,b.keypassword,b.start_time,b.end_time';
         $map=[];
         $map[]=['o.user_id','=',$this->base_userinfo['id']];
         $map[]=['o.id','=',$orders_id];
@@ -205,6 +235,24 @@ class User extends Userbase{
         if(empty($info)){
             return jsondata('0023','订单信息不存在');
         }
+        $orders_stylelist=config('app.orders_style');
+        $orders_stylearr=[];
+        if(!empty($orders_stylelist)){
+            foreach($orders_stylelist as $ov){
+                $orders_stylearr[$ov['id']]=$ov['title'];
+            }
+        }
+        $stylename='';
+        if(isset($orders_stylearr[$info['orders_style']])){
+            $stylename=$orders_stylearr[$info['orders_style']];
+        }
+        $info['stylename']=$stylename;
+        if($info['keyaccount']==''){
+            if($info['broadband_account']!=''){
+                $info['keyaccount']=$info['broadband_account'];
+            }
+        }
+        unset($info['broadband_account']);
         $data['data']=$info;
         return jsondata('0001','获取成功',$data);
     }
@@ -240,13 +288,18 @@ class User extends Userbase{
             if($info['status']==5){
                 return jsondata('0021','订单正在退款中');
             }
-            //$payno=$service->payno_create();
+            $payno=$service->payno_create();
+            $umap=[];
+            $umap[]=['id','=',$info['id']];
+            $udata=[];
+            $udata['payno']=$payno;
+            DB::name('orders')->where($umap)->update($udata);
             require_once WXPAYPATH.'WxPay.JsApiPay.php';
             $tools = new \JsApiPay();
             $input = new \WxPayUnifiedOrder();
             $input->SetBody("宽带套餐费用");
             $input->SetAttach('orderno='.$info['orderno'].'&pay_way=1');
-            $input->SetOut_trade_no($info['payno']);
+            $input->SetOut_trade_no($payno);
             $input->SetTotal_fee($info['money']);
             $input->SetNotify_url(config('app_host').'/Api/Payment/sypayment_notify');
             $input->SetTrade_type("JSAPI");

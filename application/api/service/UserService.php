@@ -135,6 +135,8 @@ class UserService extends Base{
         $studentnumber=$param['studentnumber'];
         $address=$param['address'];
         $promoter=$param['promoter'];
+        $orders_style=$param['orders_style'];
+        $keyaccount=$param['keyaccount'];
         if($school_id<=0){
             return ['code'=>'400','msg'=>'请选择校区'];
         }
@@ -158,6 +160,23 @@ class UserService extends Base{
         }
         if($address==''){
             return ['code'=>'400','msg'=>'请输入宿舍地址'];
+        }
+        $orders_stylelist=config('app.orders_style');
+        $orders_stylearr=[];
+        if(!empty($orders_stylelist)){
+            foreach($orders_stylelist as $ov){
+                $orders_stylearr[]=$ov['id'];
+            }
+        }
+        if(!in_array($orders_style,$orders_stylearr)){
+            return ['code'=>'400','msg'=>'请选择正确的订单类别'];
+        }
+        if($orders_style==2){
+            if($keyaccount==''){
+                return ['code'=>'400','msg'=>'请输入需要续费的宽带账号'];
+            }
+        }elseif($orders_style==1){
+            $keyaccount='';
         }
         $checkmobile_res=checkformat_mobile($mobile);
         if($checkmobile_res['code']!='0001'){
@@ -209,6 +228,8 @@ class UserService extends Base{
             'money'=>$goods_info['goods_price']*100,
             'create_time'=>date('Y-m-d H:i:s'),
             'isfirst'=>$isfirst,
+            'orders_style'=>$orders_style,
+            'broadband_account'=>$keyaccount,
         ];
         $order_id=DB::name('orders')->insertGetId($data);
         if($order_id){
@@ -267,6 +288,39 @@ class UserService extends Base{
             $this->payno_create();
         }
         return $no;
+    }
+
+    //查询宽带账号信息
+    public function checkBroadband($map){
+        if(empty($map)){
+            return [];
+        }
+        return DB::name('broadband')->where($map)->find();
+    }
+
+    //新增续费的宽带信息
+    public function addBroadband($param){
+        $school_id=$param['school_id'];
+        $type=$param['type'];
+        $status=$param['status'];
+        $isuse=$param['isuse'];
+        $use_time=$param['use_time'];
+        $keyaccount=$param['keyaccount'];
+        $keypassword=$param['keypassword'];
+        $create_time=$param['create_time'];
+        $addpath=$param['addpath'];
+        $data=[
+            'school_id'=>$school_id,
+            'type'=>$type,
+            'status'=>$status,
+            'isuse'=>$isuse,
+            'use_time'=>$use_time,
+            'keyaccount'=>$keyaccount,
+            'keypassword'=>$keypassword,
+            'create_time'=>$create_time,
+            'addpath'=>$addpath,
+        ];
+        return DB::name('broadband')->insertGetId($data);
     }
 
 

@@ -147,104 +147,18 @@
                     "dataType":"token"
                 },
                 {
-                    "description":"school_id 校区id",
+                    "description":"orders_style 订单种类 1新购 2续费",
                     "paramType":"body",
                     "required":true,
                     "allowMultiple":false,
-                    "dataType":"school_id"
+                    "dataType":"orders_style"
                 },
                 {
-                    "description":"goods_id 宽带套餐id",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"goods_id"
-                },
-                {
-                    "description":"realname 姓名",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"realname"
-                },
-                {
-                    "description":"mobile 联系电话",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"mobile"
-                },
-                {
-                    "description":"idcardnum 身份证号码",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"idcardnum"
-                },
-                {
-                    "description":"department 院系",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"department"
-                },
-                {
-                    "description":"studentnumber 学号",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"studentnumber"
-                },
-                {
-                    "description":"address 宿舍地址",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"address"
-                },
-                {
-                    "description":"promoter 推荐人姓名",
+                    "description":"keyaccount 宽带账号 续费必填",
                     "paramType":"body",
                     "required":false,
                     "allowMultiple":false,
-                    "dataType":"promoter"
-                }
-            ]
-        }
-        ]
-    },
-    {
-        "path":"/user/createRenewOrders",
-        "operations":[
-        {
-            "description":"",
-            "updateTime":"2021-08-27 14:45:39",
-            "httpMethod":"POST",
-            "summary":"续费宽带套餐下单",
-            "apiStatus":2,
-            "reviser":"完成",
-            "responseClass":"void",
-            "nickname":"createRenewOrders",
-            "revisionHighlight":true,
-            "fieldDesc":{
-                "code@string": "成功编码 0001为成功 其他皆为失败",
-                "msg@string": "返回提示",
-                "data.data@int":"下单信息id"
-            },
-            "parameters":[
-                {
-                    "description":"token 登录凭证",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"token"
-                },
-                {
-                    "description":"broadband_account 需要续费的宽带账号",
-                    "paramType":"body",
-                    "required":true,
-                    "allowMultiple":false,
-                    "dataType":"broadband_account"
+                    "dataType":"keyaccount"
                 },
                 {
                     "description":"school_id 校区id",
@@ -352,6 +266,13 @@
                     "dataType":"token"
                 },
                 {
+                    "description":"orders_style 订单种类 1新购 2续费",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"orders_style"
+                },
+                {
                     "description":"status 状态 1待支付 2已支付 3已完成 4已取消 5取消中",
                     "paramType":"body",
                     "required":false,
@@ -371,6 +292,42 @@
                     "required":false,
                     "allowMultiple":false,
                     "dataType":"pagenum"
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "path":"/user/getBroadbandList",
+        "operations":[
+        {
+            "description":"",
+            "updateTime":"2021-08-31 15:19:54",
+            "httpMethod":"POST",
+            "summary":"获取已购买宽带账号",
+            "apiStatus":2,
+            "reviser":"完成",
+            "responseClass":"void",
+            "nickname":"getBroadbandList",
+            "revisionHighlight":true,
+            "fieldDesc":{
+                "code@string": "成功编码 0001为成功 其他皆为失败",
+                "msg@string": "返回提示",
+                "data@array":"返回数据集",
+                "data.coutn@int":"符合条件的总数量",
+                "data.list@array":"返回数据",
+                "data.list.id@int": "订单id",
+                "data.list.orderno@string": "订单号",
+                "data.list.realname@string": "姓名",
+                "data.list.keyaccount@string": "宽带账号"
+            },
+            "parameters":[
+                {
+                    "description":"token 登录凭证",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"token"
                 }
             ]
         }

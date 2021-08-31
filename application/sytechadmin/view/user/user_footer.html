@@ -83,4 +83,13 @@
             });
         }
     }
+
+    function user_search(){
+        var url="{:url('User/user_list')}?a=1";
+        var keyword=$('.keyword').val();
+        if(keyword!=''){
+            url+='&keyword='+keyword;
+        }
+        window.location.href=url;
+    }
 </script>
