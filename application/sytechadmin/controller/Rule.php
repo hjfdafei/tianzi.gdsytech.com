@@ -64,8 +64,8 @@ class Rule extends Sytechadminbase{
             if(empty($ruleid)){
                 return jsondata('400','请选择要删除的权限');
             }
-            $ruleservice=new RuleService($ruleid);
-            return $ruleservice->rule_delete();
+            $ruleservice=new RuleService();
+            return $ruleservice->rule_delete($ruleid);
         }
         return jsondata('400','网络错误');
     }

@@ -1365,7 +1365,7 @@ class Request
 
             $data = $this->getData($data, $name);
 
-            if (is_null($data)) {
+            if (is_null($data) || $data=='') {
                 return $default;
             }
 
