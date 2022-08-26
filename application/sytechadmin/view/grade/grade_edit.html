@@ -1,0 +1,64 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--修改年级{/block}
+{block name="main"}
+<body class="index">
+    <div class="setting_form">
+        <form class='dataform layui-form' enctype="multipart/form-data" method="post" id='goodsform'>
+            <table class="layui-table">
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">选择校区<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name="school_id" class='school_id'>
+                                <option value='0'>请选择校区</option>
+                                {volist name='school_list' id='vo'}
+                                <option value='{$vo.id}' {if $info['school_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">年级名称<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="text" name='title' id="title" placeholder="年级名称" autocomplete="off" class="layui-input title" value='{$info.title}' />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">是否显示<span class='musttip'>*</span></label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="radio" name="isshow" value="1" title="是" {if $info['isshow']==1}checked{/if}>
+                            <input type="radio" name="isshow" value="2" title="否" {if $info['isshow']==2}checked{/if}>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">排序</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <input type="number" name='sortby' id="sortby" placeholder="年级排序" autocomplete="off" class="layui-input sortby" value='{$info.sortby}' />
+                        </div>
+                        <span class='inputnote_span'>(排序值越大排在越前)</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <div class="layui-input-block">
+                            <input type="hidden" name="grade_id" value='{$info.id}' />
+                            <button class="layui-btn" lay-submit lay-filter="savedata_editbtn" id='savedata_editbtn'>提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+    {include file='grade/grade_footer' /}
+{/block}

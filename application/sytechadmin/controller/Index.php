@@ -10,6 +10,7 @@ use app\sytechadmin\model\Rule;
 use app\sytechadmin\service\AssistantsService;
 use app\sytechadmin\service\BasedoctorsService;
 use app\sytechadmin\service\UserService;
+use app\sytechadmin\service\GradeService;
 class Index extends Sytechadminbase{
     public function index(){
         $adminuserservice=new AdminuserService();
@@ -247,6 +248,27 @@ class Index extends Sytechadminbase{
             return jsondata('400','暂无数据');
         }
         $data['data']=$info;
+        return jsondata('200','获取成功',$data);
+    }
+
+    public function getgrade(){
+        $dataid=input('post.dataid','0','intval');
+        if(session('admininfo')['school_id']>0){
+            $dataid=session('admininfo')['school_id'];
+        }
+        if($dataid<=0){
+            return jsondata('400','暂无数据');
+        }
+        $gmap=[];
+        $gmap[]=['school_id','=',$dataid];
+        $gfield='*';
+        $gorderby=['sortby'=>'desc','id'=>'desc'];
+        $gservice=new GradeService();
+        $list=$gservice->getGradeList(2,$gmap,$gfield,[],20,$gorderby)['list'];
+        if(empty($list)){
+            return jsondata('400','暂无数据');
+        }
+        $data['data']=$list;
         return jsondata('200','获取成功',$data);
     }
 

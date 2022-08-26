@@ -335,7 +335,14 @@ class Orders extends Sytechadminbase{
             $map[]=['o.goods_id','=',$goods_id];
         }
         if($status>0){
-            $map[]=['status','=',$status];
+            if($status==2){
+                $map[]=['o.ispay','=',1];
+            }elseif($status==6){
+                $map[]=['o.ispay','=',1];
+                $map[]=['o.broadband_id','=',0];
+            }else{
+                $map[]=['o.status','=',$status];
+            }
         }
         if($keyword!=''){
             $map[]=['o.realname|o.mobile|o.idcardnum','like',"%$keyword%"];

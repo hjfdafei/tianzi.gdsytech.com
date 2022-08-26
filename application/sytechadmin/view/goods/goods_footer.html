@@ -35,6 +35,9 @@
                 });
             }
         });
+        form.on('select(getgrade)',function(data){
+            getgrade(data.value,form);
+        })
         form.on('submit(savedata_addbtn)', function(data){
             var url="{:url('Goods/goods_add')}";
             savedata(url);
@@ -46,6 +49,30 @@
             return false;
         });
     })
+
+    function getgrade(dataid,obj){
+        if(dataid>0){
+            $.post("{:url('Index/getgrade')}",{'dataid':dataid},function(res){
+                if(res.code==200){
+                    var str='';
+                    var resdata=res.data.data;
+                    for(var i=0;i<resdata.length;i++){
+                        clistr+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                    }
+                    $('.grade_id').empty().append(asrstr);
+                    obj.render('select');
+                }else{
+                    var str="<option value='0'>全部年级</option>";
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }
+            },'json')
+        }else{
+            var str="<option value='0'>全部年级</option>";
+            $('.grade_id').empty().append(str);
+            obj.render('select');
+        }
+    }
 
     function goods_add(){
         var url='{:url("Goods/goods_add")}';
@@ -178,8 +205,12 @@
         var url="{:url('Goods/goods_list')}?a=1";
         var keyword=$('.keyword').val();
         var status=$('.status').val();
+        var school_id=$('.school_id').val();
         if(status!=''){
             url+='&status='+status;
+        }
+        if(school_id!=''){
+            url+='&school_id='+school_id;
         }
         if(keyword!=''){
             url+='&keyword='+keyword;

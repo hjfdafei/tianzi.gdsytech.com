@@ -148,6 +148,10 @@
     function banner_search(){
         var url="{:url('Banner/banner_list')}?a=1";
         var keyword=$('.keyword').val();
+        var school_id=$('.school_id').val();
+        if(school_id!=''){
+            url+='&school_id='+school_id;
+        }
         if(keyword!=''){
             url+='&keyword='+keyword;
         }

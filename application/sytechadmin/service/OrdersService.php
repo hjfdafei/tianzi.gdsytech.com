@@ -344,7 +344,7 @@ class OrdersService extends Base{
         }
         $listdata=$list['list'];
         $filename='订单信息表';
-        $head=['所在校区','订单类型','订单号','姓名','联系电话','身份证号码','院系','学号','宿舍地址','推荐人','续费宽带账号','宽带套餐','宽带账号','宽带密码','宽带有效期','应付金额','优惠金额','实付金额','支付时间','订单状态','下单时间'];
+        $head=['所在校区','订单类型','订单号','姓名','联系电话','身份证号码','院系','学号','宿舍地址','推荐人','用户自输入/续费宽带账号','宽带套餐','系统分配宽带账号','系统分配宽带密码','宽带有效期','应付金额','优惠金额','实付金额','支付时间','订单状态','下单时间'];
         $data=[];
         $statusnamearr=['1'=>'待支付','2'=>'已支付','3'=>'已发放','4'=>'已取消','5'=>'取消中'];
         $schoolservice=new SchoolService();
@@ -386,7 +386,7 @@ class OrdersService extends Base{
             $discount_money=round($v['discount_money']/100,2);
             $pay_money=round($v['pay_money']/100,2);
             $statusname=$statusnamearr[$v['status']];
-            $data[]=[$schoolname,$stylename,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],$v['studentnumber'],$v['address'],$v['promoter'],$v['broadband_account'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
+            $data[]=[$schoolname,$stylename,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],"\t".$v['studentnumber'],$v['address'],$v['promoter'],$v['broadband_account'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
         }
         exportdatas($filename,$head,$data);
         return ;

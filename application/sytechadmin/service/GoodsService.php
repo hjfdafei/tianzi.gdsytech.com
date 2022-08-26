@@ -4,6 +4,8 @@ use think\facade\Request;
 use think\Db;
 use think\db\Query;
 use app\sytechadmin\controller\Upload;
+use app\sytechadmin\service\SchoolService;
+use app\sytechadmin\service\GradeService;
 
 //宽带套餐管理
 class GoodsService extends Base{
@@ -14,16 +16,50 @@ class GoodsService extends Base{
         $page='';
         $count=0;
         $statusname=['1'=>'上架','2'=>'下架'];
+        $schoolnamearr=[];
+        $schoolservice=new SchoolService();
+        $gradenamearr=[];
+        $gradeservice=new GradeService();
         if($type==1){
-            $list=DB::name('goods')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname){
-                $item['statusname']=$statusname[$item['goods_status']];
+            $smap=[];
+            $sfield='*';
+            $sorderby=['sortby'=>'desc','id'=>'desc'];
+            $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+            if(!empty($school_list)){
+                foreach($school_list as $v){
+                    $schoolnamearr[$v['id']]=$v['title'];
+                }
+                unset($v);
+            }
+            $gmap=[];
+            $gfield='*';
+            $gorderby=['sortby'=>'desc','id'=>'desc'];
+            $grade_list=$gradeservice->getGradeList(2,$gmap,$gfield,[],20,$gorderby)['list'];
+            if(!empty($grade_list)){
+                foreach($grade_list as $v){
+                    $gradenamearr[$v['id']]=$v['title'];
+                }
+            }
+            $list=DB::name('goods')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$schoolnamearr,$gradenamearr){
+                $schoolname='';
+                if(isset($schoolnamearr[$item['school_id']])){
+                    $schoolname=$schoolnamearr[$item['school_id']];
+                }
+                $gradename='';
+                if(isset($gradenamearr[$item['grade_id']])){
+                    $gradename=$gradenamearr[$item['grade_id']];
+                }
                 $omap=[];
                 $omap[]=['isdel','=',2];
+                $omap[]=['ispay','=',1];
                 $omap[]=['goods_id','=',$item['id']];
                 if(session('admininfo.school_id')>0){
                     $omap[]=['school_id','=',session('admininfo.school_id')];
                 }
                 $item['sale_num']=DB::name('orders')->where($omap)->count();
+                $item['schoolname']=$schoolname;
+                $item['gradename']=$gradename;
+                $item['statusname']=$statusname[$item['goods_status']];
                 return $item;
             });
             $page=$list->render();
@@ -39,7 +75,7 @@ class GoodsService extends Base{
     }
 
     //宽带套餐数据校验
-    public function goods_verify($id){
+    public function goods_verify($id,$admininfo){
         $id=intval($id);
         $goods_title=input('post.goods_title','','trim');
         $goods_price=input('post.goods_price','','trim');
@@ -47,6 +83,11 @@ class GoodsService extends Base{
         $goods_sortby=input('post.goods_sortby','0','intval');
         $goods_content=input('post.goods_content','','trim');
         $goods_price=round($goods_price,2);
+        $school_id=input('post.school_id','0','intval');
+        $grade_id=input('post.grade_id','0','intval');
+        if($admininfo['school_id']>0){
+            $school_id=$admininfo['school_id'];
+        }
         if(!in_array($goods_status,[1,2])){
             $goods_status=1;
         }
@@ -54,6 +95,9 @@ class GoodsService extends Base{
         if($id>0){
             $map=[];
             $map[]=['id','=',$id];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $info=$this->goodsDetail($map);
         }
         if(empty($info)){
@@ -64,12 +108,31 @@ class GoodsService extends Base{
         if($goods_price<=0){
             return jsondata('400','请输入宽带价格');
         }
+        if($school_id>0){
+            $school_service=new SchoolService();
+            $school_map[]=['id','=',$school_id];
+            $school_info=$school_service->schoolDetail($school_map);
+            if(empty($school_info)){
+                return jsondata('400','选择的校区不存在');
+            }
+        }
+        if($grade_id>0){
+            $grade_service=new GradeService();
+            $grade_map[]=['school_id','=',$school_id];
+            $grade_map[]=['id','=',$grade_id];
+            $grade_info=$grade_service->gradeDetail($grade_map);
+            if(empty($school_info)){
+                return jsondata('400','选择的年级不存在');
+            }
+        }
         $data=[
             'goods_title'=>$goods_title,
             'goods_price'=>$goods_price,
             'goods_status'=>$goods_status,
             'goods_sortby'=>$goods_sortby,
             'goods_content'=>$goods_content,
+            'school_id'=>$school_id,
+            'grade_id'=>$grade_id,
         ];
         if(!empty(request()->file('goods_img'))){
             $upload=new Upload;
@@ -119,9 +182,12 @@ class GoodsService extends Base{
     }
 
     //宽带套餐上架/下架
-    public function goods_showhide($id,$status=1){
+    public function goods_showhide($id,$status=1,$admininfo){
         $map=[];
         $map[]=['id','=',$id];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $info=$this->goodsDetail($map);
         if(empty($info)){
             return jsondata('400','需要操作的宽带套餐不存在');
@@ -146,12 +212,15 @@ class GoodsService extends Base{
     }
 
     //删除宽带套餐
-    public function goods_delete($id){
+    public function goods_delete($id,$admininfo){
         $delid=array();
         $delimg=[];
         foreach($id as $v){
             $map=[];
             $map[]=['id','=',intval($v)];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $info=$this->goodsDetail($map);
             if(!empty($info)){
                 $omap=[];

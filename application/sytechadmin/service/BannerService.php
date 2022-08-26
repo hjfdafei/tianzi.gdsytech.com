@@ -4,6 +4,7 @@ use think\facade\Request;
 use think\Db;
 use think\db\Query;
 use app\sytechadmin\controller\Upload;
+use app\sytechadmin\service\SchoolService;
 //use app\sytechadmin\model\Banner;
 //幻灯片管理
 class BannerService extends Base{
@@ -20,15 +21,30 @@ class BannerService extends Base{
         }
         $typename=['1'=>'无跳转','2'=>'小程序','3'=>'网页'];
         $isshowname=['1'=>'显示','2'=>'隐藏'];
+        $schoolnamearr=[];
+        $schoolservice=new SchoolService();
         if($type==1){
-            $list=DB::name('banner')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($positionname,$typename,$isshowname){
+            $smap=[];
+            $sfield='*';
+            $sorderby=['sortby'=>'desc','id'=>'desc'];
+            $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
+            if(!empty($school_list)){
+                foreach($school_list as $v){
+                    $schoolnamearr[$v['id']]=$v['title'];
+                }
+            }
+            $list=DB::name('banner')->field($field)->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($positionname,$typename,$isshowname,$schoolnamearr){
                 $item['typename']=$typename[$item['type']];
                 $item['isshowname']=$isshowname[$item['isshow']];
                 $item['positionname']=$positionname[$item['position']];
                 if($item['img']!=''){
                     $item['img']=config('app.app_host').getabpath($item['img'],'upload');
                 }
-
+                $schoolname='';
+                if(isset($schoolnamearr[$item['school_id']])){
+                    $schoolname=$schoolnamearr[$item['school_id']];
+                }
+                $item['schoolname']=$schoolname;
                 return $item;
             });
             $page=$list->render();
@@ -44,7 +60,7 @@ class BannerService extends Base{
     }
 
     //benner数据校验
-    public function banner_verify($id){
+    public function banner_verify($id,$admininfo){
         $id=intval($id);
         $position=input('post.position','','intval');
         $title=input('post.title','','trim');
@@ -52,6 +68,10 @@ class BannerService extends Base{
         $linkurl=input('post.linkurl','','trim');
         $isshow=input('post.isshow','1','intval');
         $sortby=input('post.sortby','0','intval');
+        $school_id=input('post.school_id','0','intval');
+        if($admininfo['school_id']>0){
+            $school_id=$admininfo['school_id'];
+        }
         $positionids=[];
         foreach(config('app.bannerposition') as $pv){
             $positionids[]=$pv['id'];
@@ -76,11 +96,22 @@ class BannerService extends Base{
         if($id>0){
             $map=[];
             $map[]=['id','=',$id];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $info=$this->bannerDetail($map);
         }
         if(empty($info)){
             if(empty(request()->file('img'))){
                 return jsondata('400','请上传banner图片');
+            }
+        }
+        if($school_id>0){
+            $school_service=new SchoolService();
+            $school_map[]=['id','=',$school_id];
+            $school_info=$school_service->schoolDetail($school_map);
+            if(empty($school_info)){
+                return jsondata('400','选择的校区不存在');
             }
         }
         $data=[
@@ -89,7 +120,8 @@ class BannerService extends Base{
             'type'=>$type,
             'isshow'=>$isshow,
             'position'=>$position,
-            'sortby'=>$sortby
+            'sortby'=>$sortby,
+            'school_id'=>$school_id,
         ];
         if(!empty(request()->file('img'))){
             $upload=new Upload;
@@ -127,9 +159,12 @@ class BannerService extends Base{
     }
 
     //banner隐藏/显示
-    public function banner_showhide($id,$status=1){
+    public function banner_showhide($id,$status=1,$admininfo){
         $map=[];
         $map[]=['id','=',$id];
+        if($admininfo['school_id']>0){
+            $map[]=['school_id','=',$admininfo['school_id']];
+        }
         $info=$this->bannerDetail($map);
         if(empty($info)){
             return jsondata('400','需要操作的banner不存在');
@@ -149,12 +184,15 @@ class BannerService extends Base{
     }
 
     //删除banner
-    public function banner_delete($id){
+    public function banner_delete($id,$admininfo){
         $delid=array();
         $delimg=[];
         foreach($id as $v){
             $map=[];
             $map[]=['id','=',intval($v)];
+            if($admininfo['school_id']>0){
+                $map[]=['school_id','=',$admininfo['school_id']];
+            }
             $info=$this->bannerDetail($map);
             if(!empty($info)){
                 $delid[]=$info['id'];

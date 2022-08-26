@@ -137,6 +137,7 @@ class UserService extends Base{
         $promoter=$param['promoter'];
         $orders_style=$param['orders_style'];
         $keyaccount=$param['keyaccount'];
+        $school_mobile=$param['school_mobile'];
         if($school_id<=0){
             return ['code'=>'400','msg'=>'请选择校区'];
         }
@@ -171,13 +172,13 @@ class UserService extends Base{
         if(!in_array($orders_style,$orders_stylearr)){
             return ['code'=>'400','msg'=>'请选择正确的订单类别'];
         }
-        if($orders_style==2){
-            if($keyaccount==''){
-                return ['code'=>'400','msg'=>'请输入需要续费的宽带账号'];
-            }
-        }elseif($orders_style==1){
-            $keyaccount='';
-        }
+        // if($orders_style==2){
+        //     if($keyaccount==''){
+        //         return ['code'=>'400','msg'=>'请输入需要续费的宽带账号'];
+        //     }
+        // }elseif($orders_style==1){
+        //     $keyaccount='';
+        // }
         $checkmobile_res=checkformat_mobile($mobile);
         if($checkmobile_res['code']!='0001'){
             return ['code'=>'400','msg'=>$checkmobile_res['msg']];
@@ -196,6 +197,7 @@ class UserService extends Base{
         $gmap=[];
         $gmap[]=['id','=',$goods_id];
         $gmap[]=['goods_status','=',1];
+        $gmap[]=['school_id','=',$school_id];
         $goods_info=$gservice->goodsDetail($gmap);
         if(empty($goods_info)){
             return ['code'=>'400','msg'=>'宽带套餐已下架'];
@@ -230,6 +232,7 @@ class UserService extends Base{
             'isfirst'=>$isfirst,
             'orders_style'=>$orders_style,
             'broadband_account'=>$keyaccount,
+            'school_mobile'=>$school_mobile,
         ];
         $order_id=DB::name('orders')->insertGetId($data);
         if($order_id){

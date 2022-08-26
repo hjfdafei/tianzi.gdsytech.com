@@ -1,0 +1,98 @@
+{extend name="layout/main" /}
+{block name="title"}管理后台--年级列表{/block}
+{block name="main"}
+<body class="index">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style='height:10px;'></div>
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <button class="layui-btn layui-btn" onclick="grade_add()">新增年级</button>
+                    <button class="layui-btn layui-btn-danger" onclick="grade_del();">删除年级</button>
+                </div>
+            </div>
+            <div style='height:20px;'></div>
+                <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
+                    <div class="layui-row">
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">校区</label>
+                                <div class="layui-input-block">
+                                    <select name="school_id" class='school_id' lay-search>
+                                        <option value='0'>全部</option>
+                                        {volist name='school_list' id='vo'}
+                                        <option value='{$vo.id}' {if $search['school_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">关键词</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="keyword" name="keyword" placeholder="banner标题" autocomplete="off" class="layui-input keyword" value='{$search.keyword}'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <label class="layui-form-label"></label>
+                        <span class="layui-btn" onclick="grade_search()">搜索</span>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('Banner/grade_list')}">刷新</a>
+                    </div>
+                </form>
+                {if count($list)<=0}
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr>
+                            <td style='text-align:center;'>暂无数据</td>
+                        </tr>
+                    </table>
+                {else /}
+                <div style='height:10px;'></div>
+                <div class='layui-row'>
+                    <table class="layui-table layui-form" id="goods_table">
+                        <tr class='table_tr'>
+                            <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>所属校区</th>
+                            <th>标题</th>
+                            <th>状态</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                        {volist name='$list' id='vo'}
+                        <tr class='table_tr'>
+                            <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.schoolname}</td>
+                            <td>{$vo.title}</td>
+                            <td>{$vo.isshowname}</td>
+                            <td>{$vo.sortby}</td>
+                            <td>
+                                {if $vo['isshow']==1}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="grade_hide({$vo.id})">隐藏</a>
+                                {else /}
+                                    <a class="layui-btn layui-btn-normal layui-btn-sm" onclick="grade_show({$vo.id})">显示</a>
+                                {/if}
+                                <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="grade_edit({$vo.id})">修改</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        <tr>
+                            <td colspan="10" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                        </tr>
+                    </table>
+                </div>
+            {/if}
+        </div>
+    </div>
+</body>
+{/block}
+{block name="footer"}
+<script type="text/javascript">
+    function closealllayer(){
+        layer.closeAll();
+        window.location.reload();
+    }
+</script>
+{include file='grade/grade_footer' /}
+{/block}

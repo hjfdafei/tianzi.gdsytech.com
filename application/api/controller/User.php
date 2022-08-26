@@ -193,6 +193,7 @@ class User extends Userbase{
             $promoter=input('post.promoter','','trim');
             $orders_style=input('post.orders_style','1','intval');
             $keyaccount=input('post.keyaccount','','trim');
+            $school_mobile=input('post.school_mobile','','trim');
             $param=[
                 'school_id'=>$school_id,
                 'goods_id'=>$goods_id,
@@ -205,6 +206,7 @@ class User extends Userbase{
                 'promoter'=>$promoter,
                 'orders_style'=>$orders_style,
                 'keyaccount'=>$keyaccount,
+                'school_mobile'=>$school_mobile,
             ];
             $service=new UserService();
             $res=$service->ordersVerify($this->base_userinfo,$param);
@@ -225,7 +227,7 @@ class User extends Userbase{
         if($orders_id<=0){
             return jsondata('0029','请选择订单');
         }
-        $field='o.id,o.orderno,o.broadband_account,o.orders_style,o.payno,o.realname,o.mobile,o.money,o.idcardnum,o.department,o.studentnumber,o.address,o.status,o.create_time,o.finish_time,o.pay_time,g.goods_title,b.keyaccount,b.keypassword,b.start_time,b.end_time';
+        $field='o.id,o.orderno,o.broadband_account,o.school_mobile,o.orders_style,o.payno,o.realname,o.mobile,o.money,o.idcardnum,o.department,o.studentnumber,o.address,o.status,o.create_time,o.finish_time,o.pay_time,g.goods_title,b.keyaccount,b.keypassword,b.start_time,b.end_time';
         $map=[];
         $map[]=['o.user_id','=',$this->base_userinfo['id']];
         $map[]=['o.id','=',$orders_id];

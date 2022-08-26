@@ -25,6 +25,13 @@
             },
             "parameters":[
                 {
+                    "description":"school_id 校区id",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"school_id"
+                },
+                {
                     "description":"position banner位置 1首页 默认1",
                     "paramType":"body",
                     "required":false,
@@ -113,6 +120,13 @@
                 "data.list.typename@string":"套餐类型名称"
             },
             "parameters":[
+                {
+                    "description":"school_id 校区id",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"school_id"
+                },
                 {
                     "description":"keyword 关键词",
                     "paramType":"body",

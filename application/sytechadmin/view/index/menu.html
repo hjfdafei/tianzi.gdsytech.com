@@ -26,6 +26,21 @@
             {/if}
         </li>
     {/volist}
+    <li>
+        <a href="javascript:void(0);">
+            <i class="iconfont left-nav-li" lay-tips="年级管理"> <i class="fa fa-sitemap"></i></i>
+            <cite>年级管理</cite>
+            <i class="iconfont nav_right"></i>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a onclick="xadmin.add_tab('年级列表','{:url("Grade/grade_list")}')">
+                    <i class="layui-icon layui-icon-right"></i>
+                    <cite>年级列表</cite>
+                </a>
+            </li>
+        </ul>
+    </li>
     <!-- <li>
         <a href="javascript:void(0);">
             <i class="iconfont left-nav-li" lay-tips="权限管理"> <i class="fa fa-sitemap"></i></i>

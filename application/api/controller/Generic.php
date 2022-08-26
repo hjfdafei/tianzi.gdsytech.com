@@ -15,6 +15,7 @@ class Generic extends Base{
     //获取banner
     public function getBanner(){
         $position=input('position','1','intval');
+        $school_id=input('school_id','0','intval');
         $style=2;
         $start=1;
         $limit=10;
@@ -23,6 +24,9 @@ class Generic extends Base{
         $map=[];
         $map[]=['position','=',$position];
         $map[]=['isshow','=',1];
+        if($school_id>0){
+            $map[]=['school_id','=',$school_id];
+        }
         $service=new GenericService();
         $list=$service->bannerList($style,$map,$field,$start,$limit,$orderby);
         if(!empty($list['list'])){
@@ -89,12 +93,16 @@ class Generic extends Base{
     public function getGoodsList(){
         $pagenum=input('pagenum',1,'intval');
         $keyword=input('keyword','','trim');
+        $school_id=input('school_id','0','intval');
         if($pagenum<=0) $pagenum=1;
         $map=[];
         $pernum=10;
         $start=($pagenum-1)*$pernum;
         $limit=$pernum;
         $map[]=['goods_status','=',1];
+        if($school_id>0){
+            $map[]=['school_id','=',$school_id];
+        }
         if($keyword!=''){
             $map[]=['goods_title','like',"%$keyword%"];
         }

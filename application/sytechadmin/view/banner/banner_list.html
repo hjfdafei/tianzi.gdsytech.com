@@ -14,7 +14,20 @@
             <div style='height:20px;'></div>
                 <form class="layui-form" enctype="multipart/form-data" method="post" id='searchform'>
                     <div class="layui-row">
-                        <div class="layui-col-md5">
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">校区</label>
+                                <div class="layui-input-block">
+                                    <select name="school_id" class='school_id' lay-search>
+                                        <option value='0'>全部</option>
+                                        {volist name='school_list' id='vo'}
+                                        <option value='{$vo.id}' {if $search['school_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">关键词</label>
                                 <div class="layui-input-block">
@@ -41,6 +54,7 @@
                     <table class="layui-table layui-form" id="goods_table">
                         <tr class='table_tr'>
                             <th style='min-width:20px;'><input type="checkbox" class="checkbox_all" lay-filter="choose_all" lay-skin="primary" class='goods_checkbox'></th>
+                            <th>所属校区</th>
                             <th>标题</th>
                             <th>图片</th>
                             <th>跳转链接</th>
@@ -52,6 +66,7 @@
                         {volist name='$list' id='vo'}
                         <tr class='table_tr'>
                             <td style='min-width:20px;'><input type="checkbox" name="checkgoods[]" lay-filter="choose_single" lay-skin="primary" class='goods_checkbox' value='{$vo.id}'></td>
+                            <td>{$vo.schoolname}</td>
                             <td>{$vo.title}</td>
                             <td><a href="{$vo.img}" target="_blank"><img src="{$vo.img}" height='50' /></a></td>
                             <td>{$vo.linkurl}<span style='color:#337ab7;display:block;'>({$vo.typename})</span></td>
@@ -69,7 +84,7 @@
                         </tr>
                         {/volist}
                         <tr>
-                            <td colspan="8" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
+                            <td colspan="10" class='page_wrap'><span class='page_count'>共<font>{$count}</font>条记录</span>{$page|raw}</td>
                         </tr>
                     </table>
                 </div>

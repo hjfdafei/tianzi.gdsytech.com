@@ -154,11 +154,18 @@
                     "dataType":"orders_style"
                 },
                 {
-                    "description":"keyaccount 宽带账号 续费必填",
+                    "description":"keyaccount 宽带账号",
                     "paramType":"body",
                     "required":false,
                     "allowMultiple":false,
                     "dataType":"keyaccount"
+                },
+                {
+                    "description":"school_mobile 校园通讯卡号码",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"school_mobile"
                 },
                 {
                     "description":"school_id 校区id",

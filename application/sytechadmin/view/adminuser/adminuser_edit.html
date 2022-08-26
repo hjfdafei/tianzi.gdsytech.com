@@ -9,7 +9,7 @@
                     <td class='td_right'><label class="layui-form-label">所属校区</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <select name='school_id' class='school_id'>
+                            <select name='school_id' class='school_id' lay-search>
                                 <option value='0'>平台</option>
                                 {volist name='school_list' id='vo'}
                                 <option value='{$vo.id}' {if $vo['id']==$info['school_id']}selected='selected'{/if}>{$vo.title}</option>

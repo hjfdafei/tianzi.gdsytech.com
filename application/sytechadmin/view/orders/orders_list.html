@@ -17,7 +17,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">校区</label>
                                 <div class="layui-input-block">
-                                    <select name="school_id" class='school_id'>
+                                    <select name="school_id" class='school_id' lay-search>
                                         <option value='0'>全部</option>
                                         {volist name='school_list' id='vo'}
                                         <option value='{$vo.id}' {if $search['school_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
