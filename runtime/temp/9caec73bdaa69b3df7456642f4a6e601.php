@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_edit.html";i:1626664974;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_edit.html";i:1661742004;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1661741810;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -41,9 +41,22 @@
                     <td class='td_right'><label class="layui-form-label">所在校区</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <select name='school_id' class='school_id'>
+                            <select name='school_id' class='school_id' lay-filter="getgrade" lay-search>
                                 <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                                 <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($vo['id']==$info['school_id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">年级</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name="grade_id" class='grade_id' lay-search>
+                                <option value='0'>全部年级</option>
+                                <?php if(is_array($grade_list) || $grade_list instanceof \think\Collection || $grade_list instanceof \think\Paginator): $i = 0; $__LIST__ = $grade_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($info['grade_id']==$vo['id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
                                 <?php endforeach; endif; else: echo "" ;endif; ?>
                             </select>
                         </div>
@@ -138,6 +151,9 @@
                 });
             }
         });
+        form.on('select(getgrade)',function(data){
+            getgrade(data.value,form);
+        })
         form.on('submit(savedata_editbtn)', function(data){
             var url="<?php echo url('Orders/orders_edit'); ?>";
             savedata_edit(url);
@@ -167,6 +183,30 @@
         });
 
     })
+
+    function getgrade(dataid,obj){
+        if(dataid>0){
+            $.post("<?php echo url('Index/getgrade'); ?>",{'dataid':dataid},function(res){
+                if(res.code==200){
+                    var str='';
+                    var resdata=res.data.data;
+                    for(var i=0;i<resdata.length;i++){
+                        str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                    }
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }else{
+                    var str="<option value='0'>全部年级</option>";
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }
+            },'json')
+        }else{
+            var str="<option value='0'>全部年级</option>";
+            $('.grade_id').empty().append(str);
+            obj.render('select');
+        }
+    }
 
     function orders_detail(dataid){
         var url='<?php echo url("Orders/orders_detail"); ?>?ordersid='+dataid;
@@ -383,6 +423,10 @@
         if(school_id!=''){
             url+='&school_id='+school_id;
         }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
+        }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){
             url+='&goods_id='+goods_id;
@@ -419,6 +463,10 @@
         var school_id=$('.school_id').val();
         if(school_id!=''){
             url+='&school_id='+school_id;
+        }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
         }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){

@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1661415474;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1661842909;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1661741810;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -49,10 +49,23 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">校区</label>
                                 <div class="layui-input-block">
-                                    <select name="school_id" class='school_id' lay-search>
+                                    <select name="school_id" class='school_id' lay-filter="getgrade" lay-search>
                                         <option value='0'>全部</option>
                                         <?php if(is_array($school_list) || $school_list instanceof \think\Collection || $school_list instanceof \think\Paginator): $i = 0; $__LIST__ = $school_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                                         <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($search['school_id']==$vo['id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
+                                        <?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">年级</label>
+                                <div class="layui-input-block">
+                                    <select name="grade_id" class='grade_id' lay-search>
+                                        <option value='0'>全部年级</option>
+                                        <?php if(is_array($grade_list) || $grade_list instanceof \think\Collection || $grade_list instanceof \think\Paginator): $i = 0; $__LIST__ = $grade_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <option value='<?php echo htmlentities($vo['id']); ?>' <?php if($search['grade_id']==$vo['id']): ?>selected='selected'<?php endif; ?>><?php echo htmlentities($vo['title']); ?></option>
                                         <?php endforeach; endif; else: echo "" ;endif; ?>
                                     </select>
                                 </div>
@@ -95,8 +108,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-row">
                         <div class="layui-col-md3">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">关键词</label>
@@ -134,7 +145,11 @@
                         <label class="layui-form-label"></label>
                         <span class="layui-btn" onclick="orders_search()">搜索</span>
                         <span class="layui-btn layui-btn-warm" onclick="orders_export()">导出订单</span>
+                        <?php if($search['user_id']>0): ?>
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Orders/orders_list',['user_id'=>$search['user_id']]); ?>">刷新</a>
+                        <?php else: ?>
                         <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="<?php echo url('Orders/orders_list'); ?>">刷新</a>
+                        <?php endif; ?>
                     </div>
                 </form>
                 <?php if(count($list)<=0): ?>
@@ -147,9 +162,15 @@
                 <div style='height:20px;'></div>
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
+                        <?php if($search['user_id']>0): ?>
+                        <li <?php if($search['orders_style']==0): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>0,'user_id'=>$search['user_id']]); ?>">全部</a></li>
+                        <li <?php if($search['orders_style']==1): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>1,'user_id'=>$search['user_id']]); ?>">新购订单</a></li>
+                        <li <?php if($search['orders_style']==2): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>2,'user_id'=>$search['user_id']]); ?>">续费订单</a></li>
+                        <?php else: ?>
                         <li <?php if($search['orders_style']==0): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>0]); ?>">全部</a></li>
                         <li <?php if($search['orders_style']==1): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>1]); ?>">新购订单</a></li>
                         <li <?php if($search['orders_style']==2): ?>class="layui-this"<?php endif; ?>><a href="<?php echo url('Orders/orders_list',['orders_style'=>2]); ?>">续费订单</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
                 <div style='height:10px;'></div>
@@ -192,6 +213,8 @@
                                 <span style='color:#337ab7;display:block;'>宽带账号:<?php echo htmlentities($vo['keyaccount']); ?></span>
                                 <span style='color:#337ab7;display:block;'>宽带密码:<?php echo htmlentities($vo['keypassword']); ?></span>
                                 <span style='color:#337ab7;display:block;'>有效期:<?php echo htmlentities($vo['start_time']); ?>--<?php echo htmlentities($vo['end_time']); ?></span>
+                                <span style='color:#337ab7;display:block;'>自填宽带账号:<?php echo htmlentities($vo['broadband_account']); ?></span>
+                                <span style='color:#337ab7;display:block;'>校园通讯卡号码:<?php echo htmlentities($vo['school_mobile']); ?></span>
                             </td>
                             <td><?php echo htmlentities($vo['statusname']); ?></td>
                             <td>
@@ -250,6 +273,9 @@
                 });
             }
         });
+        form.on('select(getgrade)',function(data){
+            getgrade(data.value,form);
+        })
         form.on('submit(savedata_editbtn)', function(data){
             var url="<?php echo url('Orders/orders_edit'); ?>";
             savedata_edit(url);
@@ -279,6 +305,30 @@
         });
 
     })
+
+    function getgrade(dataid,obj){
+        if(dataid>0){
+            $.post("<?php echo url('Index/getgrade'); ?>",{'dataid':dataid},function(res){
+                if(res.code==200){
+                    var str='';
+                    var resdata=res.data.data;
+                    for(var i=0;i<resdata.length;i++){
+                        str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                    }
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }else{
+                    var str="<option value='0'>全部年级</option>";
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }
+            },'json')
+        }else{
+            var str="<option value='0'>全部年级</option>";
+            $('.grade_id').empty().append(str);
+            obj.render('select');
+        }
+    }
 
     function orders_detail(dataid){
         var url='<?php echo url("Orders/orders_detail"); ?>?ordersid='+dataid;
@@ -495,6 +545,10 @@
         if(school_id!=''){
             url+='&school_id='+school_id;
         }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
+        }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){
             url+='&goods_id='+goods_id;
@@ -531,6 +585,10 @@
         var school_id=$('.school_id').val();
         if(school_id!=''){
             url+='&school_id='+school_id;
+        }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
         }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){

@@ -9,9 +9,22 @@
                     <td class='td_right'><label class="layui-form-label">所在校区</label></td>
                     <td class='td_left'>
                         <div class="layui-input-block">
-                            <select name='school_id' class='school_id'>
+                            <select name='school_id' class='school_id' lay-filter="getgrade" lay-search>
                                 {volist name='school_list' id='vo'}
                                 <option value='{$vo.id}' {if $vo['id']==$info['school_id']}selected='selected'{/if}>{$vo.title}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td_right'><label class="layui-form-label">年级</label></td>
+                    <td class='td_left'>
+                        <div class="layui-input-block">
+                            <select name="grade_id" class='grade_id' lay-search>
+                                <option value='0'>全部年级</option>
+                                {volist name='grade_list' id='vo'}
+                                <option value='{$vo.id}' {if $info['grade_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
                                 {/volist}
                             </select>
                         </div>

@@ -7,6 +7,7 @@ use think\Request;
 use app\sytechadmin\controller\Sytechadminbase;
 use app\sytechadmin\service\OrdersService;
 use app\sytechadmin\service\SchoolService;
+use app\sytechadmin\service\GradeService;
 use app\sytechadmin\service\GoodsService;
 use app\sytechadmin\service\BroadbandService;
 
@@ -17,6 +18,7 @@ class Orders extends Sytechadminbase{
         $user_id=input('user_id','0','intval');
         $goods_id=input('goods_id','0','intval');
         $school_id=input('school_id','0','intval');
+        $grade_id=input('grade_id','0','intval');
         $status=input('status','0','intval');
         $orderno=input('orderno','','trim');
         $keyword=input('keyword','','trim');
@@ -37,6 +39,9 @@ class Orders extends Sytechadminbase{
         }
         if($goods_id>0){
             $map[]=['o.goods_id','=',$goods_id];
+        }
+        if($grade_id>0){
+            $map[]=['o.grade_id','=',$grade_id];
         }
         if($status>0){
             if($status==2){
@@ -69,6 +74,7 @@ class Orders extends Sytechadminbase{
         $search['user_id']=$user_id;
         $search['goods_id']=$goods_id;
         $search['school_id']=$school_id;
+        $search['grade_id']=$grade_id;
         $search['status']=$status;
         $search['keyword']=$keyword;
         $search['promoter']=$promoter;
@@ -93,7 +99,17 @@ class Orders extends Sytechadminbase{
         $gfield='*';
         $gorderby=['goods_sortby'=>'desc','id'=>'desc'];
         $goods_list=$goodsservice->getGoodsList(2,$gmap,$gfield,[],20,$gorderby)['list'];
-        $this->assign(['search'=>$search,'list'=>$data['list'],'count'=>$data['count'],'page'=>$data['page'],'school_list'=>$school_list,'goods_list'=>$goods_list]);
+        $grmap=[];
+        if($school_id>0){
+            $grmap[]=['school_id','=',$school_id];
+        }else{
+            $grmap[]=['id','=',0];
+        }
+        $grfield='*';
+        $grorderby=['sortby'=>'desc','id'=>'desc'];
+        $grservice=new GradeService();
+        $grade_list=$grservice->getGradeList(2,$grmap,$grfield,[],20,$grorderby)['list'];
+        $this->assign(['search'=>$search,'list'=>$data['list'],'count'=>$data['count'],'page'=>$data['page'],'school_list'=>$school_list,'grade_list'=>$grade_list,'goods_list'=>$goods_list]);
         return $this->fetch();
     }
 
@@ -117,6 +133,7 @@ class Orders extends Sytechadminbase{
         $goodsservice=new GoodsService();
         $broadbandservice=new BroadbandService();
         $schoolservice=new SchoolService();
+        $gradeservice=new GradeService();
         $gmap=[];
         $gmap[]=['id','=',$info['goods_id']];
         $goodsinfo=$goodsservice->goodsDetail($gmap);
@@ -143,6 +160,19 @@ class Orders extends Sytechadminbase{
         $school_name='';
         if(!empty($school_info)){
             $school_name=$school_info['title'];
+        }
+        $grade_name='';
+        if($info['grade_id']>0){
+            $gmap=[];
+            $gmap[]=['id','=',$info['grade_id']];
+            $gmap[]=['school_id','=',$info['school_id']];
+            $grade_info=$gradeservice->gradeDetail($gmap);
+            if(!empty($grade_info)){
+                $grade_name=$grade_info['title'];
+            }
+        }
+        if($school_name!='' && $grade_name!=''){
+            $school_name.='-'.$grade_name;
         }
         $orders_stylelist=config('app.orders_style');
         $orders_stylearr=[];
@@ -199,7 +229,13 @@ class Orders extends Sytechadminbase{
         $sfield='*';
         $sorderby=['sortby'=>'desc','id'=>'desc'];
         $school_list=$schoolservice->getSchoolList(2,$smap,$sfield,[],20,$sorderby)['list'];
-        $this->assign(['info'=>$info,'school_list'=>$school_list]);
+        $grmap=[];
+        $grmap[]=['school_id','=',$info['school_id']];
+        $grfield='*';
+        $grorderby=['sortby'=>'desc','id'=>'desc'];
+        $grservice=new GradeService();
+        $grade_list=$grservice->getGradeList(2,$grmap,$grfield,[],20,$grorderby)['list'];
+        $this->assign(['info'=>$info,'school_list'=>$school_list,'grade_list'=>$grade_list]);
         return $this->fetch();
     }
 
@@ -314,6 +350,7 @@ class Orders extends Sytechadminbase{
         $user_id=input('user_id','0','intval');
         $goods_id=input('goods_id','0','intval');
         $school_id=input('school_id','0','intval');
+        $grade_id=input('grade_id','0','intval');
         $status=input('status','0','intval');
         $orderno=input('orderno','','trim');
         $keyword=input('keyword','','trim');
@@ -327,6 +364,9 @@ class Orders extends Sytechadminbase{
         $map[]=['o.isdel','=',2];
         if($school_id>0){
             $map[]=['o.school_id','=',$school_id];
+        }
+        if($grade_id>0){
+            $map[]=['o.grade_id','=',$grade_id];
         }
         if($user_id>0){
             $map[]=['o.user_id','=',$user_id];
@@ -362,6 +402,7 @@ class Orders extends Sytechadminbase{
         $search['user_id']=$user_id;
         $search['goods_id']=$goods_id;
         $search['school_id']=$school_id;
+        $search['grade_id']=$grade_id;
         $search['status']=$status;
         $search['keyword']=$keyword;
         $search['orderno']=$orderno;

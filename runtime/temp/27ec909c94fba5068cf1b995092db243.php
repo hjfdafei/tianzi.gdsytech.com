@@ -1,4 +1,4 @@
-<?php /*a:3:{s:100:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_list.html";i:1661510055;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_footer.html";i:1661509710;}*/ ?>
+<?php /*a:3:{s:100:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_list.html";i:1661510055;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_footer.html";i:1661741815;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -218,9 +218,9 @@
                     var str='';
                     var resdata=res.data.data;
                     for(var i=0;i<resdata.length;i++){
-                        clistr+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                        str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
                     }
-                    $('.grade_id').empty().append(asrstr);
+                    $('.grade_id').empty().append(str);
                     obj.render('select');
                 }else{
                     var str="<option value='0'>全部年级</option>";
@@ -367,11 +367,15 @@
         var keyword=$('.keyword').val();
         var status=$('.status').val();
         var school_id=$('.school_id').val();
+        var grade_id=$('.grade_id').val();
         if(status!=''){
             url+='&status='+status;
         }
         if(school_id!=''){
             url+='&school_id='+school_id;
+        }
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
         }
         if(keyword!=''){
             url+='&keyword='+keyword;

@@ -64,6 +64,17 @@ class GenericService extends Base{
         return ['list'=>$list,'count'=>$count];
     }
 
+    //年级列表
+    public function gradeList($style,$map,$field,$start,$limit,$orderby){
+        if($style==1){
+            $list=DB::name('grade')->field($field)->where($map)->limit($start,$limit)->order($orderby)->select();
+        }else{
+            $list=DB::name('grade')->field($field)->where($map)->order($orderby)->select();
+        }
+        $count=DB::name('grade')->where($map)->count();
+        return ['list'=>$list,'count'=>$count];
+    }
+
     //校区详情
     public function schoolDetail($map,$field='*'){
         if(empty($map)){

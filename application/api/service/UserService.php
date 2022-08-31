@@ -150,14 +150,14 @@ class UserService extends Base{
         if($mobile==''){
             return ['code'=>'400','msg'=>'请输入联系电话'];
         }
-        if($idcardnum==''){
-            return ['code'=>'400','msg'=>'请输入身份证号码'];
-        }
-        if($department==''){
-            return ['code'=>'400','msg'=>'请输入院系'];
-        }
+        // if($idcardnum==''){
+        //     return ['code'=>'400','msg'=>'请输入身份证号码'];
+        // }
+        // if($department==''){
+        //     return ['code'=>'400','msg'=>'请输入院系'];
+        // }
         if($studentnumber==''){
-            return ['code'=>'400','msg'=>'请输入学号'];
+            return ['code'=>'400','msg'=>'请输入序号'];
         }
         if($address==''){
             return ['code'=>'400','msg'=>'请输入宿舍地址'];
@@ -183,9 +183,9 @@ class UserService extends Base{
         if($checkmobile_res['code']!='0001'){
             return ['code'=>'400','msg'=>$checkmobile_res['msg']];
         }
-        if(!validation_idcard($idcardnum)){
-            return ['code'=>'400','msg'=>'请输入正确的身份证号码'];
-        }
+        // if(!validation_idcard($idcardnum)){
+        //     return ['code'=>'400','msg'=>'请输入正确的身份证号码'];
+        // }
         $gservice=new GenericService();
         $smap=[];
         $smap[]=['id','=',$school_id];
@@ -216,6 +216,7 @@ class UserService extends Base{
             'user_id'=>$user_id,
             'openid'=>$openid,
             'school_id'=>$school_id,
+            'grade_id'=>$goods_info['grade_id'],
             'goods_id'=>$goods_id,
             'orderno'=>$orderno,
             'realname'=>$realname,

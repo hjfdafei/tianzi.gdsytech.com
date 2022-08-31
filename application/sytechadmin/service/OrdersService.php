@@ -6,6 +6,7 @@ use think\db\Query;
 use app\sytechadmin\controller\Upload;
 use app\sytechadmin\service\UserService;
 use app\sytechadmin\service\SchoolService;
+use app\sytechadmin\service\GradeService;
 use app\sytechadmin\service\GoodsService;
 use app\sytechadmin\service\BroadbandService;
 //订单管理
@@ -21,6 +22,8 @@ class OrdersService extends Base{
         $isrefundname=['1'=>'有退款','2'=>'无退款'];
         $schoolnamearr=[];
         $schoolservice=new SchoolService();
+        $gradenamearr=[];
+        $gradeservice=new GradeService();
         if($type==1){
             $smap=[];
             $sfield='*';
@@ -31,6 +34,15 @@ class OrdersService extends Base{
                     $schoolnamearr[$v['id']]=$v['title'];
                 }
             }
+            $gmap=[];
+            $gfield='*';
+            $gorderby=['sortby'=>'desc','id'=>'desc'];
+            $grade_list=$gradeservice->getGradeList(2,$gmap,$gfield,[],20,$gorderby)['list'];
+            if(!empty($grade_list)){
+                foreach($grade_list as $v){
+                    $gradenamearr[$v['id']]=$v['title'];
+                }
+            }
             $orders_stylelist=config('app.orders_style');
             $orders_stylearr=[];
             if(!empty($orders_stylelist)){
@@ -38,10 +50,17 @@ class OrdersService extends Base{
                     $orders_stylearr[$ov['id']]=$ov['title'];
                 }
             }
-            $list=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$ispayname,$isrefundname,$schoolnamearr,$orders_stylearr){
+            $list=DB::name('orders o')->field($field)->join('__GOODS__ g','g.id=o.goods_id','left')->join('__BROADBAND__ b','b.id=o.broadband_id','left')->where($map)->order($orderby)->paginate($pernum,false,['query'=>$search])->each(function($item,$key) use($statusname,$ispayname,$isrefundname,$schoolnamearr,$orders_stylearr,$gradenamearr){
                 $schoolname='';
                 if(isset($schoolnamearr[$item['school_id']])){
                     $schoolname=$schoolnamearr[$item['school_id']];
+                }
+                $gradename='';
+                if(isset($gradenamearr[$item['grade_id']])){
+                    $gradename=$gradenamearr[$item['grade_id']];
+                    if($schoolname!='' && $gradename!=''){
+                        $schoolname.='-'.$gradename;
+                    }
                 }
                 if($item['start_time']!=''){
                     $item['start_time']=date('Y.m.d',strtotime($item['start_time']));
@@ -90,6 +109,7 @@ class OrdersService extends Base{
     public function orders_verify($id,$admininfo){
         $id=intval($id);
         $school_id=input('post.school_id','0','intval');
+        $grade_id=input('post.grade_id','0','intval');
         $realname=input('post.realname','','trim');
         $mobile=input('post.mobile','','trim');
         $idcardnum=input('post.idcardnum','','trim');
@@ -132,6 +152,15 @@ class OrdersService extends Base{
         if(empty($school_info)){
             return jsondata('400','选择的校区不存在');
         }
+        if($grade_id>0){
+            $grade_service=new GradeService();
+            $grade_map[]=['school_id','=',$school_id];
+            $grade_map[]=['id','=',$grade_id];
+            $grade_info=$grade_service->gradeDetail($grade_map);
+            if(empty($school_info)){
+                return jsondata('400','选择的年级不存在');
+            }
+        }
         $map=[];
         if($admininfo['school_id']>0){
             $map[]=['school_id','=',$admininfo['school_id']];
@@ -144,6 +173,7 @@ class OrdersService extends Base{
         }
         $data=[
             'school_id'=>$school_id,
+            'grade_id'=>$grade_id,
             'realname'=>$realname,
             'mobile'=>$mobile,
             'idcardnum'=>$idcardnum,
@@ -344,7 +374,7 @@ class OrdersService extends Base{
         }
         $listdata=$list['list'];
         $filename='订单信息表';
-        $head=['所在校区','订单类型','订单号','姓名','联系电话','身份证号码','院系','学号','宿舍地址','推荐人','用户自输入/续费宽带账号','宽带套餐','系统分配宽带账号','系统分配宽带密码','宽带有效期','应付金额','优惠金额','实付金额','支付时间','订单状态','下单时间'];
+        $head=['所在校区','订单类型','订单号','姓名','联系电话','身份证号码','院系','学号','宿舍地址','推荐人','用户自输入/续费宽带账号','宽带套餐','系统分配宽带账号','系统分配宽带密码','宽带有效期','校园通讯卡号码','应付金额','优惠金额','实付金额','支付时间','订单状态','下单时间'];
         $data=[];
         $statusnamearr=['1'=>'待支付','2'=>'已支付','3'=>'已发放','4'=>'已取消','5'=>'取消中'];
         $schoolservice=new SchoolService();
@@ -386,7 +416,7 @@ class OrdersService extends Base{
             $discount_money=round($v['discount_money']/100,2);
             $pay_money=round($v['pay_money']/100,2);
             $statusname=$statusnamearr[$v['status']];
-            $data[]=[$schoolname,$stylename,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],"\t".$v['studentnumber'],$v['address'],$v['promoter'],$v['broadband_account'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
+            $data[]=[$schoolname,$stylename,"\t".$v['orderno'],$v['realname'],"\t".$v['mobile'],"\t".$v['idcardnum'],$v['department'],"\t".$v['studentnumber'],$v['address'],$v['promoter'],$v['broadband_account'],$v['goods_title'],$v['keyaccount'],$v['keypassword'],"\t".$start_time.'--'."\t".$end_time,"\t".$v['school_mobile'],$money,$discount_money,$pay_money,"\t".$v['pay_time'],$statusname,"\t".$v['create_time']];
         }
         exportdatas($filename,$head,$data);
         return ;

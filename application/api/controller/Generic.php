@@ -94,6 +94,7 @@ class Generic extends Base{
         $pagenum=input('pagenum',1,'intval');
         $keyword=input('keyword','','trim');
         $school_id=input('school_id','0','intval');
+        $grade_id=input('grade_id','0','intval');
         if($pagenum<=0) $pagenum=1;
         $map=[];
         $pernum=10;
@@ -102,6 +103,9 @@ class Generic extends Base{
         $map[]=['goods_status','=',1];
         if($school_id>0){
             $map[]=['school_id','=',$school_id];
+        }
+        if($grade_id>0){
+            $map[]=['grade_id','=',$grade_id];
         }
         if($keyword!=''){
             $map[]=['goods_title','like',"%$keyword%"];
@@ -157,7 +161,7 @@ class Generic extends Base{
         $pernum=10;
         $start=($pagenum-1)*$pernum;
         $limit=$pernum;
-        //$map[]=['status','=',1];
+        $map[]=['status','=',1];
         if($keyword!=''){
             $map[]=['title','like',"%$keyword%"];
         }
@@ -168,6 +172,7 @@ class Generic extends Base{
         $list=$service->schoolList($style,$map,$field,$start,$limit,$orderby);
         $listdata=$list['list'];
         $count=$list['count'];
+        $grade_list=[];
         if(!empty($listdata)){
             foreach($listdata as &$v){
                 if($v['logo']!=''){
@@ -175,7 +180,15 @@ class Generic extends Base{
                 }else{
                     $v['logo']=$this->weburl.'/static/images/school_logo.png';
                 }
+                $grfield='id,title';
+                $grorderby=['sortby'=>'desc','id'=>'asc'];
+                $grmap=[];
+                $grmap[]=['isshow','=',1];
+                $grmap[]=['school_id','=',$v['id']];
+                $grade_list=$service->gradeList(2,$grmap,$grfield,0,10,$grorderby)['list'];
+                $v['grade_list']=$grade_list;
             }
+            unset($v);
         }
         $data['list']=$listdata;
         $data['count']=$count;
@@ -201,6 +214,14 @@ class Generic extends Base{
         }else{
             $info['logo']=$this->weburl.'/static/images/school_logo.png';
         }
+        $grade_list=[];
+        $grfield='id,title';
+        $grorderby=['sortby'=>'desc','id'=>'asc'];
+        $grmap=[];
+        $grmap[]=['isshow','=',1];
+        $grmap[]=['school_id','=',$info['id']];
+        $grade_list=$service->gradeList(2,$grmap,$grfield,0,10,$grorderby)['list'];
+        $info['grade_list']=$grade_list;
         $data['data']=$info;
         return jsondata('0001','获取成功',$data);
     }

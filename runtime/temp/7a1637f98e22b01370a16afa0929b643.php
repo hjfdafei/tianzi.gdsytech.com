@@ -1,4 +1,4 @@
-<?php /*a:3:{s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_detail.html";i:1630383780;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1629944527;}*/ ?>
+<?php /*a:3:{s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_detail.html";i:1661843169;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1661741810;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -98,6 +98,8 @@
                                 <span style='color:#337ab7;display:block;'>宽带账号:<?php echo htmlentities($info['keyaccount']); ?></span>
                                 <span style='color:#337ab7;display:block;'>宽带密码:<?php echo htmlentities($info['keypassword']); ?></span>
                                 <span style='color:#337ab7;display:block;'>有效期:<?php echo htmlentities($info['start_time']); ?>--<?php echo htmlentities($info['end_time']); ?></span>
+                                <span style='color:#337ab7;display:block;'>自填宽带:<?php echo htmlentities($info['broadband_account']); ?></span>
+                                <span style='color:#337ab7;display:block;'>校园通讯卡号码:<?php echo htmlentities($info['school_mobile']); ?></span>
                             </td>
                         </tr>
                         <tr>
@@ -137,6 +139,9 @@
                 });
             }
         });
+        form.on('select(getgrade)',function(data){
+            getgrade(data.value,form);
+        })
         form.on('submit(savedata_editbtn)', function(data){
             var url="<?php echo url('Orders/orders_edit'); ?>";
             savedata_edit(url);
@@ -166,6 +171,30 @@
         });
 
     })
+
+    function getgrade(dataid,obj){
+        if(dataid>0){
+            $.post("<?php echo url('Index/getgrade'); ?>",{'dataid':dataid},function(res){
+                if(res.code==200){
+                    var str='';
+                    var resdata=res.data.data;
+                    for(var i=0;i<resdata.length;i++){
+                        str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                    }
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }else{
+                    var str="<option value='0'>全部年级</option>";
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }
+            },'json')
+        }else{
+            var str="<option value='0'>全部年级</option>";
+            $('.grade_id').empty().append(str);
+            obj.render('select');
+        }
+    }
 
     function orders_detail(dataid){
         var url='<?php echo url("Orders/orders_detail"); ?>?ordersid='+dataid;
@@ -382,6 +411,10 @@
         if(school_id!=''){
             url+='&school_id='+school_id;
         }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
+        }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){
             url+='&goods_id='+goods_id;
@@ -418,6 +451,10 @@
         var school_id=$('.school_id').val();
         if(school_id!=''){
             url+='&school_id='+school_id;
+        }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
         }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){

@@ -14,6 +14,9 @@
                 });
             }
         });
+        form.on('select(getgrade)',function(data){
+            getgrade(data.value,form);
+        })
         form.on('submit(savedata_editbtn)', function(data){
             var url="{:url('Orders/orders_edit')}";
             savedata_edit(url);
@@ -43,6 +46,30 @@
         });
 
     })
+
+    function getgrade(dataid,obj){
+        if(dataid>0){
+            $.post("{:url('Index/getgrade')}",{'dataid':dataid},function(res){
+                if(res.code==200){
+                    var str='';
+                    var resdata=res.data.data;
+                    for(var i=0;i<resdata.length;i++){
+                        str+="<option value='"+resdata[i]['id']+"' title='"+dataid+"'>"+resdata[i]['title']+"</option>";
+                    }
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }else{
+                    var str="<option value='0'>全部年级</option>";
+                    $('.grade_id').empty().append(str);
+                    obj.render('select');
+                }
+            },'json')
+        }else{
+            var str="<option value='0'>全部年级</option>";
+            $('.grade_id').empty().append(str);
+            obj.render('select');
+        }
+    }
 
     function orders_detail(dataid){
         var url='{:url("Orders/orders_detail")}?ordersid='+dataid;
@@ -259,6 +286,10 @@
         if(school_id!=''){
             url+='&school_id='+school_id;
         }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
+        }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){
             url+='&goods_id='+goods_id;
@@ -295,6 +326,10 @@
         var school_id=$('.school_id').val();
         if(school_id!=''){
             url+='&school_id='+school_id;
+        }
+        var grade_id=$('.grade_id').val();
+        if(grade_id!=''){
+            url+='&grade_id='+grade_id;
         }
         var goods_id=$('.goods_id').val();
         if(goods_id!=''){

@@ -17,10 +17,23 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">校区</label>
                                 <div class="layui-input-block">
-                                    <select name="school_id" class='school_id' lay-search>
+                                    <select name="school_id" class='school_id' lay-filter="getgrade" lay-search>
                                         <option value='0'>全部</option>
                                         {volist name='school_list' id='vo'}
                                         <option value='{$vo.id}' {if $search['school_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">年级</label>
+                                <div class="layui-input-block">
+                                    <select name="grade_id" class='grade_id' lay-search>
+                                        <option value='0'>全部年级</option>
+                                        {volist name='grade_list' id='vo'}
+                                        <option value='{$vo.id}' {if $search['grade_id']==$vo['id']}selected='selected'{/if}>{$vo.title}</option>
                                         {/volist}
                                     </select>
                                 </div>
@@ -63,8 +76,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-row">
                         <div class="layui-col-md3">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">关键词</label>
@@ -102,7 +113,11 @@
                         <label class="layui-form-label"></label>
                         <span class="layui-btn" onclick="orders_search()">搜索</span>
                         <span class="layui-btn layui-btn-warm" onclick="orders_export()">导出订单</span>
+                        {if $search['user_id']>0}
+                        <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('Orders/orders_list',['user_id'=>$search['user_id']])}">刷新</a>
+                        {else /}
                         <a style="margin-left:20px;" class="layui-btn layui-btn-normal" href="{:url('Orders/orders_list')}">刷新</a>
+                        {/if}
                     </div>
                 </form>
                 {if count($list)<=0}
@@ -115,9 +130,15 @@
                 <div style='height:20px;'></div>
                 <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                     <ul class="layui-tab-title">
+                        {if $search['user_id']>0}
+                        <li {if $search['orders_style']==0}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>0,'user_id'=>$search['user_id']])}">全部</a></li>
+                        <li {if $search['orders_style']==1}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>1,'user_id'=>$search['user_id']])}">新购订单</a></li>
+                        <li {if $search['orders_style']==2}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>2,'user_id'=>$search['user_id']])}">续费订单</a></li>
+                        {else /}
                         <li {if $search['orders_style']==0}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>0])}">全部</a></li>
                         <li {if $search['orders_style']==1}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>1])}">新购订单</a></li>
                         <li {if $search['orders_style']==2}class="layui-this"{/if}><a href="{:url('Orders/orders_list',['orders_style'=>2])}">续费订单</a></li>
+                        {/if}
                     </ul>
                 </div>
                 <div style='height:10px;'></div>
@@ -160,6 +181,8 @@
                                 <span style='color:#337ab7;display:block;'>宽带账号:{$vo.keyaccount}</span>
                                 <span style='color:#337ab7;display:block;'>宽带密码:{$vo.keypassword}</span>
                                 <span style='color:#337ab7;display:block;'>有效期:{$vo.start_time}--{$vo.end_time}</span>
+                                <span style='color:#337ab7;display:block;'>自填宽带账号:{$vo.broadband_account}</span>
+                                <span style='color:#337ab7;display:block;'>校园通讯卡号码:{$vo.school_mobile}</span>
                             </td>
                             <td>{$vo.statusname}</td>
                             <td>

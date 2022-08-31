@@ -1,4 +1,4 @@
-<?php /*a:3:{s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html";i:1614657099;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:94:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\menu.html";i:1661507056;}*/ ?>
+<?php /*a:3:{s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html";i:1614657099;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:94:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\menu.html";i:1661745508;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -92,7 +92,7 @@
             <?php endif; ?>
         </li>
     <?php endforeach; endif; else: echo "" ;endif; ?>
-    <li>
+    <!-- <li>
         <a href="javascript:void(0);">
             <i class="iconfont left-nav-li" lay-tips="年级管理"> <i class="fa fa-sitemap"></i></i>
             <cite>年级管理</cite>
@@ -106,7 +106,7 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> -->
     <!-- <li>
         <a href="javascript:void(0);">
             <i class="iconfont left-nav-li" lay-tips="权限管理"> <i class="fa fa-sitemap"></i></i>

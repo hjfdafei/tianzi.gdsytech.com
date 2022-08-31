@@ -128,6 +128,13 @@
                     "dataType":"school_id"
                 },
                 {
+                    "description":"grade_id 年级id",
+                    "paramType":"body",
+                    "required":false,
+                    "allowMultiple":false,
+                    "dataType":"grade_id"
+                },
+                {
                     "description":"keyword 关键词",
                     "paramType":"body",
                     "required":false,
