@@ -1,4 +1,4 @@
-<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1661842909;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1661741810;}*/ ?>
+<?php /*a:3:{s:102:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html";i:1662025893;s:95:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\layout\main.html";i:1626942442;s:104:"E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_footer.html";i:1661741810;}*/ ?>
 <html>
     <head>
         <meta charset="utf-8">
@@ -120,7 +120,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">推荐人</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="promoter" name="promoter" placeholder="推荐人姓名" autocomplete="off" class="layui-input promoter" value='<?php echo htmlentities($search['promoter']); ?>'>
+                                    <input type="text" id="promoter" name="promoter" placeholder="推荐人姓名/办理网格" autocomplete="off" class="layui-input promoter" value='<?php echo htmlentities($search['promoter']); ?>'>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,10 @@
                                 <span style='color:#337ab7;display:block;'>实付金额:<?php echo htmlentities($vo['pay_money']); ?></span>
                             </td>
                             <td><?php echo htmlentities($vo['create_time']); ?></td>
-                            <td><?php echo htmlentities($vo['promoter']); ?></td>
+                            <td>
+                                <span style='color:#337ab7;display:block;'>推荐人：<?php if($vo['promoter']!=''): ?><?php echo htmlentities($vo['promoter']); else: ?>无<?php endif; ?></span>
+                                <span style='color:#337ab7;display:block;'>办理网格：<?php if($vo['work_grid']!=''): ?><?php echo htmlentities($vo['work_grid']); else: ?>无<?php endif; ?></span>
+                            </td>
                             <td>
                                 <a class="layui-btn layui-btn-sm" onclick="orders_detail(<?php echo htmlentities($vo['id']); ?>)">详情</a>
                                 <a class="layui-btn layui-btn-warm layui-btn-sm" onclick="orders_edit(<?php echo htmlentities($vo['id']); ?>)">修改</a>

@@ -194,6 +194,7 @@ class User extends Userbase{
             $orders_style=input('post.orders_style','1','intval');
             $keyaccount=input('post.keyaccount','','trim');
             $school_mobile=input('post.school_mobile','','trim');
+            $work_grid=input('post.work_grid','','trim');
             $param=[
                 'school_id'=>$school_id,
                 'goods_id'=>$goods_id,
@@ -207,6 +208,7 @@ class User extends Userbase{
                 'orders_style'=>$orders_style,
                 'keyaccount'=>$keyaccount,
                 'school_mobile'=>$school_mobile,
+                'work_grid'=>$work_grid,
             ];
             $service=new UserService();
             $res=$service->ordersVerify($this->base_userinfo,$param);

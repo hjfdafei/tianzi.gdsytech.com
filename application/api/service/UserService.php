@@ -138,6 +138,7 @@ class UserService extends Base{
         $orders_style=$param['orders_style'];
         $keyaccount=$param['keyaccount'];
         $school_mobile=$param['school_mobile'];
+        $work_grid=$param['work_grid'];
         if($school_id<=0){
             return ['code'=>'400','msg'=>'请选择校区'];
         }
@@ -150,6 +151,9 @@ class UserService extends Base{
         if($mobile==''){
             return ['code'=>'400','msg'=>'请输入联系电话'];
         }
+        // if($work_grid==''){
+        //     return ['code'=>'400','msg'=>'请输入办理网格'];
+        // }
         // if($idcardnum==''){
         //     return ['code'=>'400','msg'=>'请输入身份证号码'];
         // }
@@ -160,7 +164,7 @@ class UserService extends Base{
             return ['code'=>'400','msg'=>'请输入序号'];
         }
         if($address==''){
-            return ['code'=>'400','msg'=>'请输入宿舍地址'];
+            return ['code'=>'400','msg'=>'请输入地址'];
         }
         $orders_stylelist=config('app.orders_style');
         $orders_stylearr=[];
@@ -234,6 +238,7 @@ class UserService extends Base{
             'orders_style'=>$orders_style,
             'broadband_account'=>$keyaccount,
             'school_mobile'=>$school_mobile,
+            'work_grid'=>$work_grid,
         ];
         $order_id=DB::name('orders')->insertGetId($data);
         if($order_id){

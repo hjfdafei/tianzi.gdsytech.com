@@ -1,0 +1,877 @@
+---------------------------------------------------------------
+
+[2022-09-01T17:46:06+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/Sytechadmin/index/index.html
+[运行时间：0.306483s] [吞吐率：3.26req/s] [内存消耗：4,603.55kb] [文件加载：162]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/login/login.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html [ array (
+  0 => 'admininfo',
+  1 => 'menu',
+  2 => 'page_title',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001959s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.001462s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.021870s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000343s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000439s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_rule` [ RunTime:0.001451s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_rule` [ RunTime:0.013540s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 0  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000570s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 1  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000459s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 10  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000509s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 19  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000502s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 26  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000444s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 33  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000461s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 36  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000455s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 43  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000442s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 51  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000446s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 60  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000435s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:06+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/index/welcome.html
+[运行时间：0.087436s] [吞吐率：11.44req/s] [内存消耗：4,422.80kb] [文件加载：160]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\welcome.html [ array (
+  0 => 'admininfo',
+  1 => 'info',
+  2 => 'currenttime',
+  3 => 'weektime',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002200s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000712s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000346s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000248s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:07+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/school/school_list.html
+[运行时间：0.163058s] [吞吐率：6.13req/s] [内存消耗：4,906.82kb] [文件加载：172]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\school\school_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.019877s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000874s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000399s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000271s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000937s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_school` [ RunTime:0.000564s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC LIMIT 0,20 [ RunTime:0.000298s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000632s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/school/school_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:07') [ RunTime:0.000602s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:07+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/goods/goods_list.html
+[运行时间：0.311470s] [吞吐率：3.21req/s] [内存消耗：5,132.53kb] [文件加载：174]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+  6 => 'grade_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015646s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000866s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000529s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000443s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000878s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000442s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_grade` [ RunTime:0.000654s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.007024s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_goods` [ RunTime:0.000783s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_goods` [ RunTime:0.010666s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_goods` ORDER BY `goods_sortby` DESC,`id` DESC LIMIT 0,20 [ RunTime:0.000891s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001589s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 7 [ RunTime:0.001527s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 6 [ RunTime:0.001319s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 5 [ RunTime:0.001303s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 4 [ RunTime:0.001299s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 3 [ RunTime:0.001618s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 2 [ RunTime:0.001344s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 1 [ RunTime:0.001495s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000318s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000260s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000745s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/goods/goods_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:07') [ RunTime:0.000343s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:07+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/banner/banner_list.html
+[运行时间：0.392631s] [吞吐率：2.55req/s] [内存消耗：5,034.93kb] [文件加载：173]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\banner\banner_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.014743s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000775s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000530s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000324s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000823s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000340s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_banner` [ RunTime:0.001353s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_banner` [ RunTime:0.014263s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_banner` ORDER BY `sortby` DESC,`id` DESC LIMIT 0,20 [ RunTime:0.000370s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000327s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000882s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/banner/banner_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:07') [ RunTime:0.000507s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:07+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/broadband/broadband_list.html
+[运行时间：0.508832s] [吞吐率：1.97req/s] [内存消耗：5,096.90kb] [文件加载：173]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.017059s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000819s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000535s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000425s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000716s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000372s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_broadband` [ RunTime:0.000642s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_broadband` [ RunTime:0.055757s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_broadband` ORDER BY `isuse` DESC,`status` ASC LIMIT 0,20 [ RunTime:0.001317s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000347s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000747s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/broadband/broadband_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:07') [ RunTime:0.000362s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:07+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html
+[运行时间：0.615649s] [吞吐率：1.62req/s] [内存消耗：5,658.09kb] [文件加载：182]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+  6 => 'grade_list',
+  7 => 'goods_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.017038s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000835s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000415s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000376s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000631s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000360s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_grade` [ RunTime:0.000527s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000313s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001722s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' [ RunTime:0.008885s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` DESC LIMIT 0,20 [ RunTime:0.000639s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000330s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_goods` [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_goods` ORDER BY `goods_sortby` DESC,`id` DESC [ RunTime:0.000392s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` WHERE  `id` = 0 ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000303s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000721s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/orders/orders_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:07') [ RunTime:0.000335s ]
+[ error ] [8]未定义数组索引: work_wrid[E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\runtime\temp\c06db272fb8aa52b966b932a8af0615f.php:229]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:07+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/user/user_list.html
+[运行时间：0.659303s] [吞吐率：1.52req/s] [内存消耗：4,922.93kb] [文件加载：172]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\user\user_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.020780s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000815s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000380s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000335s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_user` [ RunTime:0.000928s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_user` [ RunTime:0.022314s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_user` ORDER BY `id` DESC LIMIT 0,20 [ RunTime:0.000522s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000697s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/user/user_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:07') [ RunTime:0.000341s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:46:12+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html
+[运行时间：0.089144s] [吞吐率：11.22req/s] [内存消耗：5,405.91kb] [文件加载：180]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+  6 => 'grade_list',
+  7 => 'goods_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.020046s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000854s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000439s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000212s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000617s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000324s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_grade` [ RunTime:0.000499s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000243s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001279s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' [ RunTime:0.008963s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` DESC LIMIT 0,20 [ RunTime:0.000641s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000369s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_goods` [ RunTime:0.000597s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_goods` ORDER BY `goods_sortby` DESC,`id` DESC [ RunTime:0.000392s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` WHERE  `id` = 0 ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000300s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000673s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/orders/orders_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:46:12') [ RunTime:0.000344s ]
+[ error ] [8]未定义数组索引: work_wrid[E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\runtime\temp\c06db272fb8aa52b966b932a8af0615f.php:229]
+---------------------------------------------------------------
+
+[2022-09-01T17:47:31+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html
+[运行时间：0.095777s] [吞吐率：10.44req/s] [内存消耗：5,749.28kb] [文件加载：177]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+  6 => 'grade_list',
+  7 => 'goods_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.024395s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000913s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000398s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000302s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000641s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000349s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_grade` [ RunTime:0.000575s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000327s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001432s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' [ RunTime:0.008626s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` DESC LIMIT 0,20 [ RunTime:0.000676s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000362s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_goods` [ RunTime:0.000609s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_goods` ORDER BY `goods_sortby` DESC,`id` DESC [ RunTime:0.000401s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` WHERE  `id` = 0 ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000305s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000617s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/orders/orders_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:47:31') [ RunTime:0.000328s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:48:15+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_export.html?a=1&school_id=0&grade_id=0&goods_id=0&status=0&applytime_end=2022-09-01%2023:59:59
+[运行时间：25.449416s] [吞吐率：0.04req/s] [内存消耗：37,213.91kb] [文件加载：224]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+  'a' => '1',
+  'school_id' => '0',
+  'grade_id' => '0',
+  'goods_id' => '0',
+  'status' => '0',
+  'applytime_end' => '2022-09-01 23:59:59',
+)
+[ info ] [ DB ] INIT mysql
+[ sql ] [ DB ] CONNECT:[ UseTime:0.018021s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000645s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000512s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000299s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001590s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` ASC [ RunTime:0.020118s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.002039s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000361s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:48:31+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_export.html?a=1&school_id=0&grade_id=0&goods_id=0&status=0&applytime_end=2022-09-01%2023:59:59
+[运行时间：30.012519s] [吞吐率：0.03req/s] [内存消耗：49,485.30kb] [文件加载：208]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+  'a' => '1',
+  'school_id' => '0',
+  'grade_id' => '0',
+  'goods_id' => '0',
+  'status' => '0',
+  'applytime_end' => '2022-09-01 23:59:59',
+)
+[ info ] [ DB ] INIT mysql
+[ sql ] [ DB ] CONNECT:[ UseTime:0.021879s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000761s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000422s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000343s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001409s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` ASC [ RunTime:0.019697s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.001892s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000310s ]
+[ error ] [1]Maximum execution time of 30 seconds exceeded[E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Style\Style.php:618]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_export.html?a=1&school_id=0&grade_id=0&goods_id=0&status=0&applytime_end=2022-09-01%2023:59:59
+[运行时间：25.911210s] [吞吐率：0.04req/s] [内存消耗：37,214.91kb] [文件加载：224]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+  'a' => '1',
+  'school_id' => '0',
+  'grade_id' => '0',
+  'goods_id' => '0',
+  'status' => '0',
+  'applytime_end' => '2022-09-01 23:59:59',
+)
+[ info ] [ DB ] INIT mysql
+[ sql ] [ DB ] CONNECT:[ UseTime:0.023939s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000792s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000441s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000265s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001598s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` ASC [ RunTime:0.019895s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.001895s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000356s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/Sytechadmin/index/index.html
+[运行时间：24.247884s] [吞吐率：0.04req/s] [内存消耗：4,603.55kb] [文件加载：162]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/login/login.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html [ array (
+  0 => 'admininfo',
+  1 => 'menu',
+  2 => 'page_title',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001569s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000812s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000419s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000312s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000307s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_rule` [ RunTime:0.001342s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_rule` [ RunTime:0.000485s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 0  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000556s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 1  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000527s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 10  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000534s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 19  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000524s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 26  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000537s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 33  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000525s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 36  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000496s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 43  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000487s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 51  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000496s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 60  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000477s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/Sytechadmin/index/index.html
+[运行时间：13.160068s] [吞吐率：0.08req/s] [内存消耗：4,603.55kb] [文件加载：162]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/login/login.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\index.html [ array (
+  0 => 'admininfo',
+  1 => 'menu',
+  2 => 'page_title',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.022087s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000968s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000453s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000346s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000357s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_rule` [ RunTime:0.001457s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_rule` [ RunTime:0.000443s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 0  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000566s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 1  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000531s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 10  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000528s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 19  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000521s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 26  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000536s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 33  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000484s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 36  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000520s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 43  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000545s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 51  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000491s ]
+[ sql ] [ SQL ] SELECT `id`,`rule_module`,`rule_controller`,`rule_action`,`rule_title`,`rule_class` FROM `sy_rule` WHERE  `id` IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60)  AND `parentid` = 60  AND `rule_ismenu` = 1  AND `rule_isshow` = 1 ORDER BY `rule_sort` DESC,`id` ASC [ RunTime:0.000481s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/index/welcome.html
+[运行时间：0.053155s] [吞吐率：18.81req/s] [内存消耗：4,422.80kb] [文件加载：160]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\index\welcome.html [ array (
+  0 => 'admininfo',
+  1 => 'info',
+  2 => 'currenttime',
+  3 => 'weektime',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003616s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000809s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000845s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000358s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/broadband/broadband_list.html
+[运行时间：0.071851s] [吞吐率：13.92req/s] [内存消耗：5,096.90kb] [文件加载：173]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\broadband\broadband_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001504s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000792s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000489s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000377s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000667s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000373s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_broadband` [ RunTime:0.001960s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_broadband` [ RunTime:0.001477s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_broadband` ORDER BY `isuse` DESC,`status` ASC LIMIT 0,20 [ RunTime:0.001277s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000296s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000718s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/broadband/broadband_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:50:51') [ RunTime:0.000294s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/goods/goods_list.html
+[运行时间：0.134685s] [吞吐率：7.42req/s] [内存消耗：5,132.53kb] [文件加载：174]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\goods\goods_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+  6 => 'grade_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012646s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000618s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000313s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000251s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000602s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000241s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_grade` [ RunTime:0.000457s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000173s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_goods` [ RunTime:0.000504s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_goods` [ RunTime:0.000176s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_goods` ORDER BY `goods_sortby` DESC,`id` DESC LIMIT 0,20 [ RunTime:0.000208s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001300s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 7 [ RunTime:0.002563s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 6 [ RunTime:0.002502s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 5 [ RunTime:0.001464s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 4 [ RunTime:0.001404s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 3 [ RunTime:0.001598s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 2 [ RunTime:0.001480s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_orders` WHERE  `isdel` = 2  AND `ispay` = 1  AND `goods_id` = 1 [ RunTime:0.001345s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000247s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000165s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.001622s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/goods/goods_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:50:51') [ RunTime:0.000300s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:50:51+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/banner/banner_list.html
+[运行时间：0.159609s] [吞吐率：6.27req/s] [内存消耗：5,034.93kb] [文件加载：173]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\banner\banner_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002211s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000758s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000331s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000223s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000690s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000280s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_banner` [ RunTime:0.000532s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `sy_banner` [ RunTime:0.000200s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_banner` ORDER BY `sortby` DESC,`id` DESC LIMIT 0,20 [ RunTime:0.000202s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000203s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.001974s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/banner/banner_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:50:51') [ RunTime:0.000446s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:51:54+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html
+[运行时间：0.082687s] [吞吐率：12.09req/s] [内存消耗：5,758.12kb] [文件加载：177]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/Sytechadmin/index/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\application\sytechadmin\view\orders\orders_list.html [ array (
+  0 => 'admininfo',
+  1 => 'search',
+  2 => 'list',
+  3 => 'count',
+  4 => 'page',
+  5 => 'school_list',
+  6 => 'grade_list',
+  7 => 'goods_list',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010475s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000757s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000432s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000333s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000654s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000416s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_grade` [ RunTime:0.000560s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000311s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.000666s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' [ RunTime:0.008878s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` DESC LIMIT 0,20 [ RunTime:0.000697s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000365s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_goods` [ RunTime:0.000623s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_goods` ORDER BY `goods_sortby` DESC,`id` DESC [ RunTime:0.000349s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_grade` WHERE  `id` = 0 ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000288s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_admin_action_log` [ RunTime:0.000580s ]
+[ sql ] [ SQL ] INSERT INTO `sy_admin_action_log` (`method` , `params` , `url` , `ip` , `admin_id` , `create_time`) VALUES ('GET' , 'a:2:{s:3:\"get\";a:0:{}s:4:\"post\";a:0:{}}' , 'sytechadmin/orders/orders_list.html' , '127.0.0.1' , 1 , '2022-09-01 17:51:54') [ RunTime:0.000374s ]
+---------------------------------------------------------------
+
+[2022-09-01T17:52:09+08:00] 127.0.0.1 GET web.tianzi.gdsytech.com/sytechadmin/orders/orders_export.html?a=1&school_id=0&grade_id=0&goods_id=0&status=0&applytime_start=2022-08-23%2000:00:00&applytime_end=2022-09-01%2023:59:59
+[运行时间：0.188613s] [吞吐率：5.30req/s] [内存消耗：9,209.63kb] [文件加载：224]
+[ info ] [ LANG ] E:\webenv\apache2.4.39\htdocs\tianzi.gdsytech.com\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'host' => 'web.tianzi.gdsytech.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+  'referer' => 'http://web.tianzi.gdsytech.com/sytechadmin/orders/orders_list.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'sy=cc72bn59g4vcp36hjf74fnmut4',
+)
+[ info ] [ PARAM ] array (
+  'a' => '1',
+  'school_id' => '0',
+  'grade_id' => '0',
+  'goods_id' => '0',
+  'status' => '0',
+  'applytime_start' => '2022-08-23 00:00:00',
+  'applytime_end' => '2022-09-01 23:59:59',
+)
+[ info ] [ DB ] INIT mysql
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001834s ] mysql:host=localhost;port=3306;dbname=tianzi_gdsy;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_adminuser` [ RunTime:0.000746s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000370s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_adminuser` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000281s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_orders` [ RunTime:0.001431s ]
+[ sql ] [ SQL ] SELECT `o`.*,`g`.`goods_title`,`b`.`keyaccount`,`b`.`keypassword`,`b`.`start_time`,`b`.`end_time` FROM sy_orders o LEFT JOIN `sy_goods` `g` ON `g`.`id`=`o`.`goods_id` LEFT JOIN `sy_broadband` `b` ON `b`.`id`=`o`.`broadband_id` WHERE  `o`.`isdel` = 2  AND `o`.`create_time` >= '2022-08-23 00:00:00'  AND `o`.`create_time` <= '2022-09-01 23:59:59' ORDER BY `o`.`id` ASC [ RunTime:0.004399s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sy_school` [ RunTime:0.000607s ]
+[ sql ] [ SQL ] SELECT * FROM `sy_school` ORDER BY `sortby` DESC,`id` DESC [ RunTime:0.000349s ]

@@ -57,7 +57,7 @@ class Orders extends Sytechadminbase{
             $map[]=['o.realname|o.mobile|o.idcardnum','like',"%$keyword%"];
         }
         if($promoter!=''){
-            $map[]=['o.promoter','like',"%$promoter%"];
+            $map[]=['o.promoter|o.work_grid','like',"%$promoter%"];
         }
         if($orderno!=''){
             $map[]=['o.orderno','=',$orderno];
@@ -354,6 +354,7 @@ class Orders extends Sytechadminbase{
         $status=input('status','0','intval');
         $orderno=input('orderno','','trim');
         $keyword=input('keyword','','trim');
+        $promoter=input('promoter','','trim');
         $applytime_start=input('applytime_start','','trim');
         $applytime_end=input('applytime_end',date('Y-m-d 23:59:59'),'trim');
         $orders_style=input('orders_style','0','intval');
@@ -386,6 +387,9 @@ class Orders extends Sytechadminbase{
         }
         if($keyword!=''){
             $map[]=['o.realname|o.mobile|o.idcardnum','like',"%$keyword%"];
+        }
+        if($promoter!=''){
+            $map[]=['o.promoter|o.work_grid','like',"%$promoter%"];
         }
         if($orderno!=''){
             $map[]=['o.orderno','=',$orderno];

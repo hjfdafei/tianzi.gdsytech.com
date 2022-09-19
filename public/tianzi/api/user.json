@@ -229,7 +229,15 @@
                     "required":false,
                     "allowMultiple":false,
                     "dataType":"promoter"
+                },
+                {
+                    "description":"work_grid 办理网格",
+                    "paramType":"body",
+                    "required":true,
+                    "allowMultiple":false,
+                    "dataType":"work_grid"
                 }
+
             ]
         }
         ]
